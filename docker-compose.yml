@@ -1,0 +1,9 @@
+﻿services:
+  travelaccommodationbookingplatform.app:
+    image: travelaccommodationbookingplatform.app
+    build:
+      context: .
+      dockerfile: TravelAccommodationBookingPlatform.App/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
