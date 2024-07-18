@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-namespace TravelAccommodationBookingPlatform.App.Controllers;
+namespace TravelAccommodationBookingPlatform.Presentation.Controllers;
 
 [ApiController]
 [Route("[controller]")]
