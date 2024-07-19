@@ -2,8 +2,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using TravelAccommodationBookingPlatform.Application.Interfaces;
-using TravelAccommodationBookingPlatform.Infrastructure.Services;
+using TravelAccommodationBookingPlatform.Application.Interfaces.Authentication;
+using TravelAccommodationBookingPlatform.Infrastructure.Services.Authentication;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 
 namespace TravelAccommodationBookingPlatform.App.DependencyInjection;

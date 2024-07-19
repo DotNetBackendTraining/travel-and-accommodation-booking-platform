@@ -6,11 +6,11 @@ using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Moq;
 using TravelAccommodationBookingPlatform.Domain.Entities;
-using TravelAccommodationBookingPlatform.Infrastructure.Services;
+using TravelAccommodationBookingPlatform.Infrastructure.Services.Authentication;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 using TravelAccommodationBookingPlatform.Infrastructure.UnitTests.Common;
 
-namespace TravelAccommodationBookingPlatform.Infrastructure.UnitTests.Services;
+namespace TravelAccommodationBookingPlatform.Infrastructure.UnitTests.Services.Authentication;
 
 public class JwtTokenGeneratorTests
 {
