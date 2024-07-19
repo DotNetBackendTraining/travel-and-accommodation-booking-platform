@@ -10,4 +10,8 @@
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\TravelAccommodationBookingPlatform.Domain\TravelAccommodationBookingPlatform.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
