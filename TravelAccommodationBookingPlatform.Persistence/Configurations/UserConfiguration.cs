@@ -13,9 +13,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .HasMaxLength(DomainRules.Users.UsernameMaxLength);
 
-        builder.Property(u => u.Password)
+        builder.Property(u => u.PasswordHash)
             .IsRequired()
-            .HasMaxLength(DomainRules.Users.PasswordMaxLength);
+            .HasMaxLength(256); // typical hash size
 
         builder.Property(u => u.Email)
             .IsRequired()
