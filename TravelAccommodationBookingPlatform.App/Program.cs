@@ -5,8 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddPersistenceServices(builder.Configuration);
-builder.Services.AddControllers()
-    .AddApplicationPart(TravelAccommodationBookingPlatform.Presentation.AssemblyReference.Assembly);
+builder.Services.AddPresentationServices();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
