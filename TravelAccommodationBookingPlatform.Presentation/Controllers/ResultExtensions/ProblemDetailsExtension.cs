@@ -63,7 +63,7 @@ public static class ProblemDetailsExtension
     {
         if (result.IsSuccess)
         {
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"Cannot call ${CreateProblemDetails} on successful result");
         }
 
         return Results.Problem(
