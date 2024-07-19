@@ -2,7 +2,7 @@ using AutoFixture;
 using AutoFixture.AutoMoq;
 using AutoFixture.Xunit2;
 
-namespace TravelAccommodationBookingPlatform.Infrastructure.UnitTests.Common;
+namespace TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
 public class AutoMoqDataAttribute : AutoDataAttribute
 {

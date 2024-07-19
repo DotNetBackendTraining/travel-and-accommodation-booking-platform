@@ -8,7 +8,7 @@ using Moq;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Infrastructure.Services.Authentication;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
-using TravelAccommodationBookingPlatform.Infrastructure.UnitTests.Common;
+using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
 namespace TravelAccommodationBookingPlatform.Infrastructure.UnitTests.Services.Authentication;
 
