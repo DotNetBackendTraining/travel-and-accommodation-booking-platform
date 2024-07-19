@@ -21,6 +21,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .HasMaxLength(DomainRules.Users.EmailMaxLength);
 
+        builder.Property(u => u.UserRole)
+            .IsRequired();
+
         builder.HasIndex(u => u.Username).IsUnique();
         builder.HasIndex(u => u.Email).IsUnique();
     }
