@@ -23,6 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TravelAccommodationBookingPlatform.Infrastructure\TravelAccommodationBookingPlatform.Infrastructure.csproj" />
       <ProjectReference Include="..\TravelAccommodationBookingPlatform.Persistence\TravelAccommodationBookingPlatform.Persistence.csproj" />
       <ProjectReference Include="..\TravelAccommodationBookingPlatform.Presentation\TravelAccommodationBookingPlatform.Presentation.csproj" />
     </ItemGroup>
