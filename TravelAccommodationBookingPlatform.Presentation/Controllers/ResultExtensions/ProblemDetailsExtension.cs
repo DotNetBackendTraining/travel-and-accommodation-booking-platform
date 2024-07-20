@@ -1,69 +1,71 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Domain.Shared;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers.ResultExtensions;
 
 public static class ProblemDetailsExtension
 {
-    public static IResult ToProblemDetails(this Result result)
+    public static IActionResult ToProblemDetails(this Result result)
     {
-        return CreateProblemDetails(
+        return new BadRequestObjectResult(CreateProblemDetails(
             result,
             StatusCodes.Status400BadRequest,
             "Bad Request",
-            "https://tools.ietf.org/html/rfc7231#section-6.5.1");
+            "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+            [result.Error]));
     }
 
-    public static IResult ToNotFoundProblemDetails(this Result result)
+    public static IActionResult ToValidationProblemDetails(this IValidationResult result)
     {
-        return CreateProblemDetails(
+        return new UnprocessableEntityObjectResult(CreateProblemDetails(
+            (Result)result,
+            StatusCodes.Status422UnprocessableEntity,
+            "Validation Error",
+            "https://tools.ietf.org/html/rfc4918#section-11.2",
+            result.Errors));
+    }
+
+    public static IActionResult ToNotFoundProblemDetails(this Result result)
+    {
+        return new NotFoundObjectResult(CreateProblemDetails(
             result,
             StatusCodes.Status404NotFound,
             "Not Found",
-            "https://tools.ietf.org/html/rfc7231#section-6.5.4");
+            "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+            [result.Error]));
     }
 
-    public static IResult ToUnauthorizedProblemDetails(this Result result)
+    public static IActionResult ToUnauthorizedProblemDetails(this Result result)
     {
-        return CreateProblemDetails(
+        return new UnauthorizedObjectResult(CreateProblemDetails(
             result,
             StatusCodes.Status401Unauthorized,
             "Unauthorized",
-            "https://tools.ietf.org/html/rfc7235#section-3.1");
+            "https://tools.ietf.org/html/rfc7235#section-3.1",
+            [result.Error]));
     }
 
-    public static IResult ToForbiddenProblemDetails(this Result result)
+    public static IActionResult ToConflictProblemDetails(this Result result)
     {
-        return CreateProblemDetails(
-            result,
-            StatusCodes.Status403Forbidden,
-            "Forbidden",
-            "https://tools.ietf.org/html/rfc7231#section-6.5.3");
-    }
-
-    public static IResult ToConflictProblemDetails(this Result result)
-    {
-        return CreateProblemDetails(
+        return new ConflictObjectResult(CreateProblemDetails(
             result,
             StatusCodes.Status409Conflict,
             "Conflict",
-            "https://tools.ietf.org/html/rfc7231#section-6.5.8");
+            "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+            [result.Error]));
     }
 
-    public static IResult ToInternalServerErrorProblemDetails(this Result result)
-    {
-        return CreateProblemDetails(
-            result,
-            StatusCodes.Status500InternalServerError,
-            "Internal Server Error",
-            "https://tools.ietf.org/html/rfc7231#section-6.6.1");
-    }
-
-    private static IResult CreateProblemDetails(Result result, int statusCode, string title, string type)
+    private static IResult CreateProblemDetails(
+        Result result,
+        int statusCode,
+        string title,
+        string type,
+        Error[] errors)
     {
         if (result.IsSuccess)
         {
-            throw new InvalidOperationException($"Cannot call ${CreateProblemDetails} on successful result");
+            throw new InvalidOperationException($"Cannot create problem details for the successful result '{result}'");
         }
 
         return Results.Problem(
@@ -71,8 +73,6 @@ public static class ProblemDetailsExtension
             title: title,
             type: type,
             extensions: new Dictionary<string, object>
-            {
-                { "errors", new[] { result.Error } }
-            }!);
+                { { nameof(errors), errors } }!);
     }
 }
