@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TravelAccommodationBookingPlatform.Application\TravelAccommodationBookingPlatform.Application.csproj" />
       <ProjectReference Include="..\TravelAccommodationBookingPlatform.Domain\TravelAccommodationBookingPlatform.Domain.csproj" />
     </ItemGroup>
 

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Persistence;
+using TravelAccommodationBookingPlatform.Persistence.Repositories;
 
 namespace TravelAccommodationBookingPlatform.App.DependencyInjection;
 
@@ -10,5 +12,7 @@ public static class PersistenceServicesExtension
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("AppDbContextConnection") ??
                                  throw new ArgumentException("AppDbContextConnection not found")));
+
+        services.AddScoped<IUserRepository, UserRepository>();
     }
 }
