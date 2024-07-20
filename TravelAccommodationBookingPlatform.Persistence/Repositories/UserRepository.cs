@@ -13,7 +13,7 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task<User?> GetUserByUsername(string username, CancellationToken cancellationToken = default)
+    public async Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default)
     {
         return await _context.Users
             .Where(u => u.Username == username)

@@ -18,7 +18,7 @@ public class LoginUserCommandHandlerTests
         LoginUserCommandHandler handler,
         LoginUserCommand command)
     {
-        mockUserRepository.Setup(repo => repo.GetUserByUsername(command.Username, It.IsAny<CancellationToken>()))
+        mockUserRepository.Setup(repo => repo.GetUserByUsernameAsync(command.Username, It.IsAny<CancellationToken>()))
             .ReturnsAsync((User)null!);
 
         var result = await handler.Handle(command, CancellationToken.None);
@@ -36,7 +36,7 @@ public class LoginUserCommandHandlerTests
         LoginUserCommandHandler handler)
     {
         command.Username = user.Username;
-        mockUserRepository.Setup(repo => repo.GetUserByUsername(command.Username, It.IsAny<CancellationToken>()))
+        mockUserRepository.Setup(repo => repo.GetUserByUsernameAsync(command.Username, It.IsAny<CancellationToken>()))
             .ReturnsAsync(user);
         mockPasswordHashService.Setup(service => service.VerifyPassword(command.Password, user.PasswordHash))
             .Returns(false);
@@ -62,7 +62,7 @@ public class LoginUserCommandHandlerTests
         command.Username = user.Username;
         command.Password = password;
         user.PasswordHash = passwordHash;
-        mockUserRepository.Setup(repo => repo.GetUserByUsername(command.Username, It.IsAny<CancellationToken>()))
+        mockUserRepository.Setup(repo => repo.GetUserByUsernameAsync(command.Username, It.IsAny<CancellationToken>()))
             .ReturnsAsync(user);
         mockPasswordHashService.Setup(service => service.VerifyPassword(command.Password, user.PasswordHash))
             .Returns(true);

@@ -24,7 +24,7 @@ public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, LoginUs
 
     public async Task<Result<LoginUserResponse>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetUserByUsername(request.Username, cancellationToken);
+        var user = await _userRepository.GetUserByUsernameAsync(request.Username, cancellationToken);
         if (user is null)
         {
             return Result.Failure<LoginUserResponse>(DomainErrors.User.UsernameNotFound);
