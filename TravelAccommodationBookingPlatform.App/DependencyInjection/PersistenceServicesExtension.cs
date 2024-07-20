@@ -13,6 +13,7 @@ public static class PersistenceServicesExtension
             options.UseSqlServer(configuration.GetConnectionString("AppDbContextConnection") ??
                                  throw new ArgumentException("AppDbContextConnection not found")));
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
     }
 }
