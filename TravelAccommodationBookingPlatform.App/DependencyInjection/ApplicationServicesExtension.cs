@@ -14,5 +14,7 @@ public static class ApplicationServicesExtension
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 
         services.AddValidatorsFromAssembly(Application.AssemblyReference.Assembly);
+
+        services.AddAutoMapper(Application.AssemblyReference.Assembly);
     }
 }
