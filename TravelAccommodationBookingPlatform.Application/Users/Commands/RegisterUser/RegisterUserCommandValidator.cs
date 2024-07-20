@@ -1,5 +1,5 @@
 using FluentValidation;
-using TravelAccommodationBookingPlatform.Application.ValidatorExtensions;
+using TravelAccommodationBookingPlatform.Application.ValidationExtensions;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 
 namespace TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;

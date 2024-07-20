@@ -1,8 +1,8 @@
 using FluentValidation;
 
-namespace TravelAccommodationBookingPlatform.Application.ValidatorExtensions;
+namespace TravelAccommodationBookingPlatform.Application.ValidationExtensions;
 
-public static class UserValidatorsExtension
+public static class UserValidationExtensions
 {
     public static IRuleBuilderOptions<T, string> StrongPassword<T>(this IRuleBuilder<T, string> ruleBuilder)
     {
