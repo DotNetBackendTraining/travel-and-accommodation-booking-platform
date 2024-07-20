@@ -6,7 +6,7 @@ namespace TravelAccommodationBookingPlatform.Presentation.Controllers.ResultExte
 
 public static class ProblemDetailsExtension
 {
-    public static IActionResult ToProblemDetails(this Result result)
+    public static BadRequestObjectResult ToProblemDetails(this Result result)
     {
         return new BadRequestObjectResult(CreateProblemDetails(
             result,
@@ -16,7 +16,7 @@ public static class ProblemDetailsExtension
             [result.Error]));
     }
 
-    public static IActionResult ToValidationProblemDetails(this IValidationResult result)
+    public static UnprocessableEntityObjectResult ToValidationProblemDetails(this IValidationResult result)
     {
         return new UnprocessableEntityObjectResult(CreateProblemDetails(
             (Result)result,
@@ -26,7 +26,7 @@ public static class ProblemDetailsExtension
             result.Errors));
     }
 
-    public static IActionResult ToNotFoundProblemDetails(this Result result)
+    public static NotFoundObjectResult ToNotFoundProblemDetails(this Result result)
     {
         return new NotFoundObjectResult(CreateProblemDetails(
             result,
@@ -36,7 +36,7 @@ public static class ProblemDetailsExtension
             [result.Error]));
     }
 
-    public static IActionResult ToUnauthorizedProblemDetails(this Result result)
+    public static UnauthorizedObjectResult ToUnauthorizedProblemDetails(this Result result)
     {
         return new UnauthorizedObjectResult(CreateProblemDetails(
             result,
@@ -46,7 +46,7 @@ public static class ProblemDetailsExtension
             [result.Error]));
     }
 
-    public static IActionResult ToConflictProblemDetails(this Result result)
+    public static ConflictObjectResult ToConflictProblemDetails(this Result result)
     {
         return new ConflictObjectResult(CreateProblemDetails(
             result,
