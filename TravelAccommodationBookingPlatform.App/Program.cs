@@ -1,4 +1,5 @@
 using TravelAccommodationBookingPlatform.App.DependencyInjection;
+using TravelAccommodationBookingPlatform.App.WebApplicationExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ if (builder.Environment.IsDevelopment())
 }
 
 var app = builder.Build();
+
+await app.Migrate();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
