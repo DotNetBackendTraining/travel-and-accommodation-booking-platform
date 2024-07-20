@@ -19,4 +19,16 @@ public class UserRepository : IUserRepository
             .Where(u => u.Username == username)
             .FirstOrDefaultAsync(cancellationToken);
     }
+
+    public async Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken = default)
+    {
+        return await _context.Users
+            .Where(u => u.Email == email)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public void AddUser(User user)
+    {
+        _context.Add(user);
+    }
 }
