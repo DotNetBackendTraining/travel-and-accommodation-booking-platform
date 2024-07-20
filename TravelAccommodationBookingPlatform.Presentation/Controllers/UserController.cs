@@ -51,11 +51,11 @@ public class UserController : ControllerBase
     /// <returns>Response indicating the result of the registration process.</returns>
     /// <response code="201">User created successfully.</response>
     /// <response code="422">If the request is invalid (validation error).</response>
-    /// <response code="401">Unauthorized if operation is not allowed.</response>
+    /// <response code="409">Conflict if credentials causes a conflict.</response>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
     {
         var result = await _sender.Send(command);
@@ -65,7 +65,7 @@ public class UserController : ControllerBase
         }
 
         return result.IsFailure
-            ? result.ToUnauthorizedProblemDetails()
+            ? result.ToConflictProblemDetails()
             : Created();
     }
 }
