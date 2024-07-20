@@ -14,6 +14,7 @@ public static class InfrastructureServicesExtension
     {
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddScoped<IPasswordHashService, PasswordHashService>();
 
         services.AddAuthentication(options =>
             {
