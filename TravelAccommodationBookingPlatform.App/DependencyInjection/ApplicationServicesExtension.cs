@@ -11,7 +11,7 @@ public static class ApplicationServicesExtension
         services.AddMediatR(config =>
             config.RegisterServicesFromAssembly(Application.AssemblyReference.Assembly));
 
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         services.AddValidatorsFromAssembly(Application.AssemblyReference.Assembly);
 
