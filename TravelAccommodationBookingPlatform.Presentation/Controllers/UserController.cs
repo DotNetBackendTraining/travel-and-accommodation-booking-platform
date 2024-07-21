@@ -37,7 +37,7 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(LoginUserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> Login(
+    public async Task<ActionResult<LoginUserResponse>> Login(
         [FromBody] LoginUserRequest request,
         CancellationToken cancellationToken)
     {
