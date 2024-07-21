@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
-using TravelAccommodationBookingPlatform.Presentation.Controllers.ResultExtensions;
 using TravelAccommodationBookingPlatform.Presentation.Requests;
+using TravelAccommodationBookingPlatform.Presentation.ResultExtensions;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers;
 
@@ -43,9 +43,9 @@ public class UserController : ControllerBase
     {
         var command = _mapper.Map<LoginUserCommand>(request);
         var result = await _sender.Send(command, cancellationToken);
-        return result.IsFailure
-            ? result.ToUnauthorizedProblemDetails()
-            : Ok(result.Value);
+        return result.IsSuccess
+            ? Ok(result.Value)
+            : result.ToProblemDetails();
     }
 
     /// <summary>
@@ -67,8 +67,8 @@ public class UserController : ControllerBase
     {
         var command = _mapper.Map<RegisterUserCommand>(request);
         var result = await _sender.Send(command, cancellationToken);
-        return result.IsFailure
-            ? result.ToConflictProblemDetails()
-            : Created();
+        return result.IsSuccess
+            ? Created()
+            : result.ToProblemDetails();
     }
 }

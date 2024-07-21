@@ -2,15 +2,24 @@ namespace TravelAccommodationBookingPlatform.Domain.Shared;
 
 public class Error : IEquatable<Error>
 {
-    public static readonly Error None = new(string.Empty, string.Empty);
-    public static readonly Error NullValue = new("Error.NullValue", "The specified result value is null.");
+    public static readonly Error None = new(
+        ErrorType.None,
+        string.Empty,
+        string.Empty);
 
-    public Error(string code, string message)
+    public static readonly Error NullValue = new(
+        ErrorType.BadRequest,
+        "Error.NullValue",
+        "The specified result value is null.");
+
+    public Error(ErrorType type, string code, string message)
     {
+        Type = type;
         Code = code;
         Message = message;
     }
 
+    public ErrorType Type { get; }
     public string Code { get; }
     public string Message { get; }
 
@@ -48,4 +57,13 @@ public class Error : IEquatable<Error>
     public override int GetHashCode() => HashCode.Combine(Code, Message);
 
     public override string ToString() => Code;
+}
+
+public enum ErrorType
+{
+    None = 0,
+    BadRequest = 1,
+    NotFound = 2,
+    NotAuthorized = 3,
+    Conflict = 4
 }
