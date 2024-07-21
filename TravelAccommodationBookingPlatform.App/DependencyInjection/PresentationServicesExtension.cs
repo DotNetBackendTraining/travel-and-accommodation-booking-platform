@@ -30,7 +30,11 @@ public static class PresentationServicesExtension
 
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Authenticated Web App API", Version = "v1" });
+            options.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "Travel and Accommodation Booking Platform API",
+                Version = "v1"
+            });
 
             // Add XML output from Presentation assembly
             var assembly = Presentation.AssemblyReference.Assembly;
