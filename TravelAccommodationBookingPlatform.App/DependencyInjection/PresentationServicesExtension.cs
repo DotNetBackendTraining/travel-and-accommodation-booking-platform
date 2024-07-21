@@ -7,6 +7,8 @@ public static class PresentationServicesExtension
 {
     public static void AddPresentationServices(this IServiceCollection services)
     {
+        services.AddAutoMapper(Presentation.AssemblyReference.Assembly);
+
         services.AddProblemDetails();
         services.AddControllers()
             .AddApplicationPart(Presentation.AssemblyReference.Assembly);
