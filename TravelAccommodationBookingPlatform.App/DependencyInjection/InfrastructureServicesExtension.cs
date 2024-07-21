@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Authentication;
+using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
 using TravelAccommodationBookingPlatform.Infrastructure.Services.Authentication;
+using TravelAccommodationBookingPlatform.Infrastructure.Services.Files;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 
 namespace TravelAccommodationBookingPlatform.App.DependencyInjection;
@@ -13,8 +15,11 @@ public static class InfrastructureServicesExtension
     public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
+        services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
+
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IPasswordHashService, PasswordHashService>();
+        services.AddScoped<IImageStorageService, CloudinaryImageStorageService>();
 
         services.AddAuthentication(options =>
             {

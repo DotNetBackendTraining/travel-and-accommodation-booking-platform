@@ -3,6 +3,7 @@ using FluentValidation;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
 using TravelAccommodationBookingPlatform.Domain.Constants;
+using TravelAccommodationBookingPlatform.IntegrationTests.Shared;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
 namespace TravelAccommodationBookingPlatform.IntegrationTests;

@@ -3,20 +3,20 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using TravelAccommodationBookingPlatform.Persistence;
 
-namespace TravelAccommodationBookingPlatform.IntegrationTests;
+namespace TravelAccommodationBookingPlatform.IntegrationTests.Shared;
 
 public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IDisposable
 {
-    private readonly IServiceScope _scope;
+    protected readonly IServiceScope Scope;
     protected readonly ISender Sender;
     protected readonly AppDbContext DbContext;
     private IDbContextTransaction? _transaction;
 
     protected BaseIntegrationTest(IntegrationTestWebAppFactory factory)
     {
-        _scope = factory.Services.CreateScope();
-        Sender = _scope.ServiceProvider.GetRequiredService<ISender>();
-        DbContext = _scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        Scope = factory.Services.CreateScope();
+        Sender = Scope.ServiceProvider.GetRequiredService<ISender>();
+        DbContext = Scope.ServiceProvider.GetRequiredService<AppDbContext>();
         BeginTransaction();
     }
 
@@ -28,7 +28,7 @@ public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppF
     public void Dispose()
     {
         RollbackTransaction();
-        _scope.Dispose();
+        Scope.Dispose();
     }
 
     private void RollbackTransaction()

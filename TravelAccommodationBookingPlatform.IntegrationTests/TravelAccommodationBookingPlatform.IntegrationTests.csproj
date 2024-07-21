@@ -28,4 +28,10 @@
       <ProjectReference Include="..\TravelAccommodationBookingPlatform.TestsCommon\TravelAccommodationBookingPlatform.TestsCommon.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Assets\test_image.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

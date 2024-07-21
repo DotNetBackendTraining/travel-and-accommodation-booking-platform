@@ -26,3 +26,7 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    env:
+      CloudinarySettings__CloudName: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+      CloudinarySettings__ApiKey: ${{ secrets.CLOUDINARY_API_KEY }}
+      CloudinarySettings__ApiSecret: ${{ secrets.CLOUDINARY_API_SECRET }}

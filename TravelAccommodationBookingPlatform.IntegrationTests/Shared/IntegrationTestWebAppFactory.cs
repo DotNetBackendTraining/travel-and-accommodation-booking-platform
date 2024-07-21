@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Testcontainers.MsSql;
 
-namespace TravelAccommodationBookingPlatform.IntegrationTests;
+namespace TravelAccommodationBookingPlatform.IntegrationTests.Shared;
 
 public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
