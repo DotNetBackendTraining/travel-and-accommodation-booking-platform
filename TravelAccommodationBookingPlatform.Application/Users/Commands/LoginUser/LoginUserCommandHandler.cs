@@ -1,4 +1,4 @@
-using TravelAccommodationBookingPlatform.Application.Interfaces.Authentication;
+using TravelAccommodationBookingPlatform.Application.Interfaces.Auth;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Domain.Constants;

@@ -2,9 +2,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using TravelAccommodationBookingPlatform.Application.Interfaces.Authentication;
+using TravelAccommodationBookingPlatform.Application.Interfaces.Auth;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
-using TravelAccommodationBookingPlatform.Infrastructure.Services.Authentication;
+using TravelAccommodationBookingPlatform.Infrastructure.Services.Auth;
 using TravelAccommodationBookingPlatform.Infrastructure.Services.Files;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 

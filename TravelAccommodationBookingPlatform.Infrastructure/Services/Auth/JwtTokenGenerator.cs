@@ -3,12 +3,12 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using TravelAccommodationBookingPlatform.Application.Interfaces.Authentication;
+using TravelAccommodationBookingPlatform.Application.Interfaces.Auth;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
-namespace TravelAccommodationBookingPlatform.Infrastructure.Services.Authentication;
+namespace TravelAccommodationBookingPlatform.Infrastructure.Services.Auth;
 
 public class JwtTokenGenerator : IJwtTokenGenerator
 {

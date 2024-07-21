@@ -6,7 +6,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Moq;
 using TravelAccommodationBookingPlatform.Domain.Entities;
-using TravelAccommodationBookingPlatform.Infrastructure.Services.Authentication;
+using TravelAccommodationBookingPlatform.Infrastructure.Services.Auth;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
