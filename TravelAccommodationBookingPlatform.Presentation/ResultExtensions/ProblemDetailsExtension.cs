@@ -67,6 +67,17 @@ public static class ProblemDetailsExtension
             title: title,
             type: type,
             extensions: new Dictionary<string, object>
-                { { "errors", new[] { result.Error } } }!);
+            {
+                {
+                    "errors", new[]
+                    {
+                        new
+                        {
+                            code = result.Error.Code,
+                            message = result.Error.Message
+                        }
+                    }
+                }
+            }!);
     }
 }
