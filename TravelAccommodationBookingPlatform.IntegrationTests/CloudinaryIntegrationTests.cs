@@ -13,6 +13,7 @@ using TravelAccommodationBookingPlatform.Presentation.Shared;
 
 namespace TravelAccommodationBookingPlatform.IntegrationTests;
 
+[Collection("IntegrationTests")]
 public class CloudinaryIntegrationTests : BaseIntegrationTest
 {
     private readonly CloudinaryImageStorageService _service;

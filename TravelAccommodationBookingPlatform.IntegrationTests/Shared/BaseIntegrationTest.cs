@@ -5,7 +5,7 @@ using TravelAccommodationBookingPlatform.Persistence;
 
 namespace TravelAccommodationBookingPlatform.IntegrationTests.Shared;
 
-public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IDisposable
+public abstract class BaseIntegrationTest : IDisposable
 {
     protected readonly IServiceScope Scope;
     protected readonly ISender Sender;

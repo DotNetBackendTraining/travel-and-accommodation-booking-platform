@@ -8,6 +8,7 @@ using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
 namespace TravelAccommodationBookingPlatform.IntegrationTests;
 
+[Collection("IntegrationTests")]
 public class UserCommandsIntegrationTests : BaseIntegrationTest
 {
     public UserCommandsIntegrationTests(IntegrationTestWebAppFactory factory) : base(factory)
