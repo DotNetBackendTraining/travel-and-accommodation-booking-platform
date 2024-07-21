@@ -24,7 +24,6 @@ public static class UserValidationExtensions
     public static IRuleBuilderOptions<T, string> ValidEmail<T>(this IRuleBuilder<T, string> ruleBuilder)
     {
         return ruleBuilder
-            .NotEmpty().WithMessage("Email is required.")
             .MaximumLength(DomainRules.Users.EmailMaxLength)
             .WithMessage($"Email cannot be more than {DomainRules.Users.EmailMaxLength} characters long.")
             .EmailAddress().WithMessage("Invalid email format.");
