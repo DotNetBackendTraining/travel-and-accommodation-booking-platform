@@ -1,9 +1,11 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.ResultExtensions;
+using TravelAccommodationBookingPlatform.Presentation.Requests;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers;
 
@@ -12,16 +14,20 @@ namespace TravelAccommodationBookingPlatform.Presentation.Controllers;
 public class UserController : ControllerBase
 {
     private readonly ISender _sender;
+    private readonly IMapper _mapper;
 
-    public UserController(ISender sender)
+    public UserController(
+        ISender sender,
+        IMapper mapper)
     {
         _sender = sender;
+        _mapper = mapper;
     }
 
     /// <summary>
     /// Authenticates a user and generates a token.
     /// </summary>
-    /// <param name="command">Login command with user credentials.</param>
+    /// <param name="request">Login request with user credentials.</param>
     /// <returns>A token if login is successful; otherwise, an error.</returns>
     /// <response code="200">Returns the newly created token.</response>
     /// <response code="422">If the request is invalid (validation error).</response>
@@ -30,8 +36,9 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(LoginUserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
+    public async Task<IActionResult> Login([FromBody] LoginUserRequest request)
     {
+        var command = _mapper.Map<LoginUserCommand>(request);
         var result = await _sender.Send(command);
         return result.IsFailure
             ? result.ToUnauthorizedProblemDetails()
@@ -41,7 +48,7 @@ public class UserController : ControllerBase
     /// <summary>
     /// Registers a new user in the system.
     /// </summary>
-    /// <param name="command">Register user command with user details.</param>
+    /// <param name="request">Register user request with user details.</param>
     /// <returns>Response indicating the result of the registration process.</returns>
     /// <response code="201">User created successfully.</response>
     /// <response code="422">If the request is invalid (validation error).</response>
@@ -50,8 +57,9 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
-    public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
+    public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
     {
+        var command = _mapper.Map<RegisterUserCommand>(request);
         var result = await _sender.Send(command);
         return result.IsFailure
             ? result.ToConflictProblemDetails()
