@@ -28,6 +28,7 @@ public class UserController : ControllerBase
     /// Authenticates a user and generates a token.
     /// </summary>
     /// <param name="request">Login request with user credentials.</param>
+    /// <param name="cancellationToken">Cancellation token for the request</param>
     /// <returns>A token if login is successful; otherwise, an error.</returns>
     /// <response code="200">Returns the newly created token.</response>
     /// <response code="422">If the request is invalid (validation error).</response>
@@ -36,10 +37,12 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(LoginUserResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    public async Task<IActionResult> Login([FromBody] LoginUserRequest request)
+    public async Task<IActionResult> Login(
+        [FromBody] LoginUserRequest request,
+        CancellationToken cancellationToken)
     {
         var command = _mapper.Map<LoginUserCommand>(request);
-        var result = await _sender.Send(command);
+        var result = await _sender.Send(command, cancellationToken);
         return result.IsFailure
             ? result.ToUnauthorizedProblemDetails()
             : Ok(result.Value);
@@ -49,6 +52,7 @@ public class UserController : ControllerBase
     /// Registers a new user in the system.
     /// </summary>
     /// <param name="request">Register user request with user details.</param>
+    /// <param name="cancellationToken">Cancellation token for the request</param>
     /// <returns>Response indicating the result of the registration process.</returns>
     /// <response code="201">User created successfully.</response>
     /// <response code="422">If the request is invalid (validation error).</response>
@@ -57,10 +61,12 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
-    public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
+    public async Task<IActionResult> Register(
+        [FromBody] RegisterUserRequest request,
+        CancellationToken cancellationToken)
     {
         var command = _mapper.Map<RegisterUserCommand>(request);
-        var result = await _sender.Send(command);
+        var result = await _sender.Send(command, cancellationToken);
         return result.IsFailure
             ? result.ToConflictProblemDetails()
             : Created();
