@@ -13,6 +13,19 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
     {
     }
 
+    private const string ValidUsername = "username";
+    private const string ValidPassword = "newPassword@123";
+    private const string ValidEmail = "newuser@example.com";
+
+    private async Task RegisterUser(RegisterUserCommand command)
+    {
+        command.Username = ValidUsername;
+        command.Password = ValidPassword;
+        command.Email = ValidEmail;
+        var registerResult = await Sender.Send(command);
+        registerResult.IsSuccess.Should().BeTrue();
+    }
+
     [Theory, AutoMoqData]
     public async Task Login_WithEmptyField_ShouldReturnValidationError(
         LoginUserCommand commandWithEmptyUsername,
@@ -42,45 +55,78 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
     }
 
     [Theory, AutoMoqData]
-    public async Task LoginThenRegisterScenario(
-        RegisterUserCommand registerCommand,
-        LoginUserCommand loginCommand)
+    public async Task Login_WithInvalidPassword_ShouldReturnInvalidCredentialsError(
+        RegisterUserCommand registerUserCommand,
+        LoginUserCommand loginUserCommand)
     {
-        /* Register User */
+        await RegisterUser(registerUserCommand);
+        loginUserCommand.Username = ValidUsername;
+        loginUserCommand.Password = "wrong_password";
 
-        registerCommand.Username = "newUser";
-        registerCommand.Password = "StrongPassword!234";
-        registerCommand.Email = "newuser@example.com";
+        var result = await Sender.Send(loginUserCommand);
 
-        var registerResult = await Sender.Send(registerCommand);
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be(DomainErrors.User.InvalidCredentials);
+    }
 
-        registerResult.IsSuccess.Should().BeTrue();
-        DbContext.Users.Any(u => u.Username == registerCommand.Username).Should().BeTrue();
+    [Theory, AutoMoqData]
+    public async Task Login_WithValidCredentials_ShouldReturnToken(
+        RegisterUserCommand registerUserCommand,
+        LoginUserCommand loginUserCommand)
+    {
+        await RegisterUser(registerUserCommand);
 
-        /* Attempt Registration Again */
+        // Valid credentials
+        loginUserCommand.Username = ValidUsername;
+        loginUserCommand.Password = ValidPassword;
 
-        var registrationAgainResult = await Sender.Send(registerCommand);
+        // Login
+        var loginResult = await Sender.Send(loginUserCommand);
 
-        registrationAgainResult.IsFailure.Should().BeTrue();
-        registrationAgainResult.Error.Should().Be(DomainErrors.User.UsernameAlreadyExists);
-
-        /* Login with Registered User */
-
-        loginCommand.Username = registerCommand.Username;
-        loginCommand.Password = registerCommand.Password;
-
-        var loginResult = await Sender.Send(loginCommand);
-
+        // Must succeed
         loginResult.IsSuccess.Should().BeTrue();
         loginResult.Value.Token.Should().NotBeEmpty();
+    }
 
-        /* Attempt Login with Invalid Password */
+    [Theory, AutoMoqData]
+    public async Task Register_WithValidData_ShouldAddUserSuccessfully(RegisterUserCommand command)
+    {
+        command.Username = ValidUsername;
+        command.Password = ValidPassword;
+        command.Email = ValidEmail;
 
-        loginCommand.Password = "WrongPassword123";
+        var result = await Sender.Send(command);
 
-        var failedLoginResult = await Sender.Send(loginCommand);
+        result.IsSuccess.Should().BeTrue();
+        DbContext.Users.Any(u => u.Username == command.Username).Should().BeTrue();
+    }
 
-        failedLoginResult.IsFailure.Should().BeTrue();
-        failedLoginResult.Error.Should().Be(DomainErrors.User.InvalidCredentials);
+    [Theory, AutoMoqData]
+    public async Task Register_WithDuplicateUsername_ShouldReturnConflict(RegisterUserCommand command)
+    {
+        await RegisterUser(command);
+
+        command.Username = ValidUsername;
+        command.Password = ValidPassword;
+        command.Email = ValidEmail;
+
+        // register again
+        var result = await Sender.Send(command);
+
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().Be(DomainErrors.User.UsernameAlreadyExists);
+    }
+
+    [Theory, AutoMoqData]
+    public async Task Register_WithWeakPassword_ShouldReturnValidationError(RegisterUserCommand command)
+    {
+        command.Username = ValidUsername;
+        command.Password = "weak_password";
+        command.Email = ValidEmail;
+
+        var result = await Sender.Send(command);
+
+        result.IsFailure.Should().BeTrue();
+        result.Should().BeAssignableTo<IValidationResult>();
     }
 }
