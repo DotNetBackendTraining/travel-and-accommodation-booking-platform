@@ -1,8 +1,8 @@
 using FluentAssertions;
+using FluentValidation;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
 using TravelAccommodationBookingPlatform.Domain.Constants;
-using TravelAccommodationBookingPlatform.Domain.Shared;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
 namespace TravelAccommodationBookingPlatform.IntegrationTests;
@@ -34,13 +34,11 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
         commandWithEmptyUsername.Username = "";
         commandWithEmptyPassword.Password = "";
 
-        var resultOfEmptyUsername = await Sender.Send(commandWithEmptyUsername);
-        var resultOfEmptyPassword = await Sender.Send(commandWithEmptyPassword);
+        var loginWithEmptyUsername = async () => await Sender.Send(commandWithEmptyUsername);
+        var loginWithEmptyPassword = async () => await Sender.Send(commandWithEmptyPassword);
 
-        resultOfEmptyUsername.IsFailure.Should().BeTrue();
-        resultOfEmptyUsername.Should().BeAssignableTo<IValidationResult>();
-        resultOfEmptyPassword.IsFailure.Should().BeTrue();
-        resultOfEmptyPassword.Should().BeAssignableTo<IValidationResult>();
+        await loginWithEmptyUsername.Should().ThrowAsync<ValidationException>();
+        await loginWithEmptyPassword.Should().ThrowAsync<ValidationException>();
     }
 
     [Theory, AutoMoqData]
@@ -124,9 +122,8 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
         command.Password = "weak_password";
         command.Email = ValidEmail;
 
-        var result = await Sender.Send(command);
+        var action = async () => await Sender.Send(command);
 
-        result.IsFailure.Should().BeTrue();
-        result.Should().BeAssignableTo<IValidationResult>();
+        await action.Should().ThrowAsync<ValidationException>();
     }
 }

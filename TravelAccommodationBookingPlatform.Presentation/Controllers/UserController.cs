@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
-using TravelAccommodationBookingPlatform.Domain.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.ResultExtensions;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers;
@@ -34,11 +33,6 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
     {
         var result = await _sender.Send(command);
-        if (result is IValidationResult validationResult)
-        {
-            return validationResult.ToValidationProblemDetails();
-        }
-
         return result.IsFailure
             ? result.ToUnauthorizedProblemDetails()
             : Ok(result.Value);
@@ -59,11 +53,6 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
     {
         var result = await _sender.Send(command);
-        if (result is IValidationResult validationResult)
-        {
-            return validationResult.ToValidationProblemDetails();
-        }
-
         return result.IsFailure
             ? result.ToConflictProblemDetails()
             : Created();

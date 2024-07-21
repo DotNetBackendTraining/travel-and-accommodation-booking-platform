@@ -12,18 +12,7 @@ public static class ProblemDetailsExtension
             result,
             StatusCodes.Status400BadRequest,
             "Bad Request",
-            "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-            [result.Error]));
-    }
-
-    public static UnprocessableEntityObjectResult ToValidationProblemDetails(this IValidationResult result)
-    {
-        return new UnprocessableEntityObjectResult(CreateProblemDetails(
-            (Result)result,
-            StatusCodes.Status422UnprocessableEntity,
-            "Validation Error",
-            "https://tools.ietf.org/html/rfc4918#section-11.2",
-            result.Errors));
+            "https://tools.ietf.org/html/rfc7231#section-6.5.1"));
     }
 
     public static NotFoundObjectResult ToNotFoundProblemDetails(this Result result)
@@ -32,8 +21,7 @@ public static class ProblemDetailsExtension
             result,
             StatusCodes.Status404NotFound,
             "Not Found",
-            "https://tools.ietf.org/html/rfc7231#section-6.5.4",
-            [result.Error]));
+            "https://tools.ietf.org/html/rfc7231#section-6.5.4"));
     }
 
     public static UnauthorizedObjectResult ToUnauthorizedProblemDetails(this Result result)
@@ -42,8 +30,7 @@ public static class ProblemDetailsExtension
             result,
             StatusCodes.Status401Unauthorized,
             "Unauthorized",
-            "https://tools.ietf.org/html/rfc7235#section-3.1",
-            [result.Error]));
+            "https://tools.ietf.org/html/rfc7235#section-3.1"));
     }
 
     public static ConflictObjectResult ToConflictProblemDetails(this Result result)
@@ -52,16 +39,14 @@ public static class ProblemDetailsExtension
             result,
             StatusCodes.Status409Conflict,
             "Conflict",
-            "https://tools.ietf.org/html/rfc7231#section-6.5.8",
-            [result.Error]));
+            "https://tools.ietf.org/html/rfc7231#section-6.5.8"));
     }
 
     private static IResult CreateProblemDetails(
         Result result,
         int statusCode,
         string title,
-        string type,
-        Error[] errors)
+        string type)
     {
         if (result.IsSuccess)
         {
@@ -73,6 +58,6 @@ public static class ProblemDetailsExtension
             title: title,
             type: type,
             extensions: new Dictionary<string, object>
-                { { nameof(errors), errors } }!);
+                { { "errors", new[] { result.Error } } }!);
     }
 }

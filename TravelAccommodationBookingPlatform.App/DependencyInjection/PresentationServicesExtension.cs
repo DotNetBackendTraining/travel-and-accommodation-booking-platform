@@ -1,5 +1,6 @@
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
+using TravelAccommodationBookingPlatform.App.Filters;
 
 namespace TravelAccommodationBookingPlatform.App.DependencyInjection;
 
@@ -10,7 +11,7 @@ public static class PresentationServicesExtension
         services.AddAutoMapper(Presentation.AssemblyReference.Assembly);
 
         services.AddProblemDetails();
-        services.AddControllers()
+        services.AddControllers(options => options.Filters.Add(new ValidationExceptionFilter()))
             .AddApplicationPart(Presentation.AssemblyReference.Assembly);
     }
 
