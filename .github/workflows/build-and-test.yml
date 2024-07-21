@@ -27,6 +27,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     env:
+      JwtSettings__Key: ${{ secrets.JWT_KEY }}
       CloudinarySettings__CloudName: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
       CloudinarySettings__ApiKey: ${{ secrets.CLOUDINARY_API_KEY }}
       CloudinarySettings__ApiSecret: ${{ secrets.CLOUDINARY_API_SECRET }}
