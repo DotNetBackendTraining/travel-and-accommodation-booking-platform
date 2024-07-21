@@ -56,28 +56,28 @@ public static class ProblemDetailsExtension
             "https://tools.ietf.org/html/rfc7231#section-6.5.8"));
     }
 
-    private static IResult CreateProblemDetails(
+    private static ProblemDetails CreateProblemDetails(
         Result result,
         int statusCode,
         string title,
         string type)
     {
-        return Results.Problem(
-            statusCode: statusCode,
-            title: title,
-            type: type,
-            extensions: new Dictionary<string, object>
+        return new ProblemDetails
+        {
+            Status = statusCode,
+            Title = title,
+            Type = type,
+            Extensions =
             {
+                ["errors"] = new[]
                 {
-                    "errors", new[]
+                    new
                     {
-                        new
-                        {
-                            code = result.Error.Code,
-                            message = result.Error.Message
-                        }
+                        code = result.Error.Code,
+                        message = result.Error.Message
                     }
                 }
-            }!);
+            }
+        };
     }
 }
