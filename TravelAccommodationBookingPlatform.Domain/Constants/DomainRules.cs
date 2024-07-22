@@ -27,6 +27,8 @@ public static class DomainRules
 
     public static class Locations
     {
+        public const int PrecisionDigits = 18;
+        public const int ScaleDigits = 15;
         public const double LatitudeMin = -90.0;
         public const double LatitudeMax = 90.0;
         public const double LongitudeMin = -180.0;
