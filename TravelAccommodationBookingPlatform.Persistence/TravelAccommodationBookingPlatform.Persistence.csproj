@@ -9,11 +9,18 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\TravelAccommodationBookingPlatform.Application\TravelAccommodationBookingPlatform.Application.csproj" />
       <ProjectReference Include="..\TravelAccommodationBookingPlatform.Domain\TravelAccommodationBookingPlatform.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Data\Hotels\hotel_data_list.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
