@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
 using TravelAccommodationBookingPlatform.App.Filters;
@@ -12,7 +14,12 @@ public static class PresentationServicesExtension
 
         services.AddProblemDetails();
         services.AddControllers(options => options.Filters.Add(new ValidationExceptionFilter()))
-            .AddApplicationPart(Presentation.AssemblyReference.Assembly);
+            .AddApplicationPart(Presentation.AssemblyReference.Assembly)
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(
+                    new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+            });
     }
 
     public static void AddSwaggerDocumentation(this IServiceCollection services)
