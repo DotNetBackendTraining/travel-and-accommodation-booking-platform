@@ -16,6 +16,6 @@ public class Hotel : BaseEntity
     public Coordinates Coordinates { get; set; } = default!;
     public ICollection<Review> Reviews { get; set; } = default!;
     public ICollection<Image> Images { get; set; } = default!;
-    public ICollection<Amenity> Amenities { get; set; } = default!;
+    public IList<Amenity> Amenities { get; set; } = default!;
     public ICollection<Discount> Discounts { get; set; } = default!;
 }
