@@ -18,5 +18,6 @@ public static class PersistenceServicesExtension
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
     }
 }
