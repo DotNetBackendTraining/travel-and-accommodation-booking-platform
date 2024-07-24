@@ -30,7 +30,12 @@ public class RoomConfiguration : IEntityTypeConfiguration<Room>
             .ApplyNumberOfGuestsConfiguration();
 
         builder.OwnsMany(r => r.Images, img =>
-            img.ApplyImageConfiguration());
+        {
+            img.WithOwner().HasForeignKey("HotelId");
+            img.Property<int>("Id");
+            img.HasKey("Id");
+            img.ApplyImageConfiguration();
+        }).Navigation(e => e.Images).AutoInclude(false);
 
         builder.HasMany(r => r.Bookings);
     }

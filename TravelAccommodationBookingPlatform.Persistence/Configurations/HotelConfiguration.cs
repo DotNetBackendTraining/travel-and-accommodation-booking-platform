@@ -28,7 +28,10 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
             .HasAnnotation("Max", DomainRules.Hotels.StarRateMax);
 
         builder.OwnsOne(h => h.ThumbnailImage, img =>
-            img.ApplyImageConfiguration());
+        {
+            img.WithOwner();
+            img.ApplyImageConfiguration();
+        });
 
         builder.HasOne(h => h.City)
             .WithMany()
@@ -42,10 +45,20 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
             .HasForeignKey(r => r.HotelId);
 
         builder.OwnsMany(h => h.Images, img =>
-            img.ApplyImageConfiguration());
+        {
+            img.WithOwner().HasForeignKey("HotelId");
+            img.Property<int>("Id");
+            img.HasKey("Id");
+            img.ApplyImageConfiguration();
+        }).Navigation(e => e.Images).AutoInclude(false);
 
         builder.OwnsMany(h => h.Reviews, rev =>
-            rev.ApplyReviewConfiguration());
+        {
+            rev.WithOwner().HasForeignKey("HotelId");
+            rev.Property<int>("Id");
+            rev.HasKey("Id");
+            rev.ApplyReviewConfiguration();
+        }).Navigation(e => e.Reviews).AutoInclude(false);
 
         builder.HasMany(h => h.Discounts)
             .WithOne();
