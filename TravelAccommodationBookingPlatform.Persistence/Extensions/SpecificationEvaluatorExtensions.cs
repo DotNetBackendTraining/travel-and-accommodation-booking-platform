@@ -6,13 +6,11 @@ namespace TravelAccommodationBookingPlatform.Persistence.Extensions;
 
 public static class SpecificationEvaluatorExtensions
 {
-    public static IQueryable<TEntity> ApplySpecification<TEntity>(
-        this IQueryable<TEntity> inputQueryable,
+    private static IQueryable<TEntity> ApplySpecificationBase<TEntity>(
+        IQueryable<TEntity> queryable,
         Specification<TEntity> specification)
         where TEntity : BaseEntity
     {
-        var queryable = inputQueryable;
-
         if (specification.Criteria is not null)
         {
             queryable = queryable.Where(specification.Criteria);
@@ -36,5 +34,28 @@ public static class SpecificationEvaluatorExtensions
         }
 
         return queryable;
+    }
+
+    public static IQueryable<TEntity> ApplySpecification<TEntity>(
+        this IQueryable<TEntity> inputQueryable,
+        Specification<TEntity> specification)
+        where TEntity : BaseEntity
+    {
+        return ApplySpecificationBase(inputQueryable, specification);
+    }
+
+    public static IQueryable<TOutput> ApplySpecification<TEntity, TOutput>(
+        this IQueryable<TEntity> inputQueryable,
+        Specification<TEntity, TOutput> specification)
+        where TEntity : BaseEntity
+    {
+        var queryable = ApplySpecificationBase(inputQueryable, specification);
+
+        if (specification.Selector is not null)
+        {
+            return queryable.Select(specification.Selector);
+        }
+
+        throw new InvalidOperationException("Selector must be specified in the specification.");
     }
 }
