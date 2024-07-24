@@ -30,6 +30,11 @@ public static class SpecificationEvaluatorExtensions
             queryable = queryable.OrderByDescending(specification.OrderByDescendingExpression);
         }
 
+        if (specification.UseSplitQuery)
+        {
+            queryable = queryable.AsSplitQuery();
+        }
+
         return queryable;
     }
 }

@@ -13,6 +13,8 @@ public class Specification<TEntity> where TEntity : BaseEntity
 
     public Expression<Func<TEntity, object>>? OrderByDescendingExpression { get; private set; }
 
+    public bool UseSplitQuery { get; private set; }
+
     private Specification()
     {
     }
@@ -23,6 +25,7 @@ public class Specification<TEntity> where TEntity : BaseEntity
         private readonly List<Expression<Func<TEntity, object>>> _includes = [];
         private Expression<Func<TEntity, object>>? _orderBy;
         private Expression<Func<TEntity, object>>? _orderByDescending;
+        private bool _useSplitQuery;
 
         public Builder SetCriteria(Expression<Func<TEntity, bool>> criteria)
         {
@@ -47,6 +50,12 @@ public class Specification<TEntity> where TEntity : BaseEntity
                 _orderBy = orderByExpression;
             }
 
+            return this;
+        }
+
+        public Builder UseSplitQuery(bool useSplitQuery = true)
+        {
+            _useSplitQuery = useSplitQuery;
             return this;
         }
 
