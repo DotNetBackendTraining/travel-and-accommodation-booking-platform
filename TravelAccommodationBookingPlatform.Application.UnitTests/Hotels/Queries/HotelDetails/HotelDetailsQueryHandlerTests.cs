@@ -8,7 +8,7 @@ using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
-namespace TravelAccommodationBookingPlatform.Application.UnitTests.Hotels.Queries;
+namespace TravelAccommodationBookingPlatform.Application.UnitTests.Hotels.Queries.HotelDetails;
 
 public class HotelDetailsQueryHandlerTests
 {
