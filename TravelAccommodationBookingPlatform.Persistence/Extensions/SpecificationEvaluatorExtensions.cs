@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using TravelAccommodationBookingPlatform.Application;
+using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Persistence.Extensions;

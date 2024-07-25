@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using TravelAccommodationBookingPlatform.Application;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
+using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Persistence.Extensions;
 

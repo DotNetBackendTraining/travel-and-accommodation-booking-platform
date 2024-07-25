@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
-namespace TravelAccommodationBookingPlatform.Application;
+namespace TravelAccommodationBookingPlatform.Application.Shared;
 
 public class Specification<TEntity> where TEntity : BaseEntity
 {

@@ -1,3 +1,4 @@
+using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
