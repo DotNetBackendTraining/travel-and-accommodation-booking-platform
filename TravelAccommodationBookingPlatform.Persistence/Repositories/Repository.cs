@@ -22,7 +22,7 @@ public class Repository<TEntity> : IRepository<TEntity>
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<TEntityDto?>> ListBySpecAsync<TEntityDto>(
+    public async Task<IEnumerable<TEntityDto?>> ListWithProjectionAsync<TEntityDto>(
         Specification<TEntity> specification,
         CancellationToken cancellationToken)
     {
@@ -32,7 +32,7 @@ public class Repository<TEntity> : IRepository<TEntity>
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntityDto?>> ListBySpecAsync<TEntityDto>(
+    public async Task<IEnumerable<TEntityDto?>> ListAsync<TEntityDto>(
         Specification<TEntity, TEntityDto> specification,
         CancellationToken cancellationToken)
     {
@@ -41,7 +41,7 @@ public class Repository<TEntity> : IRepository<TEntity>
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<TEntityDto?> GetBySpecAsync<TEntityDto>(
+    public async Task<TEntityDto?> GetWithProjectionAsync<TEntityDto>(
         Specification<TEntity> specification,
         CancellationToken cancellationToken)
     {
@@ -51,7 +51,7 @@ public class Repository<TEntity> : IRepository<TEntity>
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<TEntityDto?> GetBySpecAsync<TEntityDto>(
+    public async Task<TEntityDto?> GetAsync<TEntityDto>(
         Specification<TEntity, TEntityDto> specification,
         CancellationToken cancellationToken)
     {

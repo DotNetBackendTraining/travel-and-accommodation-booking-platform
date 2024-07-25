@@ -21,7 +21,7 @@ public class HotelDetailsQueryHandler : IQueryHandler<HotelDetailsQuery, HotelDe
     {
         var specification = new HotelDetailsSpecification(request);
         var hotelDetailsResponse = await _repository
-            .GetBySpecAsync<HotelDetailsResponse>(specification, cancellationToken);
+            .GetWithProjectionAsync<HotelDetailsResponse>(specification, cancellationToken);
 
         return hotelDetailsResponse is null
             ? Result.Failure<HotelDetailsResponse>(DomainErrors.Hotel.IdNotFound)

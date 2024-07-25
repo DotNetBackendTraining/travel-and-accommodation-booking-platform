@@ -19,7 +19,7 @@ public class HotelDetailsQueryHandlerTests
         HotelDetailsQuery query)
     {
         mockGenericRepository.Setup(repo => repo
-                .GetBySpecAsync<HotelDetailsResponse>(
+                .GetWithProjectionAsync<HotelDetailsResponse>(
                     It.IsAny<Specification<Hotel>>(),
                     It.IsAny<CancellationToken>()))
             .ReturnsAsync((HotelDetailsResponse)null!);
@@ -38,7 +38,7 @@ public class HotelDetailsQueryHandlerTests
         HotelDetailsQueryHandler handler)
     {
         mockGenericRepository.Setup(repo => repo
-                .GetBySpecAsync<HotelDetailsResponse>(
+                .GetWithProjectionAsync<HotelDetailsResponse>(
                     It.IsAny<Specification<Hotel>>(),
                     It.IsAny<CancellationToken>()))
             .ReturnsAsync(hotelDetailsResponse);
