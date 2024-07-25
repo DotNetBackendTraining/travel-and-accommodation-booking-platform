@@ -26,4 +26,12 @@ public static class DomainErrors
             "User.EmailAlreadyExists",
             "User with the given email already exists");
     }
+
+    public static class Hotel
+    {
+        public static readonly Error IdNotFound = new(
+            ErrorType.NotFound,
+            "Hotel.IdNotFound",
+            "Hotel with the given ID does not exist");
+    }
 }
