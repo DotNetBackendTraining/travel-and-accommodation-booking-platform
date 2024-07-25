@@ -34,4 +34,12 @@ public static class DomainErrors
             "Hotel.IdNotFound",
             "Hotel with the given ID does not exist");
     }
+
+    public static class Room
+    {
+        public static readonly Error IdNotFound = new(
+            ErrorType.NotFound,
+            "Room.IdNotFound",
+            "Room with the given ID does not exist");
+    }
 }
