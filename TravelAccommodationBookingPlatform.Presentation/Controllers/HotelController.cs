@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelDetails;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelImages;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelReviews;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelRooms;
 using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
+using TravelAccommodationBookingPlatform.Domain.Enums;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers;
 
@@ -86,6 +88,38 @@ public class HotelController : AbstractController
         CancellationToken cancellationToken)
     {
         var query = new HotelReviewsQuery { Id = id, PaginationParameters = paginationParameters };
+        return await HandleQueryResult(query, cancellationToken);
+    }
+
+    /// <summary>
+    /// Retrieves the rooms of a specific hotel.
+    /// </summary>
+    /// <param name="id">The unique identifier of the hotel.</param>
+    /// <param name="paginationParameters">Pagination parameters for the request.</param>
+    /// <param name="roomType">The type of the room.</param>
+    /// <param name="cancellationToken">Cancellation token for the request.</param>
+    /// <returns>The rooms of the requested hotel.</returns>
+    /// <response code="200">Returns the rooms of the hotel.</response>
+    /// <response code="401">Unauthorized if credentials are invalid.</response>
+    /// <response code="404">If the hotel is not found.</response>
+    /// <response code="422">If the request is invalid (validation error).</response>
+    [HttpGet("rooms")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<ActionResult<HotelRoomsResponse>> GetHotelRooms(
+        [FromRoute] Guid id,
+        [FromQuery] PaginationParameters paginationParameters,
+        [FromQuery] RoomType? roomType,
+        CancellationToken cancellationToken)
+    {
+        var query = new HotelRoomsQuery
+        {
+            Id = id,
+            PaginationParameters = paginationParameters,
+            RoomType = roomType
+        };
         return await HandleQueryResult(query, cancellationToken);
     }
 }
