@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomDetails;
+using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomImages;
+using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers;
 
@@ -32,6 +34,30 @@ public class RoomController : AbstractController
         CancellationToken cancellationToken)
     {
         var query = new RoomDetailsQuery { Id = id };
+        return await HandleQueryResult(query, cancellationToken);
+    }
+
+    /// <summary>
+    /// Retrieves the images of a specific room.
+    /// </summary>
+    /// <param name="id">The unique identifier of the room.</param>
+    /// <param name="paginationParameters">Pagination parameters for the request.</param>
+    /// <param name="cancellationToken">Cancellation token for the request.</param>
+    /// <returns>The images of the requested room.</returns>
+    /// <response code="200">Returns the images of the room.</response>
+    /// <response code="401">Unauthorized if credentials are invalid.</response>
+    /// <response code="422">If the request is invalid (validation error).</response>
+    /// <response code="404">If the room is not found.</response>
+    [HttpGet("images")]
+    [ProducesResponseType(typeof(RoomImagesResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<RoomImagesResponse>> GetHotelImages(
+        [FromRoute] Guid id,
+        [FromQuery] PaginationParameters paginationParameters,
+        CancellationToken cancellationToken)
+    {
+        var query = new RoomImagesQuery { Id = id, PaginationParameters = paginationParameters };
         return await HandleQueryResult(query, cancellationToken);
     }
 }
