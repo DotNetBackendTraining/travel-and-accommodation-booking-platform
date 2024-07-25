@@ -1,11 +1,10 @@
+using Ardalis.Specification;
+using Ardalis.Specification.EntityFrameworkCore;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using TravelAccommodationBookingPlatform.Application;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
-using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Domain.Entities;
-using TravelAccommodationBookingPlatform.Persistence.Extensions;
 
 namespace TravelAccommodationBookingPlatform.Persistence.Repositories;
 
@@ -23,41 +22,41 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<TEntityDto?>> GetBySpecificationAsync<TEntityDto>(
+    public async Task<IEnumerable<TEntityDto?>> ListBySpecAsync<TEntityDto>(
         Specification<TEntity> specification,
         CancellationToken cancellationToken)
     {
         return await _context.Set<TEntity>()
-            .ApplySpecification(specification)
+            .WithSpecification(specification)
             .ProjectTo<TEntityDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntityDto?>> GetBySpecificationAsync<TEntityDto>(
+    public async Task<IEnumerable<TEntityDto?>> ListBySpecAsync<TEntityDto>(
         Specification<TEntity, TEntityDto> specification,
         CancellationToken cancellationToken)
     {
         return await _context.Set<TEntity>()
-            .ApplySpecification(specification)
+            .WithSpecification(specification)
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<TEntityDto?> GetFirstBySpecificationAsync<TEntityDto>(
+    public async Task<TEntityDto?> GetBySpecAsync<TEntityDto>(
         Specification<TEntity> specification,
         CancellationToken cancellationToken)
     {
         return await _context.Set<TEntity>()
-            .ApplySpecification(specification)
+            .WithSpecification(specification)
             .ProjectTo<TEntityDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<TEntityDto?> GetFirstBySpecificationAsync<TEntityDto>(
+    public async Task<TEntityDto?> GetBySpecAsync<TEntityDto>(
         Specification<TEntity, TEntityDto> specification,
         CancellationToken cancellationToken)
     {
         return await _context.Set<TEntity>()
-            .ApplySpecification(specification)
+            .WithSpecification(specification)
             .FirstOrDefaultAsync(cancellationToken);
     }
 }

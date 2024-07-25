@@ -1,6 +1,5 @@
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
-using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.Shared;
@@ -20,12 +19,9 @@ public class HotelDetailsQueryHandler : IQueryHandler<HotelDetailsQuery, HotelDe
         HotelDetailsQuery request,
         CancellationToken cancellationToken)
     {
-        var specification = new Specification<Hotel>.Builder()
-            .SetCriteria(h => h.Id == request.Id)
-            .Build();
-
+        var specification = new HotelDetailsSpecification(request);
         var hotelDetailsResponse = await _genericRepository
-            .GetFirstBySpecificationAsync<HotelDetailsResponse>(specification, cancellationToken);
+            .GetBySpecAsync<HotelDetailsResponse>(specification, cancellationToken);
 
         return hotelDetailsResponse is null
             ? Result.Failure<HotelDetailsResponse>(DomainErrors.Hotel.IdNotFound)

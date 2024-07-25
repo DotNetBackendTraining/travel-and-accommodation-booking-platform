@@ -1,9 +1,9 @@
+using Ardalis.Specification;
 using AutoFixture.Xunit2;
 using FluentAssertions;
 using Moq;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelDetails;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
-using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
@@ -19,7 +19,7 @@ public class HotelDetailsQueryHandlerTests
         HotelDetailsQuery query)
     {
         mockGenericRepository.Setup(repo => repo
-                .GetFirstBySpecificationAsync<HotelDetailsResponse>(
+                .GetBySpecAsync<HotelDetailsResponse>(
                     It.IsAny<Specification<Hotel>>(),
                     It.IsAny<CancellationToken>()))
             .ReturnsAsync((HotelDetailsResponse)null!);
@@ -37,8 +37,8 @@ public class HotelDetailsQueryHandlerTests
         HotelDetailsQuery query,
         HotelDetailsQueryHandler handler)
     {
-        mockGenericRepository.Setup(repo =>
-                repo.GetFirstBySpecificationAsync<HotelDetailsResponse>(
+        mockGenericRepository.Setup(repo => repo
+                .GetBySpecAsync<HotelDetailsResponse>(
                     It.IsAny<Specification<Hotel>>(),
                     It.IsAny<CancellationToken>()))
             .ReturnsAsync(hotelDetailsResponse);
