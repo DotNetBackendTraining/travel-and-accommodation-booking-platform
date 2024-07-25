@@ -1,9 +1,8 @@
 using FluentValidation;
-using TravelAccommodationBookingPlatform.Application.Validation.ValueObjectValidators;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
-namespace TravelAccommodationBookingPlatform.Application.Validation.ValidationExtensions;
+namespace TravelAccommodationBookingPlatform.Application.Shared.Validators.Extensions;
 
 public static class RoomValidationExtensions
 {

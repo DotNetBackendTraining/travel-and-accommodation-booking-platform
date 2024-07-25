@@ -1,7 +1,7 @@
 using FluentValidation;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 
-namespace TravelAccommodationBookingPlatform.Application.Validation.ValidationExtensions;
+namespace TravelAccommodationBookingPlatform.Application.Shared.Validators.Extensions;
 
 public static class UserValidationExtensions
 {

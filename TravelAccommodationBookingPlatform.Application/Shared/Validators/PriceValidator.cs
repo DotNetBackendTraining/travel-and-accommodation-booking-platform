@@ -2,7 +2,7 @@ using FluentValidation;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
-namespace TravelAccommodationBookingPlatform.Application.Validation.ValueObjectValidators;
+namespace TravelAccommodationBookingPlatform.Application.Shared.Validators;
 
 public class PriceValidator : AbstractValidator<Price>
 {
