@@ -8,13 +8,13 @@ using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Persistence.Repositories;
 
-public class GenericRepository<TEntity> : IGenericRepository<TEntity>
+public class Repository<TEntity> : IRepository<TEntity>
     where TEntity : BaseEntity
 {
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
 
-    public GenericRepository(
+    public Repository(
         AppDbContext context,
         IMapper mapper)
     {

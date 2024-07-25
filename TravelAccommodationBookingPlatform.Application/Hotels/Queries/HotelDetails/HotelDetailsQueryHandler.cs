@@ -8,11 +8,11 @@ namespace TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelDet
 
 public class HotelDetailsQueryHandler : IQueryHandler<HotelDetailsQuery, HotelDetailsResponse>
 {
-    private readonly IGenericRepository<Hotel> _genericRepository;
+    private readonly IRepository<Hotel> _repository;
 
-    public HotelDetailsQueryHandler(IGenericRepository<Hotel> genericRepository)
+    public HotelDetailsQueryHandler(IRepository<Hotel> repository)
     {
-        _genericRepository = genericRepository;
+        _repository = repository;
     }
 
     public async Task<Result<HotelDetailsResponse>> Handle(
@@ -20,7 +20,7 @@ public class HotelDetailsQueryHandler : IQueryHandler<HotelDetailsQuery, HotelDe
         CancellationToken cancellationToken)
     {
         var specification = new HotelDetailsSpecification(request);
-        var hotelDetailsResponse = await _genericRepository
+        var hotelDetailsResponse = await _repository
             .GetBySpecAsync<HotelDetailsResponse>(specification, cancellationToken);
 
         return hotelDetailsResponse is null

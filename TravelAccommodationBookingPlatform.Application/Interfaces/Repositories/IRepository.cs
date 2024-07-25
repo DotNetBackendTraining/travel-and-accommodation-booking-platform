@@ -3,7 +3,7 @@ using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 
-public interface IGenericRepository<TEntity> where TEntity : BaseEntity
+public interface IRepository<TEntity> where TEntity : BaseEntity
 {
     /// <summary>
     /// Applies specification to get list of <typeparamref name="TEntity"/>.

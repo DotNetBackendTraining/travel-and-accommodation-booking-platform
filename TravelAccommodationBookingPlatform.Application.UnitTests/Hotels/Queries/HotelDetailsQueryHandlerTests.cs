@@ -14,7 +14,7 @@ public class HotelDetailsQueryHandlerTests
 {
     [Theory, AutoMoqData]
     public async Task Handle_ReturnsFailure_WhenHotelNotFound(
-        [Frozen] Mock<IGenericRepository<Hotel>> mockGenericRepository,
+        [Frozen] Mock<IRepository<Hotel>> mockGenericRepository,
         HotelDetailsQueryHandler handler,
         HotelDetailsQuery query)
     {
@@ -32,7 +32,7 @@ public class HotelDetailsQueryHandlerTests
 
     [Theory, AutoMoqData]
     public async Task Handle_ReturnsSuccess_WithHotelDetails_WhenHotelIsFound(
-        [Frozen] Mock<IGenericRepository<Hotel>> mockGenericRepository,
+        [Frozen] Mock<IRepository<Hotel>> mockGenericRepository,
         HotelDetailsResponse hotelDetailsResponse,
         HotelDetailsQuery query,
         HotelDetailsQueryHandler handler)
