@@ -4,7 +4,7 @@ using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
-namespace TravelAccommodationBookingPlatform.Application.UnitTests.Hotels.Queries.HotelImages;
+namespace TravelAccommodationBookingPlatform.Application.UnitTests.Hotels.Queries.Specifications;
 
 public class HotelImagesSpecificationTests
 {
