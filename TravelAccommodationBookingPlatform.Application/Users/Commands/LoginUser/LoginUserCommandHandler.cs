@@ -3,18 +3,19 @@ using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Application.Users.Specifications;
 using TravelAccommodationBookingPlatform.Domain.Constants;
+using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.Shared;
 
 namespace TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 
 public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, LoginUserResponse>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IRepository<User> _userRepository;
     private readonly IPasswordHashService _passwordHashService;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
     public LoginUserCommandHandler(
-        IUserRepository userRepository,
+        IRepository<User> userRepository,
         IPasswordHashService passwordHashService,
         IJwtTokenGenerator jwtTokenGenerator)
     {

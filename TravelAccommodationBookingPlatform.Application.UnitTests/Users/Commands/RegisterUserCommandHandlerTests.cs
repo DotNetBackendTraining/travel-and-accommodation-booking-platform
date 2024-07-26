@@ -16,7 +16,7 @@ public class RegisterUserCommandHandlerTests
 {
     [Theory, AutoMoqData]
     public async Task Handle_Fails_WhenUsernameAlreadyExists(
-        [Frozen] Mock<IUserRepository> mockUserRepository,
+        [Frozen] Mock<IRepository<User>> mockUserRepository,
         RegisterUserCommand command,
         User existingUser,
         RegisterUserCommandHandler handler)
@@ -35,7 +35,7 @@ public class RegisterUserCommandHandlerTests
 
     [Theory, AutoMoqData]
     public async Task Handle_Fails_WhenEmailAlreadyExists(
-        [Frozen] Mock<IUserRepository> mockUserRepository,
+        [Frozen] Mock<IRepository<User>> mockUserRepository,
         RegisterUserCommand command,
         User existingUser,
         RegisterUserCommandHandler handler)
@@ -59,7 +59,8 @@ public class RegisterUserCommandHandlerTests
     [Theory, AutoMoqData]
     public async Task Handle_Succeeds_WhenUserIsRegistered(
         [Frozen] Mock<IMapper> mockMapper,
-        [Frozen] Mock<IUserRepository> mockUserRepository,
+        [Frozen] Mock<IRepository<User>> mockUserRepository,
+        [Frozen] Mock<ICudRepository<User>> mockCudRepository,
         [Frozen] Mock<IPasswordHashService> mockPasswordHashService,
         [Frozen] Mock<IUnitOfWork> mockUnitOfWork,
         RegisterUserCommand command,
@@ -82,7 +83,7 @@ public class RegisterUserCommandHandlerTests
         var result = await handler.Handle(command, CancellationToken.None);
 
         result.IsSuccess.Should().BeTrue();
-        mockUserRepository.Verify(repo => repo.AddUser(mappedUser), Times.Once);
+        mockCudRepository.Verify(repo => repo.Add(mappedUser), Times.Once);
         mockUnitOfWork.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }

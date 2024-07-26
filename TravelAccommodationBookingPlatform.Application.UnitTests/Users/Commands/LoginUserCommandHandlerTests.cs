@@ -15,7 +15,7 @@ public class LoginUserCommandHandlerTests
 {
     [Theory, AutoMoqData]
     public async Task Handle_ReturnsFailure_WhenUserNotFound(
-        [Frozen] Mock<IUserRepository> mockUserRepository,
+        [Frozen] Mock<IRepository<User>> mockUserRepository,
         LoginUserCommandHandler handler,
         LoginUserCommand command)
     {
@@ -32,7 +32,7 @@ public class LoginUserCommandHandlerTests
 
     [Theory, AutoMoqData]
     public async Task Handle_ReturnsFailure_WhenPasswordIsIncorrect(
-        [Frozen] Mock<IUserRepository> mockUserRepository,
+        [Frozen] Mock<IRepository<User>> mockUserRepository,
         [Frozen] Mock<IPasswordHashService> mockPasswordHashService,
         User user,
         LoginUserCommand command,
@@ -54,7 +54,7 @@ public class LoginUserCommandHandlerTests
 
     [Theory, AutoMoqData]
     public async Task Handle_ReturnsSuccess_WithToken_WhenCredentialsAreValid(
-        [Frozen] Mock<IUserRepository> mockUserRepository,
+        [Frozen] Mock<IRepository<User>> mockUserRepository,
         [Frozen] Mock<IPasswordHashService> mockPasswordHashService,
         [Frozen] Mock<IJwtTokenGenerator> mockJwtTokenGenerator,
         User user,

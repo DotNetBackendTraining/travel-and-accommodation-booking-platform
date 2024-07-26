@@ -13,18 +13,21 @@ namespace TravelAccommodationBookingPlatform.Application.Users.Commands.Register
 public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 {
     private readonly IMapper _mapper;
-    private readonly IUserRepository _userRepository;
+    private readonly ICudRepository<User> _cudRepository;
+    private readonly IRepository<User> _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPasswordHashService _passwordHashService;
 
     public RegisterUserCommandHandler(
         IMapper mapper,
         IUnitOfWork unitOfWork,
-        IUserRepository userRepository,
+        ICudRepository<User> cudRepository,
+        IRepository<User> repository,
         IPasswordHashService passwordHashService)
     {
         _mapper = mapper;
-        _userRepository = userRepository;
+        _cudRepository = cudRepository;
+        _repository = repository;
         _passwordHashService = passwordHashService;
         _unitOfWork = unitOfWork;
     }
@@ -32,14 +35,14 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
     public async Task<Result> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         var usernameSpec = new UserByUsernameSpecification(request.Username);
-        var existingUser = await _userRepository.GetAsync(usernameSpec, cancellationToken);
+        var existingUser = await _repository.GetAsync(usernameSpec, cancellationToken);
         if (existingUser is not null)
         {
             return Result.Failure(DomainErrors.User.UsernameAlreadyExists);
         }
 
         var emailSpec = new UserByEmailSpecification(request.Email);
-        existingUser = await _userRepository.GetAsync(emailSpec, cancellationToken);
+        existingUser = await _repository.GetAsync(emailSpec, cancellationToken);
         if (existingUser is not null)
         {
             return Result.Failure(DomainErrors.User.EmailAlreadyExists);
@@ -49,7 +52,7 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
         user.PasswordHash = _passwordHashService.HashPassword(request.Password);
         user.UserRole = UserRole.User;
 
-        _userRepository.AddUser(user);
+        _cudRepository.Add(user);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
