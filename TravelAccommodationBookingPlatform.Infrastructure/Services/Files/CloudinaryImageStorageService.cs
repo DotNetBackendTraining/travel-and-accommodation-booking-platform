@@ -2,6 +2,8 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
+using TravelAccommodationBookingPlatform.Application.Shared;
+using TravelAccommodationBookingPlatform.Domain.Shared;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 
 namespace TravelAccommodationBookingPlatform.Infrastructure.Services.Files;
@@ -21,7 +23,7 @@ public class CloudinaryImageStorageService : IImageStorageService
             settings.ApiSecret));
     }
 
-    public async Task<List<string>> SaveAllAsync(IEnumerable<IFile> images)
+    public async Task<Result<List<string>>> SaveAllAsync(IEnumerable<IFile> images)
     {
         var imageUrls = new List<string>();
 
@@ -37,28 +39,27 @@ public class CloudinaryImageStorageService : IImageStorageService
             };
 
             var result = _cloudinary.Upload(uploadParams);
-            if (result.Error != null)
+            if (result.Error is not null)
             {
-                throw new Exception($"Cloudinary error occurred: {result.Error.Message}");
+                return Result.Failure<List<string>>(ApplicationErrors.File.UploadFailed);
             }
 
             imageUrls.Add(result.SecureUrl.ToString());
         }
 
-        return imageUrls;
+        return Result.Success(imageUrls);
     }
 
-    public async Task DeleteAsync(string imageUrl)
+    public async Task<Result> DeleteAsync(string imageUrl)
     {
         var publicId = GetPublicIdFromUrl(imageUrl);
 
         var deletionParams = new DeletionParams(publicId);
         var result = await _cloudinary.DestroyAsync(deletionParams);
 
-        if (result.Error != null)
-        {
-            throw new Exception($"Cloudinary error occurred: {result.Error.Message}");
-        }
+        return result.Error is not null
+            ? Result.Failure(ApplicationErrors.File.DeletionFailed)
+            : Result.Success();
     }
 
     private static string GetPublicIdFromUrl(string url)

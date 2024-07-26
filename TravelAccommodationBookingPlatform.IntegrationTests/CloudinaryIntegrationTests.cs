@@ -1,6 +1,3 @@
-using System.Text;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,20 +31,22 @@ public class CloudinaryIntegrationTests : BaseIntegrationTest
         var fileWrapper = new FormFileWrapper(formFile);
 
         // Upload file
-        var resultUrls = await _service.SaveAllAsync(new List<IFile> { fileWrapper });
-        resultUrls.Should().NotBeEmpty();
+        var result = await _service.SaveAllAsync(new List<IFile> { fileWrapper });
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeEmpty();
 
         // Verify uploaded file
-        foreach (var url in resultUrls)
+        foreach (var url in result.Value)
         {
             Uri.IsWellFormedUriString(url, UriKind.Absolute)
                 .Should().BeTrue();
         }
 
         // Cleanup
-        foreach (var url in resultUrls)
+        foreach (var url in result.Value)
         {
-            await _service.DeleteAsync(url);
+            var deleteResult = await _service.DeleteAsync(url);
+            deleteResult.IsSuccess.Should().BeTrue();
         }
     }
 }
