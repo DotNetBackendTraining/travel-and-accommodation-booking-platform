@@ -14,6 +14,7 @@ public static class ProblemDetailsExtension
             ErrorType.NotFound => result.ToNotFoundProblemDetails(),
             ErrorType.NotAuthorized => result.ToUnauthorizedProblemDetails(),
             ErrorType.Conflict => result.ToConflictProblemDetails(),
+            ErrorType.InternalServerError => result.ToInternalServerErrorProblemDetails(),
             ErrorType.None => throw new InvalidOperationException(
                 $"Cannot create problem details for the successful result '{result}'"),
             _ => throw new ArgumentOutOfRangeException(nameof(result.Error.Type) + " undefined type")
@@ -54,6 +55,18 @@ public static class ProblemDetailsExtension
             StatusCodes.Status409Conflict,
             "Conflict",
             "https://tools.ietf.org/html/rfc7231#section-6.5.8"));
+    }
+
+    private static ObjectResult ToInternalServerErrorProblemDetails(this Result result)
+    {
+        return new ObjectResult(CreateProblemDetails(
+            result,
+            StatusCodes.Status500InternalServerError,
+            "Internal Server Error",
+            "https://tools.ietf.org/html/rfc7231#section-6.6.1"))
+        {
+            StatusCode = StatusCodes.Status500InternalServerError
+        };
     }
 
     private static ProblemDetails CreateProblemDetails(

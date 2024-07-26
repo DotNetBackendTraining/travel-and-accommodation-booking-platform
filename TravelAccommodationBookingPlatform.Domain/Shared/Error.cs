@@ -65,5 +65,6 @@ public enum ErrorType
     BadRequest = 1,
     NotFound = 2,
     NotAuthorized = 3,
-    Conflict = 4
+    Conflict = 4,
+    InternalServerError = 5
 }
