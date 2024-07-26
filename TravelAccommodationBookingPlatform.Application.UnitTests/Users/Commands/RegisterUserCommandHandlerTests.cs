@@ -5,6 +5,7 @@ using Moq;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Auth;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
+using TravelAccommodationBookingPlatform.Application.Users.Specifications;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
@@ -21,7 +22,9 @@ public class RegisterUserCommandHandlerTests
         RegisterUserCommandHandler handler)
     {
         command.Username = existingUser.Username;
-        mockUserRepository.Setup(repo => repo.GetUserByUsernameAsync(command.Username, It.IsAny<CancellationToken>()))
+        mockUserRepository.Setup(repo => repo.GetAsync(
+                It.IsAny<UserByUsernameSpecification>(),
+                It.IsAny<CancellationToken>()))
             .ReturnsAsync(existingUser);
 
         var result = await handler.Handle(command, CancellationToken.None);
@@ -38,9 +41,13 @@ public class RegisterUserCommandHandlerTests
         RegisterUserCommandHandler handler)
     {
         command.Email = existingUser.Email;
-        mockUserRepository.Setup(repo => repo.GetUserByUsernameAsync(command.Username, It.IsAny<CancellationToken>()))
+        mockUserRepository.Setup(repo => repo.GetAsync(
+                It.IsAny<UserByUsernameSpecification>(),
+                It.IsAny<CancellationToken>()))
             .ReturnsAsync((User)null!);
-        mockUserRepository.Setup(repo => repo.GetUserByEmailAsync(command.Email, It.IsAny<CancellationToken>()))
+        mockUserRepository.Setup(repo => repo.GetAsync(
+                It.IsAny<UserByEmailSpecification>(),
+                It.IsAny<CancellationToken>()))
             .ReturnsAsync(existingUser);
 
         var result = await handler.Handle(command, CancellationToken.None);
@@ -59,9 +66,13 @@ public class RegisterUserCommandHandlerTests
         User mappedUser,
         RegisterUserCommandHandler handler)
     {
-        mockUserRepository.Setup(repo => repo.GetUserByUsernameAsync(command.Username, It.IsAny<CancellationToken>()))
+        mockUserRepository.Setup(repo => repo.GetAsync(
+                It.IsAny<UserByUsernameSpecification>(),
+                It.IsAny<CancellationToken>()))
             .ReturnsAsync((User)null!);
-        mockUserRepository.Setup(repo => repo.GetUserByEmailAsync(command.Email, It.IsAny<CancellationToken>()))
+        mockUserRepository.Setup(repo => repo.GetAsync(
+                It.IsAny<UserByEmailSpecification>(),
+                It.IsAny<CancellationToken>()))
             .ReturnsAsync((User)null!);
         mockMapper.Setup(m => m.Map<User>(command))
             .Returns(mappedUser);

@@ -1,6 +1,7 @@
 using TravelAccommodationBookingPlatform.Application.Interfaces.Auth;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
+using TravelAccommodationBookingPlatform.Application.Users.Specifications;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.Shared;
 
@@ -24,7 +25,8 @@ public class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, LoginUs
 
     public async Task<Result<LoginUserResponse>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.GetUserByUsernameAsync(request.Username, cancellationToken);
+        var spec = new UserByUsernameSpecification(request.Username);
+        var user = await _userRepository.GetAsync(spec, cancellationToken);
         if (user is null)
         {
             return Result.Failure<LoginUserResponse>(DomainErrors.User.UsernameNotFound);

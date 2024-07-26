@@ -2,6 +2,7 @@ using AutoMapper;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Auth;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
+using TravelAccommodationBookingPlatform.Application.Users.Specifications;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.Enums;
@@ -30,13 +31,15 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 
     public async Task<Result> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
-        var existingUser = await _userRepository.GetUserByUsernameAsync(request.Username, cancellationToken);
+        var usernameSpec = new UserByUsernameSpecification(request.Username);
+        var existingUser = await _userRepository.GetAsync(usernameSpec, cancellationToken);
         if (existingUser is not null)
         {
             return Result.Failure(DomainErrors.User.UsernameAlreadyExists);
         }
 
-        existingUser = await _userRepository.GetUserByEmailAsync(request.Email, cancellationToken);
+        var emailSpec = new UserByEmailSpecification(request.Email);
+        existingUser = await _userRepository.GetAsync(emailSpec, cancellationToken);
         if (existingUser is not null)
         {
             return Result.Failure(DomainErrors.User.EmailAlreadyExists);
