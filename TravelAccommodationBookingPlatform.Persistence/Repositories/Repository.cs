@@ -22,13 +22,12 @@ public class Repository<TEntity> : IRepository<TEntity>
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<TEntityDto?>> ListWithProjectionAsync<TEntityDto>(
+    public async Task<IEnumerable<TEntity?>> ListAsync(
         Specification<TEntity> specification,
         CancellationToken cancellationToken)
     {
         return await _context.Set<TEntity>()
             .WithSpecification(specification)
-            .ProjectTo<TEntityDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
     }
 
@@ -41,13 +40,20 @@ public class Repository<TEntity> : IRepository<TEntity>
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<TEntityDto?> GetWithProjectionAsync<TEntityDto>(
+    public async Task<IEnumerable<TEntityDto?>> ListWithProjectionAsync<TEntityDto>(
         Specification<TEntity> specification,
         CancellationToken cancellationToken)
     {
         return await _context.Set<TEntity>()
             .WithSpecification(specification)
             .ProjectTo<TEntityDto>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<TEntity?> GetAsync(Specification<TEntity> specification, CancellationToken cancellationToken)
+    {
+        return await _context.Set<TEntity>()
+            .WithSpecification(specification)
             .FirstOrDefaultAsync(cancellationToken);
     }
 
@@ -57,6 +63,16 @@ public class Repository<TEntity> : IRepository<TEntity>
     {
         return await _context.Set<TEntity>()
             .WithSpecification(specification)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task<TEntityDto?> GetWithProjectionAsync<TEntityDto>(
+        Specification<TEntity> specification,
+        CancellationToken cancellationToken)
+    {
+        return await _context.Set<TEntity>()
+            .WithSpecification(specification)
+            .ProjectTo<TEntityDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
     }
 }
