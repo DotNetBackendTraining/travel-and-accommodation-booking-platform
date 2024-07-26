@@ -47,4 +47,23 @@ public class CloudinaryImageStorageService : IImageStorageService
 
         return imageUrls;
     }
+
+    public async Task DeleteAsync(string imageUrl)
+    {
+        var publicId = GetPublicIdFromUrl(imageUrl);
+
+        var deletionParams = new DeletionParams(publicId);
+        var result = await _cloudinary.DestroyAsync(deletionParams);
+
+        if (result.Error != null)
+        {
+            throw new Exception($"Cloudinary error occurred: {result.Error.Message}");
+        }
+    }
+
+    private static string GetPublicIdFromUrl(string url)
+    {
+        var uri = new Uri(url);
+        return Path.GetFileNameWithoutExtension(uri.LocalPath);
+    }
 }

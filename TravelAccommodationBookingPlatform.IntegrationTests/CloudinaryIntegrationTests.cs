@@ -17,16 +17,11 @@ namespace TravelAccommodationBookingPlatform.IntegrationTests;
 public class CloudinaryIntegrationTests : BaseIntegrationTest
 {
     private readonly CloudinaryImageStorageService _service;
-    private readonly Cloudinary _cloudinary;
 
     public CloudinaryIntegrationTests(IntegrationTestWebAppFactory factory) : base(factory)
     {
         var options = Scope.ServiceProvider.GetRequiredService<IOptions<CloudinarySettings>>();
         _service = new CloudinaryImageStorageService(options);
-        _cloudinary = new Cloudinary(new Account(
-            options.Value.CloudName,
-            options.Value.ApiKey,
-            options.Value.ApiSecret));
     }
 
     [Fact]
@@ -52,11 +47,7 @@ public class CloudinaryIntegrationTests : BaseIntegrationTest
         // Cleanup
         foreach (var url in resultUrls)
         {
-            var uri = new Uri(url);
-            var publicId = Path.GetFileNameWithoutExtension(uri.LocalPath);
-            var deletionParams = new DeletionParams(publicId);
-            var deletionResult = await _cloudinary.DestroyAsync(deletionParams);
-            deletionResult.Result.Should().Be("ok");
+            await _service.DeleteAsync(url);
         }
     }
 }
