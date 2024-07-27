@@ -35,15 +35,15 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
     public async Task<Result> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         var usernameSpec = new UserByUsernameSpecification(request.Username);
-        var existingUser = await _repository.GetAsync(usernameSpec, cancellationToken);
-        if (existingUser is not null)
+        var usernameExists = await _repository.ExistsAsync(usernameSpec, cancellationToken);
+        if (usernameExists)
         {
             return Result.Failure(DomainErrors.User.UsernameAlreadyExists);
         }
 
         var emailSpec = new UserByEmailSpecification(request.Email);
-        existingUser = await _repository.GetAsync(emailSpec, cancellationToken);
-        if (existingUser is not null)
+        var emailExists = await _repository.ExistsAsync(emailSpec, cancellationToken);
+        if (emailExists)
         {
             return Result.Failure(DomainErrors.User.EmailAlreadyExists);
         }

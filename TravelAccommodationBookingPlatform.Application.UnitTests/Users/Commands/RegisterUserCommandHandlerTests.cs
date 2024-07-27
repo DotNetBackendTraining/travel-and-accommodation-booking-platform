@@ -22,10 +22,10 @@ public class RegisterUserCommandHandlerTests
         RegisterUserCommandHandler handler)
     {
         command.Username = existingUser.Username;
-        mockUserRepository.Setup(repo => repo.GetAsync(
+        mockUserRepository.Setup(repo => repo.ExistsAsync(
                 It.IsAny<UserByUsernameSpecification>(),
                 It.IsAny<CancellationToken>()))
-            .ReturnsAsync(existingUser);
+            .ReturnsAsync(true);
 
         var result = await handler.Handle(command, CancellationToken.None);
 
@@ -41,14 +41,14 @@ public class RegisterUserCommandHandlerTests
         RegisterUserCommandHandler handler)
     {
         command.Email = existingUser.Email;
-        mockUserRepository.Setup(repo => repo.GetAsync(
+        mockUserRepository.Setup(repo => repo.ExistsAsync(
                 It.IsAny<UserByUsernameSpecification>(),
                 It.IsAny<CancellationToken>()))
-            .ReturnsAsync((User)null!);
-        mockUserRepository.Setup(repo => repo.GetAsync(
+            .ReturnsAsync(false);
+        mockUserRepository.Setup(repo => repo.ExistsAsync(
                 It.IsAny<UserByEmailSpecification>(),
                 It.IsAny<CancellationToken>()))
-            .ReturnsAsync(existingUser);
+            .ReturnsAsync(true);
 
         var result = await handler.Handle(command, CancellationToken.None);
 
@@ -67,14 +67,14 @@ public class RegisterUserCommandHandlerTests
         User mappedUser,
         RegisterUserCommandHandler handler)
     {
-        mockUserRepository.Setup(repo => repo.GetAsync(
+        mockUserRepository.Setup(repo => repo.ExistsAsync(
                 It.IsAny<UserByUsernameSpecification>(),
                 It.IsAny<CancellationToken>()))
-            .ReturnsAsync((User)null!);
-        mockUserRepository.Setup(repo => repo.GetAsync(
+            .ReturnsAsync(false);
+        mockUserRepository.Setup(repo => repo.ExistsAsync(
                 It.IsAny<UserByEmailSpecification>(),
                 It.IsAny<CancellationToken>()))
-            .ReturnsAsync((User)null!);
+            .ReturnsAsync(false);
         mockMapper.Setup(m => m.Map<User>(command))
             .Returns(mappedUser);
         mockPasswordHashService.Setup(service => service.HashPassword(command.Password))
