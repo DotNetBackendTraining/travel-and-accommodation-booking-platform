@@ -6,6 +6,16 @@ namespace TravelAccommodationBookingPlatform.Application.Interfaces.Repositories
 public interface IRepository<TEntity> where TEntity : BaseEntity
 {
     /// <summary>
+    /// Checks if any entity satisfies the given specification.
+    /// </summary>
+    /// <param name="specification">The specification to test against the entities.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    /// <returns>True if any entity satisfies the specification; otherwise, false.</returns>
+    Task<bool> ExistsAsync(
+        Specification<TEntity> specification,
+        CancellationToken cancellationToken);
+
+    /// <summary>
     /// Retrieves a list of <typeparamref name="TEntity"/> according to the specification.
     /// </summary>
     /// <param name="specification">Specification that will be applied on the query</param>

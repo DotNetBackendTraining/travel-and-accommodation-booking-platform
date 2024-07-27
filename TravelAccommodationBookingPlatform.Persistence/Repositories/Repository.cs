@@ -22,6 +22,15 @@ public class Repository<TEntity> : IRepository<TEntity>
         _mapper = mapper;
     }
 
+    public async Task<bool> ExistsAsync(
+        Specification<TEntity> specification,
+        CancellationToken cancellationToken)
+    {
+        return await _context.Set<TEntity>()
+            .WithSpecification(specification)
+            .AnyAsync(cancellationToken);
+    }
+
     public async Task<IEnumerable<TEntity?>> ListAsync(
         Specification<TEntity> specification,
         CancellationToken cancellationToken)
