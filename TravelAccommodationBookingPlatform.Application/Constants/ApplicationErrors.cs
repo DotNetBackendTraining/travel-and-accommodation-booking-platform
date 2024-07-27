@@ -1,6 +1,6 @@
 using TravelAccommodationBookingPlatform.Domain.Shared;
 
-namespace TravelAccommodationBookingPlatform.Application.Shared;
+namespace TravelAccommodationBookingPlatform.Application.Constants;
 
 public static class ApplicationErrors
 {

@@ -1,8 +1,8 @@
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
+using TravelAccommodationBookingPlatform.Application.Constants;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
-using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Domain.Shared;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 
