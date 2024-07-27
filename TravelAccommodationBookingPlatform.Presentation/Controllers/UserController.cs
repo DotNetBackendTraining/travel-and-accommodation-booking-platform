@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
 using TravelAccommodationBookingPlatform.Presentation.Requests;
-using TravelAccommodationBookingPlatform.Presentation.ResultExtensions;
+using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers;
 

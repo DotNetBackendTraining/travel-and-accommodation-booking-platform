@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Domain.Shared;
 
-namespace TravelAccommodationBookingPlatform.Presentation.ResultExtensions;
+namespace TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
 public static class ProblemDetailsExtension
 {
