@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Controllers;
+namespace TravelAccommodationBookingPlatform.Presentation.Shared;
 
 public abstract class AbstractController : ControllerBase
 {

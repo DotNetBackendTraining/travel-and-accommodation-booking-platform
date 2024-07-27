@@ -1,9 +1,9 @@
 using AutoMapper;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
-using TravelAccommodationBookingPlatform.Presentation.Requests;
+using TravelAccommodationBookingPlatform.Presentation.Users.Requests;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Profiles;
+namespace TravelAccommodationBookingPlatform.Presentation.Users;
 
 public class UserProfile : Profile
 {

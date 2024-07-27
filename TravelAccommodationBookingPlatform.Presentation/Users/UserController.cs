@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
-using TravelAccommodationBookingPlatform.Presentation.Requests;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
+using TravelAccommodationBookingPlatform.Presentation.Users.Requests;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Controllers;
+namespace TravelAccommodationBookingPlatform.Presentation.Users;
 
 [ApiController]
 [Route("api/users")]

@@ -8,8 +8,9 @@ using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelReviews
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelRooms;
 using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
 using TravelAccommodationBookingPlatform.Domain.Enums;
+using TravelAccommodationBookingPlatform.Presentation.Shared;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Controllers;
+namespace TravelAccommodationBookingPlatform.Presentation.Hotels;
 
 [Authorize]
 [ApiController]

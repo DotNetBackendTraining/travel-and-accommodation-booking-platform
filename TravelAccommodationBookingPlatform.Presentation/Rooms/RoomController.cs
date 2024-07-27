@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomDetails;
 using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomImages;
 using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
+using TravelAccommodationBookingPlatform.Presentation.Shared;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Controllers;
+namespace TravelAccommodationBookingPlatform.Presentation.Rooms;
 
 [Authorize]
 [ApiController]
