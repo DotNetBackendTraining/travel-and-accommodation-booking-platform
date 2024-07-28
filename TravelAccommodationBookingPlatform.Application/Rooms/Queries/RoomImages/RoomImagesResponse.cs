@@ -1,4 +1,3 @@
-using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
