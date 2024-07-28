@@ -7,6 +7,6 @@ public class HotelRoomsProfile : Profile
 {
     public HotelRoomsProfile()
     {
-        CreateMap<Room, HotelRoomsResponse.Room>();
+        CreateMap<Room, HotelRoomsResponse.RoomResponse>();
     }
 }

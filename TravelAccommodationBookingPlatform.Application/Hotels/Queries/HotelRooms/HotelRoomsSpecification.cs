@@ -17,7 +17,7 @@ public sealed class HotelRoomsSpecification : Specification<Hotel, HotelRoomsRes
                     .OrderBy(i => i.RoomNumber)
                     .Skip((query.PaginationParameters.PageNumber - 1) * query.PaginationParameters.PageSize)
                     .Take(query.PaginationParameters.PageSize)
-                    .Select(r => mapper.Map<HotelRoomsResponse.Room>(r))
+                    .Select(r => mapper.Map<HotelRoomsResponse.RoomResponse>(r))
                     .ToList(),
                 TotalCount = h.Rooms.Count
             })

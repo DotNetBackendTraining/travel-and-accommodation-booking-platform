@@ -29,7 +29,7 @@ public class HotelRoomsSpecificationTests
         var expectedRooms = rooms
             .Where(r => query.RoomType == null || r.RoomType == query.RoomType)
             .OrderBy(r => r.RoomNumber)
-            .Select(_mapper.Map<HotelRoomsResponse.Room>)
+            .Select(_mapper.Map<HotelRoomsResponse.RoomResponse>)
             .ToList();
 
         var spec = new HotelRoomsSpecification(query, _mapper);
@@ -56,7 +56,7 @@ public class HotelRoomsSpecificationTests
             .OrderBy(r => r.RoomNumber)
             .Skip((query.PaginationParameters.PageNumber - 1) * query.PaginationParameters.PageSize)
             .Take(query.PaginationParameters.PageSize)
-            .Select(_mapper.Map<HotelRoomsResponse.Room>)
+            .Select(_mapper.Map<HotelRoomsResponse.RoomResponse>)
             .ToList();
 
         var spec = new HotelRoomsSpecification(query, _mapper);
