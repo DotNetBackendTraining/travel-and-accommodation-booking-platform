@@ -42,4 +42,12 @@ public static class DomainErrors
             "Room.IdNotFound",
             "Room with the given ID does not exist");
     }
+
+    public static class City
+    {
+        public static readonly Error IdNotFound = new(
+            ErrorType.NotFound,
+            "City.IdNotFound",
+            "City with the given ID does not exist");
+    }
 }
