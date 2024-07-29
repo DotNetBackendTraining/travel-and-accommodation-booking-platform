@@ -5,6 +5,9 @@ namespace TravelAccommodationBookingPlatform.Persistence.Data.Utility;
 
 internal static class SharedDataUtility
 {
+    internal static string ExampleCityImageUrl() =>
+        "https://res.cloudinary.com/dsn0xwnmc/image/upload/v1722287332/xvjejm3t69ydjsljlbmw.jpg";
+
     internal static List<Image> GenerateRandomImages(string baseImageUrl)
     {
         var random = new Random();
