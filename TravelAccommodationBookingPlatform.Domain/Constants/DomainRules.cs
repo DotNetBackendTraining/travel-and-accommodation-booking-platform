@@ -73,4 +73,9 @@ public static class DomainRules
         public const int AddressMaxLength = 200;
         public const int DescriptionMaxLength = 1000;
     }
+
+    public static class SpecialRequests
+    {
+        public const int RequestMaxLength = 500;
+    }
 }
