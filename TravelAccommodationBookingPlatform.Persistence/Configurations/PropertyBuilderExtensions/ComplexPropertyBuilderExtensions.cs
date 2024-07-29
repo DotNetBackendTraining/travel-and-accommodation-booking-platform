@@ -49,4 +49,27 @@ public static class ComplexPropertyBuilderExtensions
 
         return builder;
     }
+
+    public static ComplexPropertyBuilder<T> ApplyCountryConfiguration<T>(this ComplexPropertyBuilder<T> builder)
+        where T : Country
+    {
+        builder.Property(c => c.Name)
+            .IsRequired()
+            .HasMaxLength(DomainRules.Countries.NameMaxLength);
+
+        return builder;
+    }
+
+    public static ComplexPropertyBuilder<T> ApplyPostOfficeConfiguration<T>(this ComplexPropertyBuilder<T> builder)
+        where T : PostOffice
+    {
+        builder.Property(p => p.Address)
+            .IsRequired()
+            .HasMaxLength(DomainRules.PostOffices.AddressMaxLength);
+
+        builder.Property(p => p.Description)
+            .HasMaxLength(DomainRules.PostOffices.DescriptionMaxLength);
+
+        return builder;
+    }
 }
