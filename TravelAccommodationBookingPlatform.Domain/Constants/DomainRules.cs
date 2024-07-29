@@ -57,4 +57,20 @@ public static class DomainRules
     {
         public const double PriceMin = 0.0;
     }
+
+    public static class Cities
+    {
+        public const int NameMaxLength = 100;
+    }
+
+    public static class Countries
+    {
+        public const int NameMaxLength = 100;
+    }
+
+    public static class PostOffices
+    {
+        public const int AddressMaxLength = 200;
+        public const int DescriptionMaxLength = 1000;
+    }
 }
