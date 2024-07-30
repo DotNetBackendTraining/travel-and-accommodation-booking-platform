@@ -31,7 +31,7 @@ public class Repository<TEntity> : IRepository<TEntity>
             .AnyAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntity?>> ListAsync(
+    public async Task<IEnumerable<TEntity>> ListAsync(
         Specification<TEntity> specification,
         CancellationToken cancellationToken)
     {
@@ -40,7 +40,7 @@ public class Repository<TEntity> : IRepository<TEntity>
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntityDto?>> ListAsync<TEntityDto>(
+    public async Task<IEnumerable<TEntityDto>> ListAsync<TEntityDto>(
         Specification<TEntity, TEntityDto> specification,
         CancellationToken cancellationToken)
     {
@@ -49,7 +49,7 @@ public class Repository<TEntity> : IRepository<TEntity>
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntityDto?>> ListWithProjectionAsync<TEntityDto>(
+    public async Task<IEnumerable<TEntityDto>> ListWithProjectionAsync<TEntityDto>(
         Specification<TEntity> specification,
         CancellationToken cancellationToken)
     {
