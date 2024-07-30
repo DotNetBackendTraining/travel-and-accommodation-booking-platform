@@ -34,8 +34,9 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
         });
 
         builder.HasOne(h => h.City)
-            .WithMany()
-            .HasForeignKey(h => h.CityId);
+            .WithMany(c => c.Hotels)
+            .HasForeignKey(h => h.CityId)
+            .IsRequired();
 
         builder.ComplexProperty(h => h.Coordinates)
             .ApplyCoordinatesConfiguration();

@@ -24,6 +24,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.UserRole)
             .IsRequired();
 
+        builder.HasMany(u => u.Bookings)
+            .WithOne(b => b.User)
+            .HasForeignKey(b => b.UserId);
+
         builder.HasIndex(u => u.Username).IsUnique();
         builder.HasIndex(u => u.Email).IsUnique();
     }

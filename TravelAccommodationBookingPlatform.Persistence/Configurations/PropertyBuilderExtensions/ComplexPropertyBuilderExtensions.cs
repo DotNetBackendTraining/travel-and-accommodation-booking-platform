@@ -72,4 +72,25 @@ public static class ComplexPropertyBuilderExtensions
 
         return builder;
     }
+
+    public static ComplexPropertyBuilder<T> ApplySpecialRequestConfiguration<T>(this ComplexPropertyBuilder<T> builder)
+        where T : SpecialRequest
+    {
+        builder.Property(sr => sr.Request)
+            .HasMaxLength(DomainRules.SpecialRequests.RequestMaxLength);
+
+        return builder;
+    }
+
+    public static ComplexPropertyBuilder<T> ApplyCheckingConfiguration<T>(this ComplexPropertyBuilder<T> builder)
+        where T : Checking
+    {
+        builder.Property(c => c.CheckInDate)
+            .IsRequired();
+
+        builder.Property(c => c.CheckOutDate)
+            .IsRequired();
+
+        return builder;
+    }
 }
