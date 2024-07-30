@@ -14,7 +14,7 @@ namespace TravelAccommodationBookingPlatform.Infrastructure.UnitTests.Services.A
 
 public class JwtTokenGeneratorTests
 {
-    [Theory, AutoMoqData]
+    [Theory, AutoMoqData(omitOnRecursion: true)]
     public void GenerateToken_ReturnsValidToken_WithCorrectClaims(
         [Frozen] Mock<IOptions<JwtSettings>> mockOptions,
         [Frozen] JwtSettings settings,

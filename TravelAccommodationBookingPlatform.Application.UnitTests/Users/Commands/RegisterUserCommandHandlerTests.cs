@@ -14,7 +14,7 @@ namespace TravelAccommodationBookingPlatform.Application.UnitTests.Users.Command
 
 public class RegisterUserCommandHandlerTests
 {
-    [Theory, AutoMoqData]
+    [Theory, AutoMoqData(omitOnRecursion: true)]
     public async Task Handle_Fails_WhenUsernameAlreadyExists(
         [Frozen] Mock<IRepository<User>> mockUserRepository,
         RegisterUserCommand command,
@@ -33,7 +33,7 @@ public class RegisterUserCommandHandlerTests
         result.Error.Should().Be(DomainErrors.User.UsernameAlreadyExists);
     }
 
-    [Theory, AutoMoqData]
+    [Theory, AutoMoqData(omitOnRecursion: true)]
     public async Task Handle_Fails_WhenEmailAlreadyExists(
         [Frozen] Mock<IRepository<User>> mockUserRepository,
         RegisterUserCommand command,
@@ -56,7 +56,7 @@ public class RegisterUserCommandHandlerTests
         result.Error.Should().Be(DomainErrors.User.EmailAlreadyExists);
     }
 
-    [Theory, AutoMoqData]
+    [Theory, AutoMoqData(omitOnRecursion: true)]
     public async Task Handle_Succeeds_WhenUserIsRegistered(
         [Frozen] Mock<IMapper> mockMapper,
         [Frozen] Mock<IRepository<User>> mockUserRepository,

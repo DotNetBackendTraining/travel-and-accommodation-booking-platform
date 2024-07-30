@@ -30,7 +30,7 @@ public class LoginUserCommandHandlerTests
         result.Error.Should().Be(DomainErrors.User.UsernameNotFound);
     }
 
-    [Theory, AutoMoqData]
+    [Theory, AutoMoqData(omitOnRecursion: true)]
     public async Task Handle_ReturnsFailure_WhenPasswordIsIncorrect(
         [Frozen] Mock<IRepository<User>> mockUserRepository,
         [Frozen] Mock<IPasswordHashService> mockPasswordHashService,
@@ -52,7 +52,7 @@ public class LoginUserCommandHandlerTests
         result.Error.Should().Be(DomainErrors.User.InvalidCredentials);
     }
 
-    [Theory, AutoMoqData]
+    [Theory, AutoMoqData(omitOnRecursion: true)]
     public async Task Handle_ReturnsSuccess_WithToken_WhenCredentialsAreValid(
         [Frozen] Mock<IRepository<User>> mockUserRepository,
         [Frozen] Mock<IPasswordHashService> mockPasswordHashService,
