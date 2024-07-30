@@ -7,7 +7,6 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
 {
     private readonly MsSqlContainer _container = new MsSqlBuilder()
         .WithImage("mcr.microsoft.com/mssql/server:2019-latest")
-        .WithPassword("cFj23uNY0lT&WP@t")
         .Build();
 
     public async Task InitializeAsync()
