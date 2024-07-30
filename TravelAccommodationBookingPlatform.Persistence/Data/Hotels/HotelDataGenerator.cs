@@ -31,7 +31,7 @@ public class HotelDataGenerator
             {
                 Id = Guid.Parse(data.Id),
                 Name = data.Name,
-                StarRate = data.StarRate,
+                StarRate = new StarRate { Rate = data.StarRate },
                 Description = $"Description for hotel {data.Name}, {data.Description}",
                 Owner = data.Owner,
                 ThumbnailImage = new Image { Url = data.ThumbnailImageUrl },

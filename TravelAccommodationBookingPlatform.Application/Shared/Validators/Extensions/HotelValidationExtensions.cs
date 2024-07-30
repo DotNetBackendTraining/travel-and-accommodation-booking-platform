@@ -13,14 +13,6 @@ public static class HotelValidationExtensions
             .WithMessage($"Hotel name cannot be more than {DomainRules.Hotels.NameMaxLength} characters long.");
     }
 
-    public static IRuleBuilderOptions<T, int> ValidStarRate<T>(this IRuleBuilder<T, int> ruleBuilder)
-    {
-        return ruleBuilder
-            .InclusiveBetween(DomainRules.Hotels.StarRateMin, DomainRules.Hotels.StarRateMax)
-            .WithMessage(
-                $"Star rate must be between {DomainRules.Hotels.StarRateMin} and {DomainRules.Hotels.StarRateMax}.");
-    }
-
     public static IRuleBuilderOptions<T, string> ValidHotelDescription<T>(this IRuleBuilder<T, string> ruleBuilder)
     {
         return ruleBuilder

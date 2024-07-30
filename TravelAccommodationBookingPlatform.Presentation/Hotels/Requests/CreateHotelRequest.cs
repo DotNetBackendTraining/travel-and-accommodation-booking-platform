@@ -8,7 +8,7 @@ namespace TravelAccommodationBookingPlatform.Presentation.Hotels.Requests;
 public class CreateHotelRequest
 {
     public string Name { get; set; } = string.Empty;
-    public int StarRate { get; set; }
+    public StarRate StarRate { get; set; } = default!;
     public string Description { get; set; } = string.Empty;
     public string Owner { get; set; } = string.Empty;
     [ValidImageExtensions] public IFormFile ThumbnailImage { get; set; } = default!;

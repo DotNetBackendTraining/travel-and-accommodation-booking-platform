@@ -6,7 +6,7 @@ namespace TravelAccommodationBookingPlatform.Domain.Entities;
 public class Hotel : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
-    public int StarRate { get; set; }
+    public StarRate StarRate { get; set; } = default!;
     public string Description { get; set; } = string.Empty;
     public string Owner { get; set; } = string.Empty;
     public Image ThumbnailImage { get; set; } = default!;

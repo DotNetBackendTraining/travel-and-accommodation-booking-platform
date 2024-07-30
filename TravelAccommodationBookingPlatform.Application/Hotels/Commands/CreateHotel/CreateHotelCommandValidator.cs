@@ -12,7 +12,7 @@ public class CreateHotelCommandValidator : AbstractValidator<CreateHotelCommand>
             .ValidHotelName();
 
         RuleFor(x => x.StarRate)
-            .ValidStarRate();
+            .SetValidator(new StarRateValidator());
 
         RuleFor(x => x.Description)
             .ValidHotelDescription();
