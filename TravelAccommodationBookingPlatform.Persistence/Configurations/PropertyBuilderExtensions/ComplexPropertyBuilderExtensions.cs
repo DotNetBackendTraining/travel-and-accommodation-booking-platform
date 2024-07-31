@@ -50,17 +50,6 @@ public static class ComplexPropertyBuilderExtensions
         return builder;
     }
 
-    public static ComplexPropertyBuilder<T> ApplyStarRateConfiguration<T>(this ComplexPropertyBuilder<T> builder)
-        where T : StarRate
-    {
-        builder.Property(s => s.Rate)
-            .IsRequired()
-            .HasAnnotation("Min", DomainRules.Hotels.StarRateMin)
-            .HasAnnotation("Max", DomainRules.Hotels.StarRateMax);
-
-        return builder;
-    }
-
     public static ComplexPropertyBuilder<T> ApplyCountryConfiguration<T>(this ComplexPropertyBuilder<T> builder)
         where T : Country
     {

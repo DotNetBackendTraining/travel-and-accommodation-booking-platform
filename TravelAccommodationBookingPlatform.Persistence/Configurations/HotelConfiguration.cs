@@ -22,8 +22,8 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
             .IsRequired()
             .HasMaxLength(DomainRules.Hotels.OwnerMaxLength);
 
-        builder.ComplexProperty(h => h.StarRate)
-            .ApplyStarRateConfiguration();
+        builder.Property(h => h.StarRate)
+            .IsRequired();
 
         builder.OwnsOne(h => h.ThumbnailImage, img =>
         {

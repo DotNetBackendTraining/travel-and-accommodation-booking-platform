@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using TravelAccommodationBookingPlatform.Domain.Entities;
+using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 using TravelAccommodationBookingPlatform.Persistence.Data.Utility;
 
@@ -31,7 +32,7 @@ public class HotelDataGenerator
             {
                 Id = Guid.Parse(data.Id),
                 Name = data.Name,
-                StarRate = new StarRate { Rate = data.StarRate },
+                StarRate = (StarRate)data.StarRate,
                 Description = $"Description for hotel {data.Name}, {data.Description}",
                 Owner = data.Owner,
                 ThumbnailImage = new Image { Url = data.ThumbnailImageUrl },
