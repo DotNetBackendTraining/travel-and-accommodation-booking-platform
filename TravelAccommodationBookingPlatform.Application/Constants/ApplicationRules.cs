@@ -4,6 +4,11 @@ public static class ApplicationRules
 {
     public static class File
     {
-        public const string ImageExtensions = "jpg,jpeg,png";
+        public enum ImageExtensions
+        {
+            Jpg = 0,
+            Jpeg = 1,
+            Png = 2
+        }
     }
 }

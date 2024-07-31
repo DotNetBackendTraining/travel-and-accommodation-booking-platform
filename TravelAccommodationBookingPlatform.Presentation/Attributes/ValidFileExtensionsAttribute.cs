@@ -5,15 +5,11 @@ namespace TravelAccommodationBookingPlatform.Presentation.Attributes;
 
 public class ValidFileExtensionsAttribute : ValidationAttribute
 {
-    private static readonly char[] Separator = [','];
     private readonly string[] _allowedExtensions;
 
-    /// <param name="allowedExtensions">Separated by <see cref="Separator"/></param>
-    public ValidFileExtensionsAttribute(string allowedExtensions)
+    public ValidFileExtensionsAttribute(string[] allowedExtensions)
     {
-        _allowedExtensions = allowedExtensions.Split(Separator, StringSplitOptions.RemoveEmptyEntries)
-            .Select(x => x.Trim().ToLowerInvariant())
-            .ToArray();
+        _allowedExtensions = allowedExtensions;
     }
 
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
