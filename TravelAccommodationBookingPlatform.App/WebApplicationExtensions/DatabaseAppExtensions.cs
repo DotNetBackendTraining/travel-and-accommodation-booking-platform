@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TravelAccommodationBookingPlatform.Persistence;
-using TravelAccommodationBookingPlatform.Persistence.Data.Cities;
-using TravelAccommodationBookingPlatform.Persistence.Data.Hotels;
-using TravelAccommodationBookingPlatform.Persistence.Data.Rooms;
+using TravelAccommodationBookingPlatform.Persistence.Data;
 
 namespace TravelAccommodationBookingPlatform.App.WebApplicationExtensions;
 

@@ -1,10 +1,10 @@
-using Newtonsoft.Json;
+using Bogus;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 using TravelAccommodationBookingPlatform.Persistence.Data.Utility;
 
-namespace TravelAccommodationBookingPlatform.Persistence.Data.Hotels;
+namespace TravelAccommodationBookingPlatform.Persistence.Data;
 
 public class HotelDataGenerator
 {
@@ -14,19 +14,19 @@ public class HotelDataGenerator
     {
         _data = new Lazy<List<Hotel>>(() =>
         {
-            var basePath = AppDomain.CurrentDomain.BaseDirectory;
-            var filePath = Path.Combine(basePath, "Data", "Hotels", "hotel_data_list.json");
-
-            if (!File.Exists(filePath))
-            {
-                throw new FileNotFoundException($"Could not find file '{filePath}'.");
-            }
-
-            var hotelsJsonData = File.ReadAllText(filePath);
-            var hotelsData = JsonConvert.DeserializeObject<List<HotelData>>(hotelsJsonData) ??
-                             throw new InvalidOperationException("could not deserialize " + nameof(hotelsJsonData));
-
             var random = new Random();
+
+            var faker = new Faker<HotelData>()
+                .RuleFor(h => h.Id, f => f.Random.Guid().ToString())
+                .RuleFor(h => h.Name, f => f.Company.CompanyName())
+                .RuleFor(h => h.StarRate, f => f.Random.Int(1, 5))
+                .RuleFor(h => h.Description, f => f.Lorem.Sentence())
+                .RuleFor(h => h.Owner, f => f.Person.FullName)
+                .RuleFor(h => h.ThumbnailImageUrl, f => f.Image.PicsumUrl())
+                .RuleFor(h => h.Latitude, f => f.Address.Latitude())
+                .RuleFor(h => h.Longitude, f => f.Address.Longitude());
+
+            var hotelsData = faker.Generate(50);
 
             var hotels = hotelsData.Select(data => new Hotel
             {
@@ -38,7 +38,7 @@ public class HotelDataGenerator
                 ThumbnailImage = new Image { Url = data.ThumbnailImageUrl },
                 CityId = cities[random.Next(cities.Count)].Id,
                 Coordinates = new Coordinates { Latitude = data.Latitude, Longitude = data.Longitude },
-                Images = SharedDataUtility.GenerateRandomImages(data.ThumbnailImageUrl),
+                Images = SharedDataUtility.GenerateRandomImages(),
                 Amenities = SharedDataUtility.GenerateRandomAmenities(),
                 Reviews = SharedDataUtility.GenerateRandomTexts()
                     .Select(s => new Review { Text = s })
@@ -52,7 +52,7 @@ public class HotelDataGenerator
     public IEnumerable<Hotel> Generate() => _data.Value;
 }
 
-public class HotelData
+internal class HotelData
 {
     public string Id { get; set; }
     public string Name { get; set; }
@@ -60,7 +60,6 @@ public class HotelData
     public string Description { get; set; }
     public string Owner { get; set; }
     public string ThumbnailImageUrl { get; set; }
-    public string CityId { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }
 }

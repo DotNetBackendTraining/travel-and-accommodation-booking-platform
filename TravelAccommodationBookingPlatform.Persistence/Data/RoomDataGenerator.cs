@@ -1,9 +1,10 @@
+using Bogus;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 using TravelAccommodationBookingPlatform.Persistence.Data.Utility;
 
-namespace TravelAccommodationBookingPlatform.Persistence.Data.Rooms;
+namespace TravelAccommodationBookingPlatform.Persistence.Data;
 
 public class RoomDataGenerator
 {
@@ -16,6 +17,8 @@ public class RoomDataGenerator
             var random = new Random();
             var roomTypes = Enum.GetValues(typeof(RoomType)).Cast<RoomType>().ToList();
             var rooms = new List<Room>();
+
+            var faker = new Faker();
 
             foreach (var hotel in hotels)
             {
@@ -30,10 +33,14 @@ public class RoomDataGenerator
                         HotelId = hotel.Id,
                         RoomNumber = i,
                         RoomType = roomType,
-                        Description = $"Description for room {i}, {SharedDataUtility.GenerateRandomText()}",
+                        Description = $"Description for room {i}, {faker.Lorem.Sentence()}",
                         Price = new Price { Value = random.Next(2, 201) * 10 },
-                        MaxNumberOfGuests = SharedDataUtility.GenerateRandomNumberOfGuests(),
-                        Images = SharedDataUtility.GenerateRandomRoomImages(roomType)
+                        MaxNumberOfGuests = new NumberOfGuests
+                        {
+                            Adults = random.Next(1, 9),
+                            Children = random.Next(0, 5)
+                        },
+                        Images = SharedDataUtility.GenerateRandomImages()
                     };
 
                     rooms.Add(room);

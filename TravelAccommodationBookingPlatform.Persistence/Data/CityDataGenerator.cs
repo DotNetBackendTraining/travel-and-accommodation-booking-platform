@@ -1,9 +1,8 @@
-using Newtonsoft.Json;
+using Bogus;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
-using TravelAccommodationBookingPlatform.Persistence.Data.Utility;
 
-namespace TravelAccommodationBookingPlatform.Persistence.Data.Cities;
+namespace TravelAccommodationBookingPlatform.Persistence.Data;
 
 public class CityDataGenerator
 {
@@ -13,17 +12,12 @@ public class CityDataGenerator
     {
         _data = new Lazy<List<City>>(() =>
         {
-            var basePath = AppDomain.CurrentDomain.BaseDirectory;
-            var filePath = Path.Combine(basePath, "Data", "Cities", "city_data_list.json");
+            var faker = new Faker<CityData>()
+                .RuleFor(c => c.Name, f => f.Address.City())
+                .RuleFor(c => c.CountryName, f => f.Address.Country())
+                .RuleFor(c => c.PostOfficeAddress, f => f.Address.StreetAddress());
 
-            if (!File.Exists(filePath))
-            {
-                throw new FileNotFoundException($"Could not find file '{filePath}'.");
-            }
-
-            var citiesJsonData = File.ReadAllText(filePath);
-            var citiesData = JsonConvert.DeserializeObject<List<CityData>>(citiesJsonData) ??
-                             throw new InvalidOperationException("Could not deserialize " + nameof(citiesJsonData));
+            var citiesData = faker.Generate(15);
 
             var cities = citiesData.Select(data => new City
             {
@@ -34,7 +28,7 @@ public class CityDataGenerator
                     Address = data.PostOfficeAddress,
                     Description = $"Description for {data.Name} Post Office"
                 },
-                ThumbnailImage = new Image { Url = SharedDataUtility.ExampleCityImageUrl() },
+                ThumbnailImage = new Image { Url = new Faker().Image.PicsumUrl() },
             }).ToList();
 
             return cities;
@@ -44,7 +38,7 @@ public class CityDataGenerator
     public IEnumerable<City> Generate() => _data.Value;
 }
 
-public class CityData
+internal class CityData
 {
     public string Name { get; set; }
     public string CountryName { get; set; }
