@@ -60,6 +60,12 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
         }).Navigation(e => e.Reviews).AutoInclude(false);
 
         builder.HasMany(h => h.Discounts)
-            .WithOne();
+            .WithOne(d => d.Hotel)
+            .HasForeignKey(d => d.HotelId);
+
+        builder.HasOne(h => h.ActiveDiscount)
+            .WithOne()
+            .HasForeignKey<Hotel>(h => h.ActiveDiscountId)
+            .IsRequired(false);
     }
 }

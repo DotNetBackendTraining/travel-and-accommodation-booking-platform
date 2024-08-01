@@ -93,4 +93,30 @@ public static class ComplexPropertyBuilderExtensions
 
         return builder;
     }
+
+    public static ComplexPropertyBuilder<T> ApplyPersonalInformationConfiguration<T>(
+        this ComplexPropertyBuilder<T> builder)
+        where T : PersonalInformation
+    {
+        builder.Property(pi => pi.FullName)
+            .IsRequired()
+            .HasMaxLength(DomainRules.PersonalInformation.FullNameMaxLength);
+
+        builder.Property(pi => pi.PhoneNumber)
+            .IsRequired()
+            .HasMaxLength(DomainRules.PersonalInformation.PhoneNumberMaxLength);
+
+        return builder;
+    }
+
+    public static ComplexPropertyBuilder<T> ApplyDiscountRateConfiguration<T>(this ComplexPropertyBuilder<T> builder)
+        where T : DiscountRate
+    {
+        builder.Property(dr => dr.Percentage)
+            .IsRequired()
+            .HasAnnotation("Min", DomainRules.DiscountRates.PercentageMin)
+            .HasAnnotation("Max", DomainRules.DiscountRates.PercentageMax);
+
+        return builder;
+    }
 }
