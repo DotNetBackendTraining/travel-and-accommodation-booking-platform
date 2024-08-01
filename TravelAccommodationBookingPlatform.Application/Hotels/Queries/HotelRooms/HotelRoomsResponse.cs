@@ -4,12 +4,14 @@ using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
 namespace TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelRooms;
 
-public class HotelRoomsResponse : PagedCollectionResponse<HotelRoomsResponse.RoomResponse>
+public class HotelRoomsResponse
 {
     public Guid Id { get; set; }
+    public required PageResponse<RoomResponse> Results { get; set; }
 
     public class RoomResponse
     {
+        public Guid Id { get; set; }
         public int RoomNumber { get; set; }
         public RoomType RoomType { get; set; }
         public string Description { get; set; } = string.Empty;

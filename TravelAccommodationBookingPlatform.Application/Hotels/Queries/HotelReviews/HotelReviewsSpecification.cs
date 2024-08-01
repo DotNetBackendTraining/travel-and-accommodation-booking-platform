@@ -10,13 +10,16 @@ public sealed class HotelReviewsSpecification : Specification<Hotel, HotelReview
         Query.Select(h => new HotelReviewsResponse
         {
             Id = h.Id,
-            Items = h.Reviews
-                .AsQueryable()
-                .OrderBy(i => i.Text)
-                .Skip((query.PaginationParameters.PageNumber - 1) * query.PaginationParameters.PageSize)
-                .Take(query.PaginationParameters.PageSize)
-                .ToList(),
-            TotalCount = h.Reviews.Count
+            Results = new()
+            {
+                Items = h.Reviews
+                    .AsQueryable()
+                    .OrderBy(i => i.Text)
+                    .Skip((query.PaginationParameters.PageNumber - 1) * query.PaginationParameters.PageSize)
+                    .Take(query.PaginationParameters.PageSize)
+                    .ToList(),
+                TotalCount = h.Reviews.Count
+            }
         }).Where(h => h.Id == query.Id);
     }
 }

@@ -25,8 +25,8 @@ public class HotelReviewsSpecificationTests
 
         result.Should().ContainSingle();
         result.First().Id.Should().Be(query.Id);
-        result.First().TotalCount.Should().Be(reviews.Count);
-        result.First().Items.Should().BeEquivalentTo(expectedReviews);
+        result.First().Results.TotalCount.Should().Be(reviews.Count);
+        result.First().Results.Items.Should().BeEquivalentTo(expectedReviews);
     }
 
     [Theory, AutoMoqData(omitOnRecursion: true)]
@@ -50,7 +50,7 @@ public class HotelReviewsSpecificationTests
 
         result.Should().ContainSingle();
         result.First().Id.Should().Be(query.Id);
-        result.First().TotalCount.Should().Be(reviews.Count);
-        result.First().Items.Should().BeEquivalentTo(expectedReviews);
+        result.First().Results.TotalCount.Should().Be(reviews.Count);
+        result.First().Results.Items.Should().BeEquivalentTo(expectedReviews);
     }
 }

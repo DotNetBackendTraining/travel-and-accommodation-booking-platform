@@ -11,15 +11,18 @@ public sealed class HotelRoomsSpecification : Specification<Hotel, HotelRoomsRes
         Query.Select(h => new HotelRoomsResponse
             {
                 Id = h.Id,
-                Items = h.Rooms
-                    .AsQueryable()
-                    .Where(r => query.RoomType == null || r.RoomType == query.RoomType)
-                    .OrderBy(i => i.RoomNumber)
-                    .Skip((query.PaginationParameters.PageNumber - 1) * query.PaginationParameters.PageSize)
-                    .Take(query.PaginationParameters.PageSize)
-                    .Select(r => mapper.Map<HotelRoomsResponse.RoomResponse>(r))
-                    .ToList(),
-                TotalCount = h.Rooms.Count
+                Results = new()
+                {
+                    Items = h.Rooms
+                        .AsQueryable()
+                        .Where(r => query.RoomType == null || r.RoomType == query.RoomType)
+                        .OrderBy(i => i.RoomNumber)
+                        .Skip((query.PaginationParameters.PageNumber - 1) * query.PaginationParameters.PageSize)
+                        .Take(query.PaginationParameters.PageSize)
+                        .Select(r => mapper.Map<HotelRoomsResponse.RoomResponse>(r))
+                        .ToList(),
+                    TotalCount = h.Rooms.Count
+                }
             })
             .Where(h => h.Id == query.Id);
     }

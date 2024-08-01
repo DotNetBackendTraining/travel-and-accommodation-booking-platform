@@ -25,8 +25,8 @@ public class RoomImagesSpecificationTests
 
         result.Should().ContainSingle();
         result.First().Id.Should().Be(query.Id);
-        result.First().TotalCount.Should().Be(images.Count);
-        result.First().Items.Should().BeEquivalentTo(expectedImages);
+        result.First().Results.TotalCount.Should().Be(images.Count);
+        result.First().Results.Items.Should().BeEquivalentTo(expectedImages);
     }
 
     [Theory, AutoMoqData(omitOnRecursion: true)]
@@ -50,7 +50,7 @@ public class RoomImagesSpecificationTests
 
         result.Should().ContainSingle();
         result.First().Id.Should().Be(query.Id);
-        result.First().TotalCount.Should().Be(images.Count);
-        result.First().Items.Should().BeEquivalentTo(expectedImages);
+        result.First().Results.TotalCount.Should().Be(images.Count);
+        result.First().Results.Items.Should().BeEquivalentTo(expectedImages);
     }
 }
