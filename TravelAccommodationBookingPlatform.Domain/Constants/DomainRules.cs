@@ -14,8 +14,6 @@ public static class DomainRules
         public const int NameMaxLength = 100;
         public const int DescriptionMaxLength = 1000;
         public const int OwnerMaxLength = 100;
-        public const int StarRateMin = 1;
-        public const int StarRateMax = 5;
     }
 
     public static class Rooms
