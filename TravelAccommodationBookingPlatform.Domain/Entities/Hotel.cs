@@ -18,4 +18,6 @@ public class Hotel : BaseEntity
     public ICollection<Image> Images { get; set; } = default!;
     public IList<Amenity> Amenities { get; set; } = default!;
     public ICollection<Discount> Discounts { get; set; } = default!;
+    public Guid? ActiveDiscountId { get; set; }
+    public Discount? ActiveDiscount { get; set; }
 }

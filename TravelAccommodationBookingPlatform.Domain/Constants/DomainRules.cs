@@ -76,4 +76,21 @@ public static class DomainRules
     {
         public const int RequestMaxLength = 500;
     }
+
+    public static class Payments
+    {
+        public const int ConfirmationNumberMaxLength = 50;
+    }
+
+    public static class DiscountRates
+    {
+        public const double PercentageMin = 0.0;
+        public const double PercentageMax = 100.0;
+    }
+
+    public static class PersonalInformation
+    {
+        public const int FullNameMaxLength = 100;
+        public const int PhoneNumberMaxLength = 15;
+    }
 }
