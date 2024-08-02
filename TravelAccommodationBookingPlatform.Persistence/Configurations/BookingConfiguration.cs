@@ -30,7 +30,7 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             .ApplySpecialRequestConfiguration();
 
         builder.HasOne(b => b.Payment)
-            .WithOne()
+            .WithOne(p => p.Booking)
             .HasForeignKey<Booking>(b => b.PaymentId)
             .IsRequired(false);
     }
