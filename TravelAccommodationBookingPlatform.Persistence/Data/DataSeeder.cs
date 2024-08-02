@@ -7,7 +7,7 @@ public static class DataSeeder
 {
     public static async Task SeedAsync(AppDbContext context)
     {
-        if (await context.Users.AnyAsync())
+        if (await context.Payments.AnyAsync())
         {
             // latest added entity is seeded
             return;
@@ -15,9 +15,11 @@ public static class DataSeeder
 
         // Order matters, don't change it
         var cities = await context.Cities.ToListAsync();
-        var hotels = await context.Hotels.ToListAsync();
+        var hotelsWithRooms = await context.Hotels.Include(h => h.Rooms).ToListAsync();
         var discounts = await context.Discounts.ToListAsync();
         var users = await context.Users.ToListAsync();
+        var bookings = await context.Bookings.ToListAsync();
+        var payments = await context.Payments.ToListAsync();
 
         if (cities.Count == 0)
         {
@@ -26,16 +28,16 @@ public static class DataSeeder
             await context.SaveChangesAsync();
         }
 
-        if (hotels.Count == 0)
+        if (hotelsWithRooms.Count == 0)
         {
-            hotels = HotelDataGenerator.GenerateHotelsWithRooms(cities, 5);
-            await context.Hotels.AddRangeAsync(hotels);
+            hotelsWithRooms = HotelDataGenerator.GenerateHotelsWithRooms(cities, 5);
+            await context.Hotels.AddRangeAsync(hotelsWithRooms);
             await context.SaveChangesAsync();
         }
 
         if (discounts.Count == 0)
         {
-            discounts = DiscountDataGenerator.GenerateDiscounts(hotels);
+            discounts = DiscountDataGenerator.GenerateDiscounts(hotelsWithRooms);
             await context.Discounts.AddRangeAsync(discounts);
             await context.SaveChangesAsync();
         }
@@ -44,6 +46,20 @@ public static class DataSeeder
         {
             users = UserDataGenerator.GenerateUsers(10);
             await context.Users.AddRangeAsync(users);
+            await context.SaveChangesAsync();
+        }
+
+        if (bookings.Count == 0)
+        {
+            bookings = BookingDataGenerator.GenerateBookings(users, hotelsWithRooms, 30);
+            await context.Bookings.AddRangeAsync(bookings);
+            await context.SaveChangesAsync();
+        }
+
+        if (payments.Count == 0)
+        {
+            payments = PaymentDataGenerator.GeneratePayments(bookings);
+            await context.Payments.AddRangeAsync(payments);
             await context.SaveChangesAsync();
         }
     }
