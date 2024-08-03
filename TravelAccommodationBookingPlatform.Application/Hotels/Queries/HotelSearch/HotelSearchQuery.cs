@@ -9,7 +9,7 @@ public class HotelSearchQuery : IQuery<HotelSearchResponse>
 {
     public HotelSearchFilters Filters { get; set; } = new();
     public PaginationParameters PaginationParameters { get; set; } = default!;
-    public bool IncludeSearchResultFilters { get; set; }
+    public bool IncludeAvailableSearchFilters { get; set; }
 
     public class HotelSearchFilters
     {
