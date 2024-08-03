@@ -8,7 +8,7 @@ namespace TravelAccommodationBookingPlatform.IntegrationTests.Shared;
 public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     private readonly MsSqlContainer _container = new MsSqlBuilder()
-        .WithImage("mcr.microsoft.com/mssql/server:2019-latest")
+        .WithImage("mcr.microsoft.com/mssql/server:2017-latest")
         .Build();
 
     public async Task InitializeAsync()
