@@ -1,4 +1,5 @@
 using Ardalis.Specification;
+using TravelAccommodationBookingPlatform.Application.Interfaces.Specifications;
 using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
@@ -125,5 +126,33 @@ public interface IRepository<TEntity> where TEntity : BaseEntity
     Task<PageResponse<TEntityDto>?> PageWithProjectionAsync<TEntityDto>(
         Specification<TEntity> specification,
         PaginationParameters paginationParameters,
+        CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Aggregates data to a single result object according to the specified query and aggregate specifications.
+    /// </summary>
+    /// <param name="querySpecification">Specification that will be applied to the entities before aggregation.</param>
+    /// <param name="aggregateSpecification">Specification that defines the aggregation logic.</param>
+    /// <param name="cancellationToken">Request cancellation token.</param>
+    /// <typeparam name="TAggregateDto">The type that the result of the aggregation will be projected to.</typeparam>
+    /// <returns>The aggregated result projected to <typeparamref name="TAggregateDto"/> or null if no match is found.</returns>
+    Task<TAggregateDto?> AggregateAsync<TAggregateDto>(
+        Specification<TEntity> querySpecification,
+        AggregateSpecification<TEntity, TAggregateDto> aggregateSpecification,
+        CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Aggregates data to a single result according to the specified query and aggregate specifications.
+    /// </summary>
+    /// <param name="querySpecification">Specification that will be applied to the entities before aggregation.</param>
+    /// <param name="aggregateSpecification">Specification that defines the aggregation logic.</param>
+    /// <param name="cancellationToken">Request cancellation token.</param>
+    /// <typeparam name="TEntityDto">The type that the entities will be projected to before aggregation
+    /// (according to the specifictaion).</typeparam>
+    /// <typeparam name="TAggregateDto">The type that the result of the aggregation will be projected to.</typeparam>
+    /// <returns>The aggregated result projected to <typeparamref name="TAggregateDto"/> or null if no match is found.</returns>
+    Task<TAggregateDto?> AggregateAsync<TEntityDto, TAggregateDto>(
+        Specification<TEntity, TEntityDto> querySpecification,
+        AggregateSpecification<TEntityDto, TAggregateDto> aggregateSpecification,
         CancellationToken cancellationToken);
 }

@@ -4,6 +4,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
+using TravelAccommodationBookingPlatform.Application.Interfaces.Specifications;
 using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
@@ -132,5 +133,29 @@ public class Repository<TEntity> : IRepository<TEntity>
                 .Take(parameters.PageSize)
                 .ToListAsync(cancellationToken)
         };
+    }
+
+    public async Task<TAggregateDto?> AggregateAsync<TAggregateDto>(
+        Specification<TEntity> querySpecification,
+        AggregateSpecification<TEntity, TAggregateDto> aggregateSpecification,
+        CancellationToken cancellationToken)
+    {
+        return await _context.Set<TEntity>()
+            .WithSpecification(querySpecification)
+            .GroupBy(e => 1)
+            .WithSpecification(aggregateSpecification)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task<TAggregateDto?> AggregateAsync<TEntityDto, TAggregateDto>(
+        Specification<TEntity, TEntityDto> querySpecification,
+        AggregateSpecification<TEntityDto, TAggregateDto> aggregateSpecification,
+        CancellationToken cancellationToken)
+    {
+        return await _context.Set<TEntity>()
+            .WithSpecification(querySpecification)
+            .GroupBy(e => 1)
+            .WithSpecification(aggregateSpecification)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 }
