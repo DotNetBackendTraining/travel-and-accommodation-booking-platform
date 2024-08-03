@@ -1,9 +1,8 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using TravelAccommodationBookingPlatform.Application.Hotels.Commands.CreateHotel;
-using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
 using TravelAccommodationBookingPlatform.Presentation.Hotels.Requests;
-using TravelAccommodationBookingPlatform.Presentation.TypeConverters;
+using TravelAccommodationBookingPlatform.Presentation.Hotels.ViewModels;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Hotels;
 
@@ -11,7 +10,14 @@ public class HotelProfile : Profile
 {
     public HotelProfile()
     {
-        CreateMap<IFormFile, IFile>().ConvertUsing<FormFileToIFileConverter>();
+        // CreateHotel
         CreateMap<CreateHotelRequest, CreateHotelCommand>();
+
+        // HotelSearch
+        CreateMap<HotelSearchResponse.HotelSummary, HotelSearchViewModel.HotelSearchResult>();
+        CreateMap<HotelSearchResponse.HotelSearchResult, HotelSearchViewModel.HotelSearchResult>()
+            .IncludeMembers(src => src.HotelSummary);
+        CreateMap<HotelSearchResponse.AvailableFiltersResult, HotelSearchViewModel.AvailableFiltersResult>();
+        CreateMap<HotelSearchResponse, HotelSearchViewModel>();
     }
 }
