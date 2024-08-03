@@ -1,4 +1,5 @@
 using Ardalis.Specification;
+using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
@@ -83,5 +84,46 @@ public interface IRepository<TEntity> where TEntity : BaseEntity
     /// <returns>The first projected output that obeys the specification or default if no match is found.</returns>
     Task<TEntityDto?> GetWithProjectionAsync<TEntityDto>(
         Specification<TEntity> specification,
+        CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Retrieves a paged list of <typeparamref name="TEntity"/> according to the specification.
+    /// </summary>
+    /// <param name="specification">Specification that will be applied on the query.</param>
+    /// <param name="paginationParameters">Parameters for pagination (page number, page size).</param>
+    /// <param name="cancellationToken">Request cancellation token.</param>
+    /// <typeparam name="TEntity">Output of applying the specification on the query.</typeparam>
+    /// <returns>A page response containing the outputs that obey the specification.</returns>
+    Task<PageResponse<TEntity>?> PageAsync(
+        Specification<TEntity> specification,
+        PaginationParameters paginationParameters,
+        CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Retrieves a paged list of <typeparamref name="TEntityDto"/> according to the specification.
+    /// </summary>
+    /// <param name="specification">Specification that will be applied on the query.</param>
+    /// <param name="paginationParameters">Parameters for pagination (page number, page size).</param>
+    /// <param name="cancellationToken">Request cancellation token.</param>
+    /// <typeparam name="TEntityDto">Output of applying the specification on the query.</typeparam>
+    /// <returns>A page response containing the outputs that obey the specification.</returns>
+    Task<PageResponse<TEntityDto>?> PageAsync<TEntityDto>(
+        Specification<TEntity, TEntityDto> specification,
+        PaginationParameters paginationParameters,
+        CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Retrieves a paged list of <typeparamref name="TEntity"/> according to the specification.
+    /// Projects each <typeparamref name="TEntity"/> into <typeparamref name="TEntityDto"/> with AutoMapper.
+    /// </summary>
+    /// <param name="specification">Specification that will be applied on the query.</param>
+    /// <param name="paginationParameters">Parameters for pagination (page number, page size).</param>
+    /// <param name="cancellationToken">Request cancellation token.</param>
+    /// <typeparam name="TEntityDto">The type that the output of the query will be projected to.
+    /// So a map profile from <typeparamref name="TEntity"/> into <typeparamref name="TEntityDto"/> should exist.</typeparam>
+    /// <returns>A page response containing the projected outputs that obey the specification.</returns>
+    Task<PageResponse<TEntityDto>?> PageWithProjectionAsync<TEntityDto>(
+        Specification<TEntity> specification,
+        PaginationParameters paginationParameters,
         CancellationToken cancellationToken);
 }

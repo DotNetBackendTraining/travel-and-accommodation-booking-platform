@@ -4,6 +4,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
+using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Persistence.Repositories;
@@ -83,5 +84,53 @@ public class Repository<TEntity> : IRepository<TEntity>
             .WithSpecification(specification)
             .ProjectTo<TEntityDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task<PageResponse<TEntity>?> PageAsync(
+        Specification<TEntity> specification,
+        PaginationParameters paginationParameters,
+        CancellationToken cancellationToken)
+    {
+        var query = _context.Set<TEntity>()
+            .WithSpecification(specification);
+
+        return await PageResponseAsync(query, paginationParameters, cancellationToken);
+    }
+
+    public async Task<PageResponse<TEntityDto>?> PageAsync<TEntityDto>(
+        Specification<TEntity, TEntityDto> specification,
+        PaginationParameters paginationParameters,
+        CancellationToken cancellationToken)
+    {
+        var query = _context.Set<TEntity>()
+            .WithSpecification(specification);
+
+        return await PageResponseAsync(query, paginationParameters, cancellationToken);
+    }
+
+    public async Task<PageResponse<TEntityDto>?> PageWithProjectionAsync<TEntityDto>(
+        Specification<TEntity> specification,
+        PaginationParameters paginationParameters,
+        CancellationToken cancellationToken)
+    {
+        var query = _context.Set<TEntity>()
+            .WithSpecification(specification)
+            .ProjectTo<TEntityDto>(_mapper.ConfigurationProvider);
+
+        return await PageResponseAsync(query, paginationParameters, cancellationToken);
+    }
+
+    private static async Task<PageResponse<T>> PageResponseAsync<T>(
+        IQueryable<T> query,
+        PaginationParameters parameters,
+        CancellationToken cancellationToken)
+    {
+        return new PageResponse<T>
+        {
+            TotalCount = await query.CountAsync(cancellationToken),
+            Items = await query.Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                .Take(parameters.PageSize)
+                .ToListAsync(cancellationToken)
+        };
     }
 }
