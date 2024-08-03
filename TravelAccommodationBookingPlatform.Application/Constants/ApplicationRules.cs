@@ -11,4 +11,9 @@ public static class ApplicationRules
             Png = 2
         }
     }
+
+    public static class Search
+    {
+        public const int SearchTermMaxLength = 100;
+    }
 }
