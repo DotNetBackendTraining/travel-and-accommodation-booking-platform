@@ -24,7 +24,7 @@ public class HotelSearchQueryHandler : IQueryHandler<HotelSearchQuery, HotelSear
     {
         var resultsSpec = new HotelSearchResultsSpecification(request.Filters, _mapper);
         var resultsPage = await _repository.PageAsync(resultsSpec, request.PaginationParameters, cancellationToken);
-        var response = new HotelSearchResponse { SearchResults = resultsPage ?? new() };
+        var response = new HotelSearchResponse { SearchResults = resultsPage };
 
         if (request.IncludeAvailableSearchFilters)
         {

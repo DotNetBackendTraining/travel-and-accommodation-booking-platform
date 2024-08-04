@@ -87,7 +87,7 @@ public class Repository<TEntity> : IRepository<TEntity>
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<PageResponse<TEntity>?> PageAsync(
+    public async Task<PageResponse<TEntity>> PageAsync(
         Specification<TEntity> specification,
         PaginationParameters paginationParameters,
         CancellationToken cancellationToken)
@@ -98,7 +98,7 @@ public class Repository<TEntity> : IRepository<TEntity>
         return await PageResponseAsync(query, paginationParameters, cancellationToken);
     }
 
-    public async Task<PageResponse<TEntityDto>?> PageAsync<TEntityDto>(
+    public async Task<PageResponse<TEntityDto>> PageAsync<TEntityDto>(
         Specification<TEntity, TEntityDto> specification,
         PaginationParameters paginationParameters,
         CancellationToken cancellationToken)
@@ -109,7 +109,7 @@ public class Repository<TEntity> : IRepository<TEntity>
         return await PageResponseAsync(query, paginationParameters, cancellationToken);
     }
 
-    public async Task<PageResponse<TEntityDto>?> PageWithProjectionAsync<TEntityDto>(
+    public async Task<PageResponse<TEntityDto>> PageWithProjectionAsync<TEntityDto>(
         Specification<TEntity> specification,
         PaginationParameters paginationParameters,
         CancellationToken cancellationToken)

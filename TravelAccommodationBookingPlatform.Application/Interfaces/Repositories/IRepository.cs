@@ -95,7 +95,7 @@ public interface IRepository<TEntity> where TEntity : BaseEntity
     /// <param name="cancellationToken">Request cancellation token.</param>
     /// <typeparam name="TEntity">Output of applying the specification on the query.</typeparam>
     /// <returns>A page response containing the outputs that obey the specification.</returns>
-    Task<PageResponse<TEntity>?> PageAsync(
+    Task<PageResponse<TEntity>> PageAsync(
         Specification<TEntity> specification,
         PaginationParameters paginationParameters,
         CancellationToken cancellationToken);
@@ -108,7 +108,7 @@ public interface IRepository<TEntity> where TEntity : BaseEntity
     /// <param name="cancellationToken">Request cancellation token.</param>
     /// <typeparam name="TEntityDto">Output of applying the specification on the query.</typeparam>
     /// <returns>A page response containing the outputs that obey the specification.</returns>
-    Task<PageResponse<TEntityDto>?> PageAsync<TEntityDto>(
+    Task<PageResponse<TEntityDto>> PageAsync<TEntityDto>(
         Specification<TEntity, TEntityDto> specification,
         PaginationParameters paginationParameters,
         CancellationToken cancellationToken);
@@ -123,7 +123,7 @@ public interface IRepository<TEntity> where TEntity : BaseEntity
     /// <typeparam name="TEntityDto">The type that the output of the query will be projected to.
     /// So a map profile from <typeparamref name="TEntity"/> into <typeparamref name="TEntityDto"/> should exist.</typeparam>
     /// <returns>A page response containing the projected outputs that obey the specification.</returns>
-    Task<PageResponse<TEntityDto>?> PageWithProjectionAsync<TEntityDto>(
+    Task<PageResponse<TEntityDto>> PageWithProjectionAsync<TEntityDto>(
         Specification<TEntity> specification,
         PaginationParameters paginationParameters,
         CancellationToken cancellationToken);
