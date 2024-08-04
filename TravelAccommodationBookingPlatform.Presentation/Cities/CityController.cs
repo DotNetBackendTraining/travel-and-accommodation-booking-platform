@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Cities.Queries.CityDetails;
+using TravelAccommodationBookingPlatform.Application.Cities.Queries.CitySearch;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Cities;
@@ -33,6 +34,29 @@ public class CityController : AbstractController
         CancellationToken cancellationToken)
     {
         var query = new CityDetailsQuery { Id = id };
+        return await HandleQueryResult(query, cancellationToken);
+    }
+
+
+    /// <summary>
+    /// Searches for cities based on provided filters and returns available search filters.
+    /// </summary>
+    /// <param name="query">The search query with filters.</param>
+    /// <param name="cancellationToken">Cancellation token for the request.</param>
+    /// <returns>The search results and available filters.</returns>
+    /// <response code="200">Returns the search results and filters.</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="401">Unauthorized if credentials are invalid.</response>
+    /// <response code="422">If the request is invalid (validation error).</response>
+    [HttpGet]
+    [ProducesResponseType(typeof(CitySearchResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<ActionResult<CitySearchResponse>> CitySearch(
+        [FromQuery] CitySearchQuery query,
+        CancellationToken cancellationToken)
+    {
         return await HandleQueryResult(query, cancellationToken);
     }
 }
