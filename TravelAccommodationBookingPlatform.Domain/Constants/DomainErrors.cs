@@ -25,6 +25,11 @@ public static class DomainErrors
             ErrorType.Conflict,
             "User.EmailAlreadyExists",
             "User with the given email already exists");
+
+        public static readonly Error CredentialsNotProvided = new(
+            ErrorType.NotAuthorized,
+            "User.Unauthorized",
+            "No user credentials were provided");
     }
 
     public static class Hotel
