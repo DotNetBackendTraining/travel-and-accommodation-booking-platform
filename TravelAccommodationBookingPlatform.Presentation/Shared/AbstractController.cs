@@ -1,6 +1,9 @@
+using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
+using TravelAccommodationBookingPlatform.Domain.Constants;
+using TravelAccommodationBookingPlatform.Domain.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Shared;
@@ -22,5 +25,13 @@ public abstract class AbstractController : ControllerBase
         return result.IsSuccess
             ? Ok(result.Value)
             : result.ToProblemDetails();
+    }
+
+    protected Result<Guid> GetUserIdOrFailure()
+    {
+        var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+        return userIdClaim is null
+            ? Result.Failure<Guid>(DomainErrors.User.CredentialsNotProvided)
+            : Result.Success(Guid.Parse(userIdClaim.Value));
     }
 }
