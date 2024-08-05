@@ -28,8 +28,8 @@ public class JwtTokenGeneratorTests
         var handler = new JwtSecurityTokenHandler();
         var decodedToken = handler.ReadJwtToken(token);
 
-        decodedToken.Claims.First(c => c.Type == "sub").Value.Should().Be(user.Username);
         decodedToken.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value.Should().Be(user.Id.ToString());
+        decodedToken.Claims.First(c => c.Type == ClaimTypes.Name).Value.Should().Be(user.Username);
         decodedToken.Claims.First(c => c.Type == ClaimTypes.Role).Value.Should().Be(user.UserRole.ToString());
         decodedToken.Issuer.Should().Be(settings.Issuer);
         decodedToken.Audiences.First().Should().Be(settings.Audience);
