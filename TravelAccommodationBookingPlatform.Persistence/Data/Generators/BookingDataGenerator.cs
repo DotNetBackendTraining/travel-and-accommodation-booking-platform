@@ -28,7 +28,7 @@ internal static class BookingDataGenerator
             var hotel = hotelsWithRooms[faker.Random.Int(0, hotelsWithRooms.Count - 1)];
             var rooms = hotel.Rooms.OrderBy(_ => faker.Random.Int()).Take(faker.Random.Int(1, 3)).ToList();
 
-            var checkInDate = faker.Date.Future();
+            var checkInDate = faker.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now.AddYears(1));
 
             var booking = new Booking
             {

@@ -23,7 +23,7 @@ public static class DataSeeder
 
         if (cities.Count == 0)
         {
-            cities = CityDataGenerator.GenerateCities(15);
+            cities = CityDataGenerator.GenerateCities(10);
             await context.Cities.AddRangeAsync(cities);
             await context.SaveChangesAsync();
         }
@@ -44,14 +44,14 @@ public static class DataSeeder
 
         if (users.Count == 0)
         {
-            users = UserDataGenerator.GenerateUsers(10);
+            users = UserDataGenerator.GenerateUsers(5);
             await context.Users.AddRangeAsync(users);
             await context.SaveChangesAsync();
         }
 
         if (bookings.Count == 0)
         {
-            bookings = BookingDataGenerator.GenerateBookings(users, hotelsWithRooms, 30);
+            bookings = BookingDataGenerator.GenerateBookings(users, hotelsWithRooms, 2000);
             await context.Bookings.AddRangeAsync(bookings);
             await context.SaveChangesAsync();
         }
