@@ -1,0 +1,59 @@
+# This workflow will build, test a .NET project and push a Docker image using Docker Compose
+
+name: .NET and Docker
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+    env:
+      JwtSettings__Key: ${{ secrets.JWT_KEY }}
+      CloudinarySettings__CloudName: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+      CloudinarySettings__ApiKey: ${{ secrets.CLOUDINARY_API_KEY }}
+      CloudinarySettings__ApiSecret: ${{ secrets.CLOUDINARY_API_SECRET }}
+
+  build-and-push-docker:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Install Docker Compose
+        run: |
+          curl -L "https://github.com/docker/compose/releases/download/v2.10.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker images using Docker Compose
+        run: |
+          docker-compose build
+          docker-compose push

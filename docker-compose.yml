@@ -1,6 +1,6 @@
 ﻿services:
   travelaccommodationbookingplatform.app:
-    image: travelaccommodationbookingplatform.app
+    image: izzat5233/travelaccommodationbookingplatform:main
     build:
       context: .
       dockerfile: TravelAccommodationBookingPlatform.App/Dockerfile
