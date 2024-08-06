@@ -13,11 +13,11 @@ namespace TravelAccommodationBookingPlatform.Presentation.Bookings;
 [ApiController]
 [Route("api/bookings")]
 [RoleAuthorize]
-public class BookingsController : AbstractController
+public class BookingController : AbstractController
 {
     private readonly IMapper _mapper;
 
-    public BookingsController(ISender sender, IMapper mapper) : base(sender)
+    public BookingController(ISender sender, IMapper mapper) : base(sender)
     {
         _mapper = mapper;
     }
