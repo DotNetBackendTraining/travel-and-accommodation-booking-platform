@@ -35,7 +35,7 @@ public class HotelAdminController : AbstractController
     /// <response code="201">Returns the ID of the newly created hotel.</response>
     /// <response code="400">If the request is invalid (input format error).</response>
     /// <response code="401">Unauthorized if credentials are invalid.</response>
-    /// <response code="403">Forbidden if user does not have the required role(s).</response>
+    /// <response code="403">Forbidden if user is not an admin.</response>
     /// <response code="404">If a required resource is not found (e.g. City).</response>
     /// <response code="422">If the request is invalid (validation error).</response>
     [HttpPost]
