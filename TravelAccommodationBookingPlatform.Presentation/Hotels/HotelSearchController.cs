@@ -36,7 +36,7 @@ public class HotelSearchController : AbstractController
     /// <response code="400">If the request is invalid.</response>
     /// <response code="401">Unauthorized if credentials are invalid.</response>
     /// <response code="422">If the request is invalid (validation error).</response>
-    [HttpGet("search")]
+    [HttpGet]
     [ProducesResponseType(typeof(HotelSearchResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
