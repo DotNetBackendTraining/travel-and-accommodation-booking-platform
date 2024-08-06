@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch;
+using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Bookings.Requests;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
@@ -11,6 +12,7 @@ namespace TravelAccommodationBookingPlatform.Presentation.Bookings;
 
 [ApiController]
 [Route("api/bookings")]
+[RoleAuthorize]
 public class BookingsController : AbstractController
 {
     private readonly IMapper _mapper;

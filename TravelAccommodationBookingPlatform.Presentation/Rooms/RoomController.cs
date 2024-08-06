@@ -1,17 +1,17 @@
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomDetails;
 using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomImages;
 using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
+using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Rooms;
 
-[Authorize]
 [ApiController]
 [Route("api/rooms/{id:guid}")]
+[RoleAuthorize]
 public class RoomController : AbstractController
 {
     public RoomController(ISender sender) : base(sender)

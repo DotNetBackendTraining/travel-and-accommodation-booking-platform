@@ -1,16 +1,16 @@
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Cities.Queries.CityDetails;
 using TravelAccommodationBookingPlatform.Application.Cities.Queries.CitySearch;
+using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Cities;
 
-[Authorize]
 [ApiController]
 [Route("api/cities")]
+[RoleAuthorize]
 public class CityController : AbstractController
 {
     public CityController(ISender sender) : base(sender)

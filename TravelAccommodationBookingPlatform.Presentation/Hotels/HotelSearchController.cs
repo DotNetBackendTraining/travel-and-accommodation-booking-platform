@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.FeaturedHotels;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
+using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Hotels.ViewModels;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
@@ -12,6 +13,7 @@ namespace TravelAccommodationBookingPlatform.Presentation.Hotels;
 
 [ApiController]
 [Route("api/hotels")]
+[RoleAuthorize]
 public class HotelSearchController : AbstractController
 {
     private readonly IMapper _mapper;
