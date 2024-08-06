@@ -1,4 +1,4 @@
-namespace TravelAccommodationBookingPlatform.Application.Shared.Pagination;
+namespace TravelAccommodationBookingPlatform.Application.Shared.Responses;
 
 public sealed class PageResponse<TItem>
 {

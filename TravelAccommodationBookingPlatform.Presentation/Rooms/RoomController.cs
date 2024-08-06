@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomDetails;
 using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomImages;
-using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
+using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 

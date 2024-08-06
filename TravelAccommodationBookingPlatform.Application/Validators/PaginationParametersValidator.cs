@@ -1,5 +1,5 @@
 using FluentValidation;
-using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
+using TravelAccommodationBookingPlatform.Application.Shared;
 
 namespace TravelAccommodationBookingPlatform.Application.Validators;
 

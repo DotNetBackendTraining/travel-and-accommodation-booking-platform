@@ -1,6 +1,7 @@
 using Ardalis.Specification;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Specifications;
-using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
+using TravelAccommodationBookingPlatform.Application.Shared;
+using TravelAccommodationBookingPlatform.Application.Shared.Responses;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;

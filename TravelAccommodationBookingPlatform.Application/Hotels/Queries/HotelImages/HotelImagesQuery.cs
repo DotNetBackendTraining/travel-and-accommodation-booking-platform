@@ -1,5 +1,5 @@
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
-using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
+using TravelAccommodationBookingPlatform.Application.Shared;
 
 namespace TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelImages;
 

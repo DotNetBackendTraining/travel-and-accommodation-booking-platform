@@ -1,5 +1,5 @@
 using AutoMapper;
-using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
+using TravelAccommodationBookingPlatform.Application.Shared.Responses;
 
 namespace TravelAccommodationBookingPlatform.Presentation.TypeConverters;
 

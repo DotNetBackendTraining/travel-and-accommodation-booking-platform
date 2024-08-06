@@ -1,5 +1,5 @@
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch;
-using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
+using TravelAccommodationBookingPlatform.Application.Shared;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Bookings.Requests;
 

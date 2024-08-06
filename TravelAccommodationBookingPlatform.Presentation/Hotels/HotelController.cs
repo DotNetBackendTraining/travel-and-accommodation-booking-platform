@@ -6,7 +6,7 @@ using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelDetails
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelImages;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelReviews;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelRooms;
-using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
+using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 

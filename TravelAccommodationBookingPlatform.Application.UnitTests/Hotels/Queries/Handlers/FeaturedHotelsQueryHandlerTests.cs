@@ -1,10 +1,9 @@
 using AutoFixture.Xunit2;
-using AutoMapper;
 using FluentAssertions;
 using Moq;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.FeaturedHotels;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
-using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
+using TravelAccommodationBookingPlatform.Application.Shared.Responses;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
