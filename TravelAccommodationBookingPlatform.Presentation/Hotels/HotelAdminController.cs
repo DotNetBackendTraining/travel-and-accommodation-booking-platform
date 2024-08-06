@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Hotels.Commands.CreateHotel;
+using TravelAccommodationBookingPlatform.Domain.Enums;
+using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Hotels.Requests;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
@@ -11,6 +13,7 @@ namespace TravelAccommodationBookingPlatform.Presentation.Hotels;
 
 [ApiController]
 [Route("api/hotels")]
+[RoleAuthorize(UserRole.Admin)]
 public class HotelAdminController : AbstractController
 {
     private readonly IMapper _mapper;
@@ -32,12 +35,14 @@ public class HotelAdminController : AbstractController
     /// <response code="201">Returns the ID of the newly created hotel.</response>
     /// <response code="400">If the request is invalid (input format error).</response>
     /// <response code="401">Unauthorized if credentials are invalid.</response>
+    /// <response code="403">Forbidden if user does not have the required role(s).</response>
     /// <response code="404">If a required resource is not found (e.g. City).</response>
     /// <response code="422">If the request is invalid (validation error).</response>
     [HttpPost]
     [ProducesResponseType(typeof(CreateHotelResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<CreateHotelResponse>> CreateHotel(
