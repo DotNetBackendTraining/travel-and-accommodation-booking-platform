@@ -15,6 +15,7 @@ public static class ProblemDetailsExtension
             ErrorType.NotAuthorized => result.ToUnauthorizedProblemDetails(),
             ErrorType.Conflict => result.ToConflictProblemDetails(),
             ErrorType.InternalServerError => result.ToInternalServerErrorProblemDetails(),
+            ErrorType.Forbidden => result.ToForbiddenProblemDetails(),
             ErrorType.None => throw new InvalidOperationException(
                 $"Cannot create problem details for the successful result '{result}'"),
             _ => throw new ArgumentOutOfRangeException(nameof(result.Error.Type) + " undefined type")
@@ -66,6 +67,18 @@ public static class ProblemDetailsExtension
             "https://tools.ietf.org/html/rfc7231#section-6.6.1"))
         {
             StatusCode = StatusCodes.Status500InternalServerError
+        };
+    }
+
+    private static ObjectResult ToForbiddenProblemDetails(this Result result)
+    {
+        return new ObjectResult(CreateProblemDetails(
+            result,
+            StatusCodes.Status403Forbidden,
+            "Forbidden",
+            "https://tools.ietf.org/html/rfc7231#section-6.5.3"))
+        {
+            StatusCode = StatusCodes.Status403Forbidden
         };
     }
 

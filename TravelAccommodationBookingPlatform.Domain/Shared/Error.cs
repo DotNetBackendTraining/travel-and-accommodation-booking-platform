@@ -66,5 +66,6 @@ public enum ErrorType
     NotFound = 2,
     NotAuthorized = 3,
     Conflict = 4,
-    InternalServerError = 5
+    InternalServerError = 5,
+    Forbidden = 6
 }
