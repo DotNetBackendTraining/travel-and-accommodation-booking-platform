@@ -1,7 +1,7 @@
 using FluentValidation;
 using TravelAccommodationBookingPlatform.Application.Shared.Pagination;
 
-namespace TravelAccommodationBookingPlatform.Application.Shared.Validators;
+namespace TravelAccommodationBookingPlatform.Application.Validators;
 
 public class PaginationParametersValidator : AbstractValidator<PaginationParameters>
 {

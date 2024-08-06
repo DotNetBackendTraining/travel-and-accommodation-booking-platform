@@ -1,5 +1,5 @@
 using FluentValidation;
-using TravelAccommodationBookingPlatform.Application.Shared.Validators;
+using TravelAccommodationBookingPlatform.Application.Validators;
 
 namespace TravelAccommodationBookingPlatform.Application.Cities.Queries.CitySearch;
 

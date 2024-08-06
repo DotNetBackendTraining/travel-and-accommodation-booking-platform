@@ -1,7 +1,7 @@
 using FluentValidation;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
-namespace TravelAccommodationBookingPlatform.Application.Shared.Validators;
+namespace TravelAccommodationBookingPlatform.Application.Validators;
 
 public class CheckingValidator : AbstractValidator<Checking>
 {

@@ -1,6 +1,6 @@
 using FluentValidation;
-using TravelAccommodationBookingPlatform.Application.Shared.Validators;
-using TravelAccommodationBookingPlatform.Application.Shared.Validators.Extensions;
+using TravelAccommodationBookingPlatform.Application.Validators;
+using TravelAccommodationBookingPlatform.Application.Validators.Extensions;
 
 namespace TravelAccommodationBookingPlatform.Application.Hotels.Commands.CreateHotel;
 
