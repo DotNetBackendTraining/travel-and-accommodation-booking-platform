@@ -30,6 +30,11 @@ public static class DomainErrors
             ErrorType.NotAuthorized,
             "User.Unauthorized",
             "No user credentials were provided");
+
+        public static readonly Error InvalidRole = new(
+            ErrorType.Forbidden,
+            "User.InvalidRole",
+            "User does not have the required role(s)");
     }
 
     public static class Hotel
