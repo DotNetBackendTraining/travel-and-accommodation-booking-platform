@@ -8,7 +8,7 @@ namespace TravelAccommodationBookingPlatform.Application.Hotels.Commands.CreateH
 public class CreateHotelCommand : ICommand<CreateHotelResponse>
 {
     public string Name { get; set; } = string.Empty;
-    public StarRate StarRate { get; set; } = default!;
+    public StarRate StarRate { get; set; }
     public string Description { get; set; } = string.Empty;
     public string Owner { get; set; } = string.Empty;
     public IFile ThumbnailImage { get; set; } = default!;
