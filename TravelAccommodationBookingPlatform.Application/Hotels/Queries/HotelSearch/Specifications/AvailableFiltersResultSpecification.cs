@@ -1,16 +1,16 @@
 using Ardalis.Specification;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Specifications;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
 namespace TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications;
 
-public sealed class AvailableFiltersSpecification
-    : AggregateSpecification<Hotel, HotelSearchResponse.AvailableFiltersResult>
+public sealed class AvailableFiltersResultSpecification : AggregateSpecification<Hotel, AvailableFiltersResult>
 {
-    public AvailableFiltersSpecification()
+    public AvailableFiltersResultSpecification()
     {
-        Query.Select(g => new HotelSearchResponse.AvailableFiltersResult
+        Query.Select(g => new AvailableFiltersResult
         {
             MinimumPrice = new Price
             {

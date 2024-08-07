@@ -3,6 +3,7 @@ using AutoMapper;
 using FluentAssertions;
 using Moq;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
@@ -10,7 +11,7 @@ using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
 namespace TravelAccommodationBookingPlatform.Application.UnitTests.Hotels.Queries.Specifications.HotelSearch;
 
-public class HotelSearchResultsSpecificationTests
+public class HotelSearchResultSpecificationTests
 {
     [Theory, AutoMoqData(omitOnRecursion: true)]
     public void HotelSearchResultsSpecification_ShouldReturnCorrectlyMappedResults(
@@ -23,14 +24,14 @@ public class HotelSearchResultsSpecificationTests
         var filters = new HotelSearchQuery.HotelSearchFilters();
 
         // Act
-        var spec = new HotelSearchResultsSpecification(filters, options, mapper.Object);
+        var spec = new HotelSearchResultSpecification(filters, options, mapper.Object);
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert
         result.Should().HaveCount(1);
         var hotelResult = result.First();
-        hotelResult.HotelSummary.Should().NotBeNull();
-        mapper.Verify(m => m.Map<HotelSearchResponse.HotelSummary>(hotel), Times.Once);
+        hotelResult.Summary.Should().NotBeNull();
+        mapper.Verify(m => m.Map<HotelSearchResult.HotelSummary>(hotel), Times.Once);
     }
 
     [Theory, AutoMoqData(omitOnRecursion: true)]
@@ -49,7 +50,7 @@ public class HotelSearchResultsSpecificationTests
         var filters = new HotelSearchQuery.HotelSearchFilters();
 
         // Act
-        var spec = new HotelSearchResultsSpecification(filters, options, mapper);
+        var spec = new HotelSearchResultSpecification(filters, options, mapper);
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert
@@ -78,7 +79,7 @@ public class HotelSearchResultsSpecificationTests
         var filters = new HotelSearchQuery.HotelSearchFilters();
 
         // Act
-        var spec = new HotelSearchResultsSpecification(filters, options, mapper);
+        var spec = new HotelSearchResultSpecification(filters, options, mapper);
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert
@@ -100,7 +101,7 @@ public class HotelSearchResultsSpecificationTests
         var filters = new HotelSearchQuery.HotelSearchFilters();
 
         // Act
-        var spec = new HotelSearchResultsSpecification(filters, options, mapper);
+        var spec = new HotelSearchResultSpecification(filters, options, mapper);
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert

@@ -1,5 +1,5 @@
 using FluentAssertions;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.Enums;
@@ -8,11 +8,11 @@ using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
 namespace TravelAccommodationBookingPlatform.Application.UnitTests.Hotels.Queries.Specifications.HotelSearch;
 
-public class AvailableFiltersSpecificationTests
+public class AvailableFiltersResultSpecificationTests
 {
-    private static HotelSearchResponse.AvailableFiltersResult? GetSpecResult(IEnumerable<Hotel> hotels)
+    private static AvailableFiltersResult? GetSpecResult(IEnumerable<Hotel> hotels)
     {
-        var spec = new AvailableFiltersSpecification();
+        var spec = new AvailableFiltersResultSpecification();
         return spec.Evaluate(hotels.GroupBy(_ => 1).AsQueryable()).FirstOrDefault();
     }
 

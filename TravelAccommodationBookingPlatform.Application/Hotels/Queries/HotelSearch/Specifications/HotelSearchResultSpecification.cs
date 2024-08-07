@@ -1,5 +1,6 @@
 using Ardalis.Specification;
 using AutoMapper;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications.Extensions;
 using TravelAccommodationBookingPlatform.Application.Shared.Responses;
 using TravelAccommodationBookingPlatform.Domain.Entities;
@@ -7,19 +8,18 @@ using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
 namespace TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications;
 
-public sealed class HotelSearchResultsSpecification
-    : Specification<Hotel, HotelSearchResponse.HotelSearchResult>
+public sealed class HotelSearchResultSpecification : Specification<Hotel, HotelSearchResult>
 {
-    public HotelSearchResultsSpecification(
+    public HotelSearchResultSpecification(
         HotelSearchQuery.HotelSearchFilters filters,
         HotelSearchQuery.HotelSearchOptions options,
         IMapper mapper)
     {
-        Query.Select(h => new HotelSearchResponse.HotelSearchResult
+        Query.Select(h => new HotelSearchResult
             {
-                HotelSummary = mapper.Map<HotelSearchResponse.HotelSummary>(h),
+                Summary = mapper.Map<HotelSearchResult.HotelSummary>(h),
                 PriceDeal = options.IncludePriceDealIfAvailable && h.Rooms.Any()
-                    ? new HotelSearchResponse.HotelPriceDeal
+                    ? new HotelSearchResult.HotelPriceDeal
                     {
                         MinimumPriceDeal = new PriceDealResponse
                         {

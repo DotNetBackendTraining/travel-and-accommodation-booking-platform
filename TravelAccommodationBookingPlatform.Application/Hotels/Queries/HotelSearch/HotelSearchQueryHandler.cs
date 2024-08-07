@@ -22,7 +22,7 @@ public class HotelSearchQueryHandler : IQueryHandler<HotelSearchQuery, HotelSear
 
     public async Task<Result<HotelSearchResponse>> Handle(HotelSearchQuery request, CancellationToken cancellationToken)
     {
-        var resultsSpec = new HotelSearchResultsSpecification(
+        var resultsSpec = new HotelSearchResultSpecification(
             request.Filters,
             request.Options,
             _mapper);
@@ -33,7 +33,7 @@ public class HotelSearchQueryHandler : IQueryHandler<HotelSearchQuery, HotelSear
         if (request.Options.IncludeAvailableSearchFilters)
         {
             var hotelsSpec = new HotelSearchSpecification(request.Filters, request.Options.SortingOption);
-            var filtersSpec = new AvailableFiltersSpecification();
+            var filtersSpec = new AvailableFiltersResultSpecification();
             response.AvailableFilters = await _repository.AggregateAsync(hotelsSpec, filtersSpec, cancellationToken);
         }
 

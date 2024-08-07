@@ -26,13 +26,13 @@ public class HotelSearchQueryHandlerTests
 
         // Assert
         mockRepository.Verify(r => r.PageAsync(
-                It.IsAny<HotelSearchResultsSpecification>(),
+                It.IsAny<HotelSearchResultSpecification>(),
                 query.PaginationParameters,
                 It.IsAny<CancellationToken>()),
             Times.Once);
         mockRepository.Verify(r => r.AggregateAsync(
                 It.IsAny<HotelSearchSpecification>(),
-                It.IsAny<AvailableFiltersSpecification>(),
+                It.IsAny<AvailableFiltersResultSpecification>(),
                 It.IsAny<CancellationToken>()),
             Times.Never);
     }
@@ -53,13 +53,13 @@ public class HotelSearchQueryHandlerTests
 
         // Assert
         mockRepository.Verify(r => r.PageAsync(
-                It.IsAny<HotelSearchResultsSpecification>(),
+                It.IsAny<HotelSearchResultSpecification>(),
                 query.PaginationParameters,
                 It.IsAny<CancellationToken>()),
             Times.Once);
         mockRepository.Verify(r => r.AggregateAsync(
                 It.IsAny<HotelSearchSpecification>(),
-                It.IsAny<AvailableFiltersSpecification>(),
+                It.IsAny<AvailableFiltersResultSpecification>(),
                 It.IsAny<CancellationToken>()),
             Times.Once);
     }
