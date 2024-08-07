@@ -11,8 +11,8 @@ namespace TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSea
 public sealed class HotelSearchResultSpecification : Specification<Hotel, HotelSearchResult>
 {
     public HotelSearchResultSpecification(
-        HotelSearchQuery.HotelSearchFilters filters,
-        HotelSearchQuery.HotelSearchOptions options,
+        HotelSearchFilters filters,
+        HotelSearchOptions options,
         IMapper mapper)
     {
         Query.Select(h => new HotelSearchResult
@@ -40,6 +40,6 @@ public sealed class HotelSearchResultSpecification : Specification<Hotel, HotelS
             })
             .Include(h => h.City)
             .ApplyHotelSearchFilters(filters)
-            .ApplyHotelSortingOption(options.SortingOption);
+            .ApplyHotelSortingOption(options.Sorting);
     }
 }

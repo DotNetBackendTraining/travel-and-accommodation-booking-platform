@@ -1,4 +1,5 @@
 using Ardalis.Specification;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications.Extensions;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
@@ -7,8 +8,8 @@ namespace TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSea
 public sealed class HotelSearchSpecification : Specification<Hotel>
 {
     public HotelSearchSpecification(
-        HotelSearchQuery.HotelSearchFilters filters,
-        HotelSearchQuery.SortingOption sortingOption)
+        HotelSearchFilters filters,
+        HotelSearchOptions.SortingOption sortingOption)
     {
         Query.ApplyHotelSearchFilters(filters)
             .ApplyHotelSortingOption(sortingOption);

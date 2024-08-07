@@ -1,5 +1,5 @@
 using FluentAssertions;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications.Extensions;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.Enums;
@@ -19,7 +19,7 @@ public class ApplyHotelSortingOptionTests
         hotels.ForEach(h => h.Name = "Hotel " + random.Next(1000));
 
         // Act
-        var spec = new TestSpec<Hotel>(q => q.ApplyHotelSortingOption(HotelSearchQuery.SortingOption.Name));
+        var spec = new TestSpec<Hotel>(q => q.ApplyHotelSortingOption(HotelSearchOptions.SortingOption.Name));
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert
@@ -35,7 +35,7 @@ public class ApplyHotelSortingOptionTests
         DiscountRate discountRate)
     {
         // Arrange
-        var sortingOption = HotelSearchQuery.SortingOption.Featured;
+        var sortingOption = HotelSearchOptions.SortingOption.Featured;
         var hotels = new List<Hotel> { hotel1, hotel2, hotel3, hotel4 };
 
         // Assign discounts to some hotels
@@ -70,7 +70,7 @@ public class ApplyHotelSortingOptionTests
         });
 
         // Act
-        var spec = new TestSpec<Hotel>(q => q.ApplyHotelSortingOption(HotelSearchQuery.SortingOption.StarsThenName));
+        var spec = new TestSpec<Hotel>(q => q.ApplyHotelSortingOption(HotelSearchOptions.SortingOption.StarsThenName));
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert

@@ -32,7 +32,7 @@ public class HotelSearchQueryHandler : IQueryHandler<HotelSearchQuery, HotelSear
 
         if (request.Options.IncludeAvailableSearchFilters)
         {
-            var hotelsSpec = new HotelSearchSpecification(request.Filters, request.Options.SortingOption);
+            var hotelsSpec = new HotelSearchSpecification(request.Filters, request.Options.Sorting);
             var filtersSpec = new AvailableFiltersResultSpecification();
             response.AvailableFilters = await _repository.AggregateAsync(hotelsSpec, filtersSpec, cancellationToken);
         }

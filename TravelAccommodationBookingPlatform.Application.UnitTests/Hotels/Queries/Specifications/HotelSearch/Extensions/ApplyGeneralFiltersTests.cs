@@ -1,5 +1,5 @@
 using FluentAssertions;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications.Extensions;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
@@ -12,7 +12,7 @@ public class ApplyGeneralFiltersTests
 {
     [Theory, AutoMoqData(omitOnRecursion: true, [typeof(RoomWithoutBookingsCustomization)])]
     public void ApplyGeneralFilters_ShouldFilterCorrectly_WhenCriteriaAreMet(
-        HotelSearchQuery.GeneralFilters filters,
+        HotelSearchFilters.GeneralFilters filters,
         List<Room> rooms,
         Hotel hotel)
     {
@@ -37,7 +37,7 @@ public class ApplyGeneralFiltersTests
 
     [Theory, AutoMoqData(omitOnRecursion: true, [typeof(RoomWithoutBookingsCustomization)])]
     public void ApplyGeneralFilters_ShouldFilterCorrectly_WhenRoomCountIsInsufficient(
-        HotelSearchQuery.GeneralFilters filters,
+        HotelSearchFilters.GeneralFilters filters,
         List<Room> rooms,
         Hotel hotel)
     {
@@ -56,7 +56,7 @@ public class ApplyGeneralFiltersTests
 
     [Theory, AutoMoqData(omitOnRecursion: true, [typeof(RoomWithoutBookingsCustomization)])]
     public void ApplyGeneralFilters_ShouldFilterCorrectly_WhenGuestCountIsInsufficient(
-        HotelSearchQuery.GeneralFilters filters,
+        HotelSearchFilters.GeneralFilters filters,
         List<Room> rooms,
         Hotel hotel)
     {
@@ -79,7 +79,7 @@ public class ApplyGeneralFiltersTests
 
     [Theory, AutoMoqData(omitOnRecursion: true, [typeof(RoomWithoutBookingsCustomization)])]
     public void ApplyGeneralFilters_ShouldFilterCorrectly_WhenChildrenGuestCountIsInsufficient(
-        HotelSearchQuery.GeneralFilters filters,
+        HotelSearchFilters.GeneralFilters filters,
         List<Room> rooms,
         Hotel hotel)
     {
@@ -102,7 +102,7 @@ public class ApplyGeneralFiltersTests
 
     [Theory, AutoMoqData(omitOnRecursion: true, [typeof(RoomWithoutBookingsCustomization)])]
     public void ApplyGeneralFilters_ShouldHandleEmptyRoomsList(
-        HotelSearchQuery.GeneralFilters filters,
+        HotelSearchFilters.GeneralFilters filters,
         Hotel hotel)
     {
         // Arrange

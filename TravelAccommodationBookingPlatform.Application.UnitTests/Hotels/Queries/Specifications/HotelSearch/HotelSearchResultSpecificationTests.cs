@@ -2,7 +2,6 @@ using AutoFixture.Xunit2;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications;
 using TravelAccommodationBookingPlatform.Domain.Entities;
@@ -17,11 +16,11 @@ public class HotelSearchResultSpecificationTests
     public void HotelSearchResultsSpecification_ShouldReturnCorrectlyMappedResults(
         Hotel hotel,
         Mock<IMapper> mapper,
-        HotelSearchQuery.HotelSearchOptions options)
+        HotelSearchOptions options)
     {
         // Arrange
         var hotels = new List<Hotel> { hotel };
-        var filters = new HotelSearchQuery.HotelSearchFilters();
+        var filters = new HotelSearchFilters();
 
         // Act
         var spec = new HotelSearchResultSpecification(filters, options, mapper.Object);
@@ -39,7 +38,7 @@ public class HotelSearchResultSpecificationTests
         Hotel hotel,
         [Frozen] DiscountRate discountRate,
         IMapper mapper,
-        HotelSearchQuery.HotelSearchOptions options)
+        HotelSearchOptions options)
     {
         // Arrange
         options.IncludePriceDealIfAvailable = true;
@@ -47,7 +46,7 @@ public class HotelSearchResultSpecificationTests
         hotel.Rooms.ToList().ForEach(r => r.Price = new Price { Value = new Random().Next(100, 500) });
 
         var hotels = new List<Hotel> { hotel };
-        var filters = new HotelSearchQuery.HotelSearchFilters();
+        var filters = new HotelSearchFilters();
 
         // Act
         var spec = new HotelSearchResultSpecification(filters, options, mapper);
@@ -69,14 +68,14 @@ public class HotelSearchResultSpecificationTests
     public void HotelSearchResultsSpecification_ShouldNotIncludePriceDeal_WhenNotAvailable(
         Hotel hotel,
         IMapper mapper,
-        HotelSearchQuery.HotelSearchOptions options)
+        HotelSearchOptions options)
     {
         // Arrange
         options.IncludePriceDealIfAvailable = false;
         hotel.Rooms.ToList().ForEach(r => r.Price = new Price { Value = new Random().Next(100, 500) });
 
         var hotels = new List<Hotel> { hotel };
-        var filters = new HotelSearchQuery.HotelSearchFilters();
+        var filters = new HotelSearchFilters();
 
         // Act
         var spec = new HotelSearchResultSpecification(filters, options, mapper);
@@ -92,13 +91,13 @@ public class HotelSearchResultSpecificationTests
     public void HotelSearchResultsSpecification_ShouldHandleEmptyRoomsList(
         Hotel hotel,
         IMapper mapper,
-        HotelSearchQuery.HotelSearchOptions options)
+        HotelSearchOptions options)
     {
         // Arrange
         options.IncludePriceDealIfAvailable = true;
         hotel.Rooms.Clear(); // No rooms in the hotel
         var hotels = new List<Hotel> { hotel };
-        var filters = new HotelSearchQuery.HotelSearchFilters();
+        var filters = new HotelSearchFilters();
 
         // Act
         var spec = new HotelSearchResultSpecification(filters, options, mapper);

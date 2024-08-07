@@ -1,6 +1,6 @@
 using AutoFixture.Xunit2;
 using FluentAssertions;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications.Extensions;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.Enums;
@@ -14,7 +14,7 @@ public class ApplyAdvancedFiltersTests
     [Theory, AutoMoqData(omitOnRecursion: true)]
     public void ShouldFilterCorrectly_WhenAllCriteriaAreMet(
         [Frozen] Price price,
-        HotelSearchQuery.AdvancedFilters advancedFilters,
+        HotelSearchFilters.AdvancedFilters advancedFilters,
         Hotel hotel)
     {
         // Arrange
@@ -38,7 +38,7 @@ public class ApplyAdvancedFiltersTests
     [Theory, AutoMoqData(omitOnRecursion: true)]
     public void ShouldFilterCorrectly_WhenMinPriceIsNotMet(
         [Frozen] Price price,
-        HotelSearchQuery.AdvancedFilters advancedFilters,
+        HotelSearchFilters.AdvancedFilters advancedFilters,
         List<Room> rooms,
         Hotel hotel)
     {
@@ -58,7 +58,7 @@ public class ApplyAdvancedFiltersTests
     [Theory, AutoMoqData(omitOnRecursion: true)]
     public void ShouldFilterCorrectly_WhenMaxPriceIsNotMet(
         [Frozen] Price price,
-        HotelSearchQuery.AdvancedFilters advancedFilters,
+        HotelSearchFilters.AdvancedFilters advancedFilters,
         List<Room> rooms,
         Hotel hotel)
     {
@@ -77,7 +77,7 @@ public class ApplyAdvancedFiltersTests
     [Theory, AutoMoqData(omitOnRecursion: true)]
     public void ShouldFilterCorrectly_WhenStarRatingIsNotMet(
         [Frozen] Price price,
-        HotelSearchQuery.AdvancedFilters advancedFilters,
+        HotelSearchFilters.AdvancedFilters advancedFilters,
         Hotel hotel)
     {
         // Arrange
@@ -95,7 +95,7 @@ public class ApplyAdvancedFiltersTests
     [Theory, AutoMoqData(omitOnRecursion: true)]
     public void ShouldFilterCorrectly_WhenRequiredAmenitiesAreNotMet(
         [Frozen] Price price,
-        HotelSearchQuery.AdvancedFilters advancedFilters,
+        HotelSearchFilters.AdvancedFilters advancedFilters,
         Hotel hotel)
     {
         // Arrange
@@ -113,7 +113,7 @@ public class ApplyAdvancedFiltersTests
     [Theory, AutoMoqData(omitOnRecursion: true)]
     public void ShouldFilterCorrectly_WhenRequiredRoomTypesAreNotMet(
         [Frozen] Price price,
-        HotelSearchQuery.AdvancedFilters advancedFilters,
+        HotelSearchFilters.AdvancedFilters advancedFilters,
         List<Room> rooms,
         Hotel hotel)
     {
@@ -136,7 +136,7 @@ public class ApplyAdvancedFiltersTests
         Hotel hotel)
     {
         // Arrange
-        var advancedFilters = new HotelSearchQuery.AdvancedFilters();
+        var advancedFilters = new HotelSearchFilters.AdvancedFilters();
         hotel.Rooms = rooms;
 
         // Act

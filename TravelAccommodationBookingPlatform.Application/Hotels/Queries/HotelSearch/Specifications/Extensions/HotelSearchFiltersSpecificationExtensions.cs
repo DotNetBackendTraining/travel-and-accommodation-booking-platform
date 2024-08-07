@@ -1,4 +1,5 @@
 using Ardalis.Specification;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
@@ -8,7 +9,7 @@ public static class HotelSearchFiltersSpecificationExtensions
 {
     public static ISpecificationBuilder<Hotel> ApplyHotelSearchFilters(
         this ISpecificationBuilder<Hotel> query,
-        HotelSearchQuery.HotelSearchFilters filters)
+        HotelSearchFilters filters)
     {
         return query
             .ApplySearchTermFilter(filters.SearchTerm)
@@ -40,7 +41,7 @@ public static class HotelSearchFiltersSpecificationExtensions
 
     public static ISpecificationBuilder<Hotel> ApplyGeneralFilters(
         this ISpecificationBuilder<Hotel> query,
-        HotelSearchQuery.GeneralFilters filters)
+        HotelSearchFilters.GeneralFilters filters)
     {
         if (filters.Checking is not null)
         {
@@ -63,7 +64,7 @@ public static class HotelSearchFiltersSpecificationExtensions
 
     public static ISpecificationBuilder<Hotel> ApplyAdvancedFilters(
         this ISpecificationBuilder<Hotel> query,
-        HotelSearchQuery.AdvancedFilters advancedFilters)
+        HotelSearchFilters.AdvancedFilters advancedFilters)
     {
         if (advancedFilters.MinPrice is not null)
         {

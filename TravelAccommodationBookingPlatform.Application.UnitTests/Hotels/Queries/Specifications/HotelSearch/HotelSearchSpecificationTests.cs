@@ -1,5 +1,5 @@
 using FluentAssertions;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.Enums;
@@ -15,7 +15,7 @@ public class HotelSearchSpecificationTests
         Hotel hotel)
     {
         // Arrange
-        var filters = new HotelSearchQuery.HotelSearchFilters
+        var filters = new HotelSearchFilters
         {
             SearchTerm = hotel.Name,
             General =
@@ -31,7 +31,7 @@ public class HotelSearchSpecificationTests
         };
 
         // Act
-        var spec = new HotelSearchSpecification(filters, HotelSearchQuery.SortingOption.Name);
+        var spec = new HotelSearchSpecification(filters, HotelSearchOptions.SortingOption.Name);
         var result = spec.Evaluate(new List<Hotel> { hotel }.AsQueryable()).ToList();
 
         // Assert
@@ -45,7 +45,7 @@ public class HotelSearchSpecificationTests
         Hotel hotel)
     {
         // Arrange
-        var filters = new HotelSearchQuery.HotelSearchFilters
+        var filters = new HotelSearchFilters
         {
             SearchTerm = hotel.Name, // match
             Advanced =
@@ -58,7 +58,7 @@ public class HotelSearchSpecificationTests
         hotel.Rooms = rooms;
 
         // Act
-        var spec = new HotelSearchSpecification(filters, HotelSearchQuery.SortingOption.Name);
+        var spec = new HotelSearchSpecification(filters, HotelSearchOptions.SortingOption.Name);
         var result = spec.Evaluate(new List<Hotel> { hotel }.AsQueryable()).ToList();
 
         // Assert
@@ -70,14 +70,14 @@ public class HotelSearchSpecificationTests
         List<Hotel> hotels)
     {
         // Arrange
-        var filters = new HotelSearchQuery.HotelSearchFilters { SearchTerm = "Hotel" }; // Match all hotels
+        var filters = new HotelSearchFilters { SearchTerm = "Hotel" }; // Match all hotels
         hotels.ForEach(h =>
         {
             h.Name = $"Hotel {Guid.NewGuid().ToString()[..8]}"; // Ensure unique and comparable names
         });
 
         // Act
-        var spec = new HotelSearchSpecification(filters, HotelSearchQuery.SortingOption.Name);
+        var spec = new HotelSearchSpecification(filters, HotelSearchOptions.SortingOption.Name);
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert Success
