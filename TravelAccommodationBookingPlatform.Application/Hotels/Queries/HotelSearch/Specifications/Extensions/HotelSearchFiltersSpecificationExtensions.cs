@@ -10,7 +10,8 @@ public static class HotelSearchFiltersSpecificationExtensions
         this ISpecificationBuilder<Hotel> query,
         HotelSearchQuery.HotelSearchFilters filters)
     {
-        return query.ApplySearchTermFilter(filters.SearchTerm)
+        return query
+            .ApplySearchTermFilter(filters.SearchTerm)
             .ApplyGeneralFilters(filters.General)
             .ApplyAdvancedFilters(filters.Advanced);
     }
@@ -41,11 +42,23 @@ public static class HotelSearchFiltersSpecificationExtensions
         this ISpecificationBuilder<Hotel> query,
         HotelSearchQuery.GeneralFilters filters)
     {
-        return query
-            .HasAvailableRoom(filters.Checking)
-            .Where(h => h.Rooms.Count >= filters.Rooms)
-            .Where(h => h.Rooms.Sum(r => r.MaxNumberOfGuests.Adults) >= filters.NumberOfGuests.Adults)
-            .Where(h => h.Rooms.Sum(r => r.MaxNumberOfGuests.Children) >= filters.NumberOfGuests.Children);
+        if (filters.Checking is not null)
+        {
+            query.HasAvailableRoom(filters.Checking);
+        }
+
+        if (filters.Rooms is not null)
+        {
+            query.Where(h => h.Rooms.Count >= filters.Rooms);
+        }
+
+        if (filters.NumberOfGuests is not null)
+        {
+            query.Where(h => h.Rooms.Sum(r => r.MaxNumberOfGuests.Adults) >= filters.NumberOfGuests.Adults)
+                .Where(h => h.Rooms.Sum(r => r.MaxNumberOfGuests.Children) >= filters.NumberOfGuests.Children);
+        }
+
+        return query;
     }
 
     public static ISpecificationBuilder<Hotel> ApplyAdvancedFilters(

@@ -19,9 +19,8 @@ public class HotelSearchResultsSpecificationTests
         HotelSearchQuery.HotelSearchOptions options)
     {
         // Arrange
-        hotel.Rooms.First().Bookings = [];
-        var filters = new HotelSearchQuery.HotelSearchFilters { General = new() { Rooms = 0 } };
         var hotels = new List<Hotel> { hotel };
+        var filters = new HotelSearchQuery.HotelSearchFilters();
 
         // Act
         var spec = new HotelSearchResultsSpecification(filters, options, mapper.Object);
@@ -45,10 +44,9 @@ public class HotelSearchResultsSpecificationTests
         options.IncludePriceDealIfAvailable = true;
         hotel.ActiveDiscount = new Discount { Rate = discountRate };
         hotel.Rooms.ToList().ForEach(r => r.Price = new Price { Value = new Random().Next(100, 500) });
-        hotel.Rooms.First().Bookings = [];
 
-        var filters = new HotelSearchQuery.HotelSearchFilters { General = new() { Rooms = 0 } };
         var hotels = new List<Hotel> { hotel };
+        var filters = new HotelSearchQuery.HotelSearchFilters();
 
         // Act
         var spec = new HotelSearchResultsSpecification(filters, options, mapper);
@@ -75,10 +73,9 @@ public class HotelSearchResultsSpecificationTests
         // Arrange
         options.IncludePriceDealIfAvailable = false;
         hotel.Rooms.ToList().ForEach(r => r.Price = new Price { Value = new Random().Next(100, 500) });
-        hotel.Rooms.First().Bookings = [];
 
-        var filters = new HotelSearchQuery.HotelSearchFilters { General = new() { Rooms = 0 } };
         var hotels = new List<Hotel> { hotel };
+        var filters = new HotelSearchQuery.HotelSearchFilters();
 
         // Act
         var spec = new HotelSearchResultsSpecification(filters, options, mapper);
@@ -100,14 +97,15 @@ public class HotelSearchResultsSpecificationTests
         options.IncludePriceDealIfAvailable = true;
         hotel.Rooms.Clear(); // No rooms in the hotel
         var hotels = new List<Hotel> { hotel };
-        var filters = new HotelSearchQuery.HotelSearchFilters { General = { Rooms = 0 } };
+        var filters = new HotelSearchQuery.HotelSearchFilters();
 
         // Act
         var spec = new HotelSearchResultsSpecification(filters, options, mapper);
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert
-        result.Should().HaveCount(0);
-        // The default general filters always filter any hotel with no rooms
+        result.Should().HaveCount(1);
+        var hotelResult = result.First();
+        hotelResult.PriceDeal.Should().BeNull();
     }
 }

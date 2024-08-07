@@ -21,25 +21,15 @@ public class HotelSearchQuery : IQuery<HotelSearchResponse>
     public class HotelSearchOptions
     {
         public SortingOption SortingOption { get; set; } = SortingOption.Name;
-        public bool IncludeAvailableSearchFilters { get; set; } = false;
-        public bool IncludePriceDealIfAvailable { get; set; } = false;
+        public bool IncludeAvailableSearchFilters { get; set; }
+        public bool IncludePriceDealIfAvailable { get; set; }
     }
 
     public class GeneralFilters
     {
-        public Checking Checking { get; set; } = new()
-        {
-            CheckInDate = DateTime.Today,
-            CheckOutDate = DateTime.Today.AddDays(1)
-        };
-
-        public NumberOfGuests NumberOfGuests { get; set; } = new()
-        {
-            Adults = 2,
-            Children = 0
-        };
-
-        public int Rooms { get; set; } = 1;
+        public Checking? Checking { get; set; }
+        public NumberOfGuests? NumberOfGuests { get; set; }
+        public int? Rooms { get; set; }
     }
 
     public class AdvancedFilters
@@ -54,7 +44,12 @@ public class HotelSearchQuery : IQuery<HotelSearchResponse>
     public enum SortingOption
     {
         Name = 0,
+
+        /// <summary>
+        /// Sorts by feature score, filters any hotel that is not featured
+        /// </summary>
         Featured = 1,
+
         StarsThenName = 2
     }
 }
