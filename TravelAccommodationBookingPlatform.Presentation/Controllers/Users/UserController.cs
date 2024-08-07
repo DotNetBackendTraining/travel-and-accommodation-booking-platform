@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
+using TravelAccommodationBookingPlatform.Presentation.Controllers.Users.Requests;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
-using TravelAccommodationBookingPlatform.Presentation.Users.Requests;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Users;
+namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Users;
 
 [ApiController]
 [ApiVersion("1")]

@@ -8,7 +8,7 @@ using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Rooms;
+namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Rooms;
 
 [ApiController]
 [ApiVersion("1")]

@@ -7,7 +7,7 @@ using TravelAccommodationBookingPlatform.Application.Cities.Queries.CitySearch;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Cities;
+namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Cities;
 
 [ApiController]
 [ApiVersion("1")]

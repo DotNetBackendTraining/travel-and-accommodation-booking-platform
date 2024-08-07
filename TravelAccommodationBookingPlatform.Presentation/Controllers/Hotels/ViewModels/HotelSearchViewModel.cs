@@ -2,7 +2,7 @@ using TravelAccommodationBookingPlatform.Application.Shared.Responses;
 using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Hotels.ViewModels;
+namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels.ViewModels;
 
 public class HotelSearchViewModel
 {

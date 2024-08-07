@@ -1,8 +1,8 @@
 using AutoMapper;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch;
-using TravelAccommodationBookingPlatform.Presentation.Bookings.Requests;
+using TravelAccommodationBookingPlatform.Presentation.Controllers.Bookings.Requests;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Bookings;
+namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Bookings;
 
 public class BookingProfile : Profile
 {

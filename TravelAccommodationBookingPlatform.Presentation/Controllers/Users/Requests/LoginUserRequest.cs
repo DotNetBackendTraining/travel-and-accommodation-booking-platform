@@ -1,4 +1,4 @@
-namespace TravelAccommodationBookingPlatform.Presentation.Users.Requests;
+namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Users.Requests;
 
 public class LoginUserRequest
 {

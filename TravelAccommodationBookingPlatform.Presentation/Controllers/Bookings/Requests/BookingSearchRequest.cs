@@ -1,7 +1,7 @@
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch;
 using TravelAccommodationBookingPlatform.Application.Shared;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Bookings.Requests;
+namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Bookings.Requests;
 
 public class BookingSearchRequest
 {

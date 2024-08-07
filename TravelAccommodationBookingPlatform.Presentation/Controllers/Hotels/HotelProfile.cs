@@ -1,10 +1,10 @@
 using AutoMapper;
 using TravelAccommodationBookingPlatform.Application.Hotels.Commands.CreateHotel;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
-using TravelAccommodationBookingPlatform.Presentation.Hotels.Requests;
-using TravelAccommodationBookingPlatform.Presentation.Hotels.ViewModels;
+using TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels.Requests;
+using TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels.ViewModels;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Hotels;
+namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels;
 
 public class HotelProfile : Profile
 {

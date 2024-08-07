@@ -11,11 +11,11 @@ using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
 using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
-using TravelAccommodationBookingPlatform.Presentation.Hotels.ViewModels;
+using TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels.ViewModels;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Hotels;
+namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels;
 
 [ApiController]
 [ApiVersion("1")]

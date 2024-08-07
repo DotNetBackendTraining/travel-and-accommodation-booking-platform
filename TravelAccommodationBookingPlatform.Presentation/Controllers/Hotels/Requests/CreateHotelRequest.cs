@@ -3,7 +3,7 @@ using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Hotels.Requests;
+namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels.Requests;
 
 public class CreateHotelRequest
 {

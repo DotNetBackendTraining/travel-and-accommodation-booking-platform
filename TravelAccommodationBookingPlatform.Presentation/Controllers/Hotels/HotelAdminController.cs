@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Hotels.Commands.CreateHotel;
 using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
-using TravelAccommodationBookingPlatform.Presentation.Hotels.Requests;
+using TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels.Requests;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Hotels;
+namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels;
 
 [ApiController]
 [ApiVersion("1")]
