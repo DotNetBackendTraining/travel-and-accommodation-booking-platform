@@ -17,7 +17,7 @@ public class HotelSearchQueryHandlerTests
         HotelSearchQueryHandler handler)
     {
         // Arrange
-        query.IncludeAvailableSearchFilters = false;
+        query.Options.IncludeAvailableSearchFilters = false;
         query.PaginationParameters.PageNumber = 1;
         query.PaginationParameters.PageSize = 10;
 
@@ -44,7 +44,7 @@ public class HotelSearchQueryHandlerTests
         HotelSearchQueryHandler handler)
     {
         // Arrange
-        query.IncludeAvailableSearchFilters = true;
+        query.Options.IncludeAvailableSearchFilters = true;
         query.PaginationParameters.PageNumber = 1;
         query.PaginationParameters.PageSize = 10;
 

@@ -6,9 +6,11 @@ namespace TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSea
 
 public sealed class HotelSearchSpecification : Specification<Hotel>
 {
-    public HotelSearchSpecification(HotelSearchQuery.HotelSearchFilters filters)
+    public HotelSearchSpecification(
+        HotelSearchQuery.HotelSearchFilters filters,
+        HotelSearchQuery.SortingOption sortingOption)
     {
         Query.ApplyHotelSearchFilters(filters)
-            .OrderBy(h => h.Name);
+            .ApplyHotelSortingOption(sortingOption);
     }
 }

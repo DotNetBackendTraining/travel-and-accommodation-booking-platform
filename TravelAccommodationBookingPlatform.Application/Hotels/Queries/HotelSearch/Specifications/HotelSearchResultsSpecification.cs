@@ -12,13 +12,13 @@ public sealed class HotelSearchResultsSpecification
 {
     public HotelSearchResultsSpecification(
         HotelSearchQuery.HotelSearchFilters filters,
-        bool includePriceDealIfAvailable,
+        HotelSearchQuery.HotelSearchOptions options,
         IMapper mapper)
     {
         Query.Select(h => new HotelSearchResponse.HotelSearchResult
             {
                 HotelSummary = mapper.Map<HotelSearchResponse.HotelSummary>(h),
-                PriceDeal = includePriceDealIfAvailable && h.Rooms.Any()
+                PriceDeal = options.IncludePriceDealIfAvailable && h.Rooms.Any()
                     ? new HotelSearchResponse.HotelPriceDeal
                     {
                         MinimumPriceDeal = new PriceDealResponse
@@ -40,6 +40,6 @@ public sealed class HotelSearchResultsSpecification
             })
             .Include(h => h.City)
             .ApplyHotelSearchFilters(filters)
-            .OrderBy(h => h.Name);
+            .ApplyHotelSortingOption(options.SortingOption);
     }
 }

@@ -7,16 +7,22 @@ namespace TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSea
 
 public class HotelSearchQuery : IQuery<HotelSearchResponse>
 {
-    public HotelSearchFilters Filters { get; set; } = new();
     public PaginationParameters PaginationParameters { get; set; } = default!;
-    public bool IncludeAvailableSearchFilters { get; set; }
-    public bool IncludePriceDealIfAvailable { get; set; }
+    public HotelSearchFilters Filters { get; set; } = new();
+    public HotelSearchOptions Options { get; set; } = new();
 
     public class HotelSearchFilters
     {
         public string SearchTerm { get; set; } = string.Empty;
         public GeneralFilters General { get; set; } = new();
         public AdvancedFilters Advanced { get; set; } = new();
+    }
+
+    public class HotelSearchOptions
+    {
+        public SortingOption SortingOption { get; set; } = SortingOption.Name;
+        public bool IncludeAvailableSearchFilters { get; set; } = false;
+        public bool IncludePriceDealIfAvailable { get; set; } = false;
     }
 
     public class GeneralFilters
@@ -43,5 +49,12 @@ public class HotelSearchQuery : IQuery<HotelSearchResponse>
         public List<StarRate>? AllowedStarRatings { get; set; }
         public List<Amenity>? RequiredAmenities { get; set; }
         public List<RoomType>? RequiredRoomTypes { get; set; }
+    }
+
+    public enum SortingOption
+    {
+        Name = 0,
+        Featured = 1,
+        StarsThenName = 2
     }
 }

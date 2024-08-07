@@ -4,7 +4,7 @@ using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
 namespace TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications.Extensions;
 
-public static class HotelSearchSpecificationExtensions
+public static class HotelSearchFiltersSpecificationExtensions
 {
     public static ISpecificationBuilder<Hotel> ApplyHotelSearchFilters(
         this ISpecificationBuilder<Hotel> query,

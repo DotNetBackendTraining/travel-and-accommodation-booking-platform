@@ -15,15 +15,16 @@ public class HotelSearchResultsSpecificationTests
     [Theory, AutoMoqData(omitOnRecursion: true)]
     public void HotelSearchResultsSpecification_ShouldReturnCorrectlyMappedResults(
         Hotel hotel,
-        bool includePriceDealIfAvailable,
-        Mock<IMapper> mapper)
+        Mock<IMapper> mapper,
+        HotelSearchQuery.HotelSearchOptions options)
     {
         // Arrange
+        hotel.Rooms.First().Bookings = [];
+        var filters = new HotelSearchQuery.HotelSearchFilters { General = new() { Rooms = 0 } };
         var hotels = new List<Hotel> { hotel };
-        var filters = new HotelSearchQuery.HotelSearchFilters();
 
         // Act
-        var spec = new HotelSearchResultsSpecification(filters, includePriceDealIfAvailable, mapper.Object);
+        var spec = new HotelSearchResultsSpecification(filters, options, mapper.Object);
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert
@@ -37,18 +38,20 @@ public class HotelSearchResultsSpecificationTests
     public void HotelSearchResultsSpecification_ShouldIncludePriceDeal_WhenAvailable(
         Hotel hotel,
         [Frozen] DiscountRate discountRate,
-        IMapper mapper)
+        IMapper mapper,
+        HotelSearchQuery.HotelSearchOptions options)
     {
         // Arrange
-        const bool includePriceDealIfAvailable = true;
+        options.IncludePriceDealIfAvailable = true;
         hotel.ActiveDiscount = new Discount { Rate = discountRate };
         hotel.Rooms.ToList().ForEach(r => r.Price = new Price { Value = new Random().Next(100, 500) });
+        hotel.Rooms.First().Bookings = [];
 
+        var filters = new HotelSearchQuery.HotelSearchFilters { General = new() { Rooms = 0 } };
         var hotels = new List<Hotel> { hotel };
-        var filters = new HotelSearchQuery.HotelSearchFilters();
 
         // Act
-        var spec = new HotelSearchResultsSpecification(filters, includePriceDealIfAvailable, mapper);
+        var spec = new HotelSearchResultsSpecification(filters, options, mapper);
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert
@@ -66,17 +69,19 @@ public class HotelSearchResultsSpecificationTests
     [Theory, AutoMoqData(omitOnRecursion: true)]
     public void HotelSearchResultsSpecification_ShouldNotIncludePriceDeal_WhenNotAvailable(
         Hotel hotel,
-        IMapper mapper)
+        IMapper mapper,
+        HotelSearchQuery.HotelSearchOptions options)
     {
         // Arrange
-        const bool includePriceDealIfAvailable = false;
+        options.IncludePriceDealIfAvailable = false;
         hotel.Rooms.ToList().ForEach(r => r.Price = new Price { Value = new Random().Next(100, 500) });
+        hotel.Rooms.First().Bookings = [];
 
+        var filters = new HotelSearchQuery.HotelSearchFilters { General = new() { Rooms = 0 } };
         var hotels = new List<Hotel> { hotel };
-        var filters = new HotelSearchQuery.HotelSearchFilters();
 
         // Act
-        var spec = new HotelSearchResultsSpecification(filters, includePriceDealIfAvailable, mapper);
+        var spec = new HotelSearchResultsSpecification(filters, options, mapper);
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert
@@ -88,16 +93,17 @@ public class HotelSearchResultsSpecificationTests
     [Theory, AutoMoqData(omitOnRecursion: true)]
     public void HotelSearchResultsSpecification_ShouldHandleEmptyRoomsList(
         Hotel hotel,
-        IMapper mapper)
+        IMapper mapper,
+        HotelSearchQuery.HotelSearchOptions options)
     {
         // Arrange
-        const bool includePriceDealIfAvailable = true;
+        options.IncludePriceDealIfAvailable = true;
         hotel.Rooms.Clear(); // No rooms in the hotel
         var hotels = new List<Hotel> { hotel };
         var filters = new HotelSearchQuery.HotelSearchFilters { General = { Rooms = 0 } };
 
         // Act
-        var spec = new HotelSearchResultsSpecification(filters, includePriceDealIfAvailable, mapper);
+        var spec = new HotelSearchResultsSpecification(filters, options, mapper);
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert

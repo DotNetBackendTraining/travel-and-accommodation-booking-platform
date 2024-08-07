@@ -31,7 +31,7 @@ public class HotelSearchSpecificationTests
         };
 
         // Act
-        var spec = new HotelSearchSpecification(filters);
+        var spec = new HotelSearchSpecification(filters, HotelSearchQuery.SortingOption.Name);
         var result = spec.Evaluate(new List<Hotel> { hotel }.AsQueryable()).ToList();
 
         // Assert
@@ -58,7 +58,7 @@ public class HotelSearchSpecificationTests
         hotel.Rooms = rooms;
 
         // Act
-        var spec = new HotelSearchSpecification(filters);
+        var spec = new HotelSearchSpecification(filters, HotelSearchQuery.SortingOption.Name);
         var result = spec.Evaluate(new List<Hotel> { hotel }.AsQueryable()).ToList();
 
         // Assert
@@ -66,7 +66,7 @@ public class HotelSearchSpecificationTests
     }
 
     [Theory, AutoMoqData(omitOnRecursion: true, [typeof(RoomWithoutBookingsCustomization)])]
-    public void HotelSearchSpecification_ShouldOrderByHotelName(
+    public void HotelSearchSpecification_ShouldApplySortingOption(
         List<Hotel> hotels)
     {
         // Arrange
@@ -77,7 +77,7 @@ public class HotelSearchSpecificationTests
         });
 
         // Act
-        var spec = new HotelSearchSpecification(filters);
+        var spec = new HotelSearchSpecification(filters, HotelSearchQuery.SortingOption.Name);
         var result = spec.Evaluate(hotels.AsQueryable()).ToList();
 
         // Assert Success

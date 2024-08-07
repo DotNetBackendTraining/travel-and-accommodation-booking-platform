@@ -24,15 +24,15 @@ public class HotelSearchQueryHandler : IQueryHandler<HotelSearchQuery, HotelSear
     {
         var resultsSpec = new HotelSearchResultsSpecification(
             request.Filters,
-            request.IncludePriceDealIfAvailable,
+            request.Options,
             _mapper);
 
         var resultsPage = await _repository.PageAsync(resultsSpec, request.PaginationParameters, cancellationToken);
         var response = new HotelSearchResponse { SearchResults = resultsPage };
 
-        if (request.IncludeAvailableSearchFilters)
+        if (request.Options.IncludeAvailableSearchFilters)
         {
-            var hotelsSpec = new HotelSearchSpecification(request.Filters);
+            var hotelsSpec = new HotelSearchSpecification(request.Filters, request.Options.SortingOption);
             var filtersSpec = new AvailableFiltersSpecification();
             response.AvailableFilters = await _repository.AggregateAsync(hotelsSpec, filtersSpec, cancellationToken);
         }
