@@ -1,6 +1,5 @@
 using AutoMapper;
 using TravelAccommodationBookingPlatform.Application.Hotels.Commands.CreateHotel;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.FeaturedHotels;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
 using TravelAccommodationBookingPlatform.Presentation.Hotels.Requests;
 using TravelAccommodationBookingPlatform.Presentation.Hotels.ViewModels;
@@ -21,15 +20,5 @@ public class HotelProfile : Profile
             .IncludeMembers(src => src.HotelSummary, src => src.PriceDeal);
         CreateMap<HotelSearchResponse.AvailableFiltersResult, HotelSearchViewModel.AvailableFiltersResult>();
         CreateMap<HotelSearchResponse, HotelSearchViewModel>();
-
-        // FeaturedHotels
-        CreateMap<FeaturedHotelsResponse.FeaturedHotelSummary, FeaturedHotelsViewModel.FeaturedHotelResult>();
-        CreateMap<FeaturedHotelsResponse.FeaturedDealResult, FeaturedHotelsViewModel.PriceDeal>()
-            .ForMember(dest => dest.Minimum, opt => opt.MapFrom(src => src.MinimumPriceDeal))
-            .ForMember(dest => dest.Maximum, opt => opt.MapFrom(src => src.MaximumPriceDeal));
-        CreateMap<FeaturedHotelsResponse.FeaturedDealResult, FeaturedHotelsViewModel.FeaturedHotelResult>()
-            .IncludeMembers(src => src.Hotel)
-            .ForMember(dest => dest.PriceDeal, opt => opt.MapFrom(src => src));
-        CreateMap<FeaturedHotelsResponse, FeaturedHotelsViewModel>();
     }
 }
