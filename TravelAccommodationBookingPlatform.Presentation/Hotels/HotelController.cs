@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,21 +7,55 @@ using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelDetails
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelImages;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelReviews;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelRooms;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
 using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
+using TravelAccommodationBookingPlatform.Presentation.Hotels.ViewModels;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
+using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Hotels;
 
 [ApiController]
 [ApiVersion("1")]
-[Route("api/v{version:apiVersion}/hotels/{id:guid}")]
+[Route("api/v{version:apiVersion}/hotels")]
 [RoleAuthorize]
 public class HotelController : AbstractController
 {
-    public HotelController(ISender sender) : base(sender)
+    private readonly IMapper _mapper;
+
+    public HotelController(
+        ISender sender,
+        IMapper mapper)
+        : base(sender)
     {
+        _mapper = mapper;
+    }
+
+    /// <summary>
+    /// Searches for hotels based on provided filters and returns available search filters.
+    /// </summary>
+    /// <param name="query">The search query with filters.</param>
+    /// <param name="cancellationToken">Cancellation token for the request.</param>
+    /// <returns>The search results and available filters.</returns>
+    /// <response code="200">Returns the search results and filters.</response>
+    /// <response code="400">If the request is invalid.</response>
+    /// <response code="401">Unauthorized if credentials are invalid.</response>
+    /// <response code="422">If the request is invalid (validation error).</response>
+    [HttpGet]
+    [ProducesResponseType(typeof(HotelSearchResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<ActionResult<HotelSearchViewModel>> HotelSearch(
+        [FromQuery] HotelSearchQuery query,
+        CancellationToken cancellationToken)
+    {
+        var result = await Sender.Send(query, cancellationToken);
+        return result.IsSuccess
+            ? Ok(_mapper.Map<HotelSearchViewModel>(result.Value))
+            : result.ToProblemDetails();
     }
 
     /// <summary>
@@ -32,7 +67,7 @@ public class HotelController : AbstractController
     /// <response code="200">Returns the details of the hotel.</response>
     /// <response code="401">Unauthorized if credentials are invalid.</response>
     /// <response code="404">If the hotel is not found.</response>
-    [HttpGet]
+    [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(HotelDetailsResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -55,7 +90,7 @@ public class HotelController : AbstractController
     /// <response code="401">Unauthorized if credentials are invalid.</response>
     /// <response code="404">If the hotel is not found.</response>
     /// <response code="422">If the request is invalid (validation error).</response>
-    [HttpGet("images")]
+    [HttpGet("{id:guid}/images")]
     [ProducesResponseType(typeof(HotelImagesResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -80,7 +115,7 @@ public class HotelController : AbstractController
     /// <response code="401">Unauthorized if credentials are invalid.</response>
     /// <response code="404">If the hotel is not found.</response>
     /// <response code="422">If the request is invalid (validation error).</response>
-    [HttpGet("reviews")]
+    [HttpGet("{id:guid}/reviews")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -106,7 +141,7 @@ public class HotelController : AbstractController
     /// <response code="401">Unauthorized if credentials are invalid.</response>
     /// <response code="404">If the hotel is not found.</response>
     /// <response code="422">If the request is invalid (validation error).</response>
-    [HttpGet("rooms")]
+    [HttpGet("{id:guid}/rooms")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
