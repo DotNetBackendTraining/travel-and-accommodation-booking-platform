@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +11,8 @@ using TravelAccommodationBookingPlatform.Presentation.Users.Requests;
 namespace TravelAccommodationBookingPlatform.Presentation.Users;
 
 [ApiController]
-[Route("api/users")]
+[ApiVersion("1")]
+[Route("api/v{version:apiVersion}/users")]
 public class UserController : ControllerBase
 {
     private readonly ISender _sender;

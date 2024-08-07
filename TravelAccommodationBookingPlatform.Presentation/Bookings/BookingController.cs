@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +12,8 @@ using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 namespace TravelAccommodationBookingPlatform.Presentation.Bookings;
 
 [ApiController]
-[Route("api/bookings")]
+[ApiVersion("1")]
+[Route("api/v{version:apiVersion}/bookings")]
 [RoleAuthorize]
 public class BookingController : AbstractController
 {

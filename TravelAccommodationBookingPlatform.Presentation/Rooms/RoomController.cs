@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,8 @@ using TravelAccommodationBookingPlatform.Presentation.Shared;
 namespace TravelAccommodationBookingPlatform.Presentation.Rooms;
 
 [ApiController]
-[Route("api/rooms/{id:guid}")]
+[ApiVersion("1")]
+[Route("api/v{version:apiVersion}/rooms/{id:guid}")]
 [RoleAuthorize]
 public class RoomController : AbstractController
 {

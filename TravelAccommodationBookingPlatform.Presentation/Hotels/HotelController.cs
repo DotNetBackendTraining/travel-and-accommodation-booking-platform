@@ -1,5 +1,5 @@
+using Asp.Versioning;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelDetails;
@@ -8,13 +8,15 @@ using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelReviews
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelRooms;
 using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Domain.Enums;
+using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Hotels;
 
-[Authorize]
 [ApiController]
-[Route("api/hotels/{id:guid}")]
+[ApiVersion("1")]
+[Route("api/v{version:apiVersion}/hotels/{id:guid}")]
+[RoleAuthorize]
 public class HotelController : AbstractController
 {
     public HotelController(ISender sender) : base(sender)
