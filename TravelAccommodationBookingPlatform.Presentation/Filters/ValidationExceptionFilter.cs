@@ -1,8 +1,9 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace TravelAccommodationBookingPlatform.App.Filters;
+namespace TravelAccommodationBookingPlatform.Presentation.Filters;
 
 public class ValidationExceptionFilter : IExceptionFilter
 {

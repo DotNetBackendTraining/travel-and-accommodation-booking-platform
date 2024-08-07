@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
-using TravelAccommodationBookingPlatform.App.Filters;
+using TravelAccommodationBookingPlatform.Presentation.Filters;
 
 namespace TravelAccommodationBookingPlatform.App.DependencyInjection;
 
