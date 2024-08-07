@@ -1,6 +1,6 @@
 # Travel and Accommodation Booking Platform
 
-[![.NET](https://github.com/DotNetBackendTraining/travel-and-accommodation-booking-platform/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/DotNetBackendTraining/travel-and-accommodation-booking-platform/actions/workflows/build-and-test.yml)
+[![.NET and Docker](https://github.com/DotNetBackendTraining/travel-and-accommodation-booking-platform/actions/workflows/build-test-push.yml/badge.svg)](https://github.com/DotNetBackendTraining/travel-and-accommodation-booking-platform/actions/workflows/build-test-push.yml)
 
 # Introduction
 
