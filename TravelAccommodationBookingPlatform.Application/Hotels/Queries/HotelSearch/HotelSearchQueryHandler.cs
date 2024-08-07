@@ -22,7 +22,11 @@ public class HotelSearchQueryHandler : IQueryHandler<HotelSearchQuery, HotelSear
 
     public async Task<Result<HotelSearchResponse>> Handle(HotelSearchQuery request, CancellationToken cancellationToken)
     {
-        var resultsSpec = new HotelSearchResultsSpecification(request.Filters, _mapper);
+        var resultsSpec = new HotelSearchResultsSpecification(
+            request.Filters,
+            request.IncludePriceDealIfAvailable,
+            _mapper);
+
         var resultsPage = await _repository.PageAsync(resultsSpec, request.PaginationParameters, cancellationToken);
         var response = new HotelSearchResponse { SearchResults = resultsPage };
 

@@ -18,8 +18,8 @@ public class HotelSearchViewModel
         public Image ThumbnailImage { get; set; } = default!;
         public Guid CityId { get; set; }
         public string CityName { get; set; } = string.Empty;
-        public Price? MinimumPrice { get; set; }
-        public Price? MaximumPrice { get; set; }
+        public PriceDealResponse? MinimumPriceDeal { get; set; } = default!;
+        public PriceDealResponse? MaximumPriceDeal { get; set; } = default!;
     }
 
     public class AvailableFiltersResult

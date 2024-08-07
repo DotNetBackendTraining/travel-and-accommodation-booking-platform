@@ -16,8 +16,9 @@ public class HotelProfile : Profile
 
         // HotelSearch
         CreateMap<HotelSearchResponse.HotelSummary, HotelSearchViewModel.HotelSearchResult>();
+        CreateMap<HotelSearchResponse.HotelPriceDeal, HotelSearchViewModel.HotelSearchResult>();
         CreateMap<HotelSearchResponse.HotelSearchResult, HotelSearchViewModel.HotelSearchResult>()
-            .IncludeMembers(src => src.HotelSummary);
+            .IncludeMembers(src => src.HotelSummary, src => src.PriceDeal);
         CreateMap<HotelSearchResponse.AvailableFiltersResult, HotelSearchViewModel.AvailableFiltersResult>();
         CreateMap<HotelSearchResponse, HotelSearchViewModel>();
 
