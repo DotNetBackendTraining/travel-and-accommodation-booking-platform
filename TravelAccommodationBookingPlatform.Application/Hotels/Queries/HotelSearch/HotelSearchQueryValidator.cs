@@ -9,19 +9,21 @@ public class HotelSearchQueryValidator : AbstractValidator<HotelSearchQuery>
     public HotelSearchQueryValidator()
     {
         RuleFor(x => x.Filters.SearchTerm)
-            .NotEmpty().WithMessage("Search term must not be empty")
             .MaximumLength(ApplicationRules.Search.SearchTermMaxLength).WithMessage(
                 $"Search term must be less than or equal {ApplicationRules.Search.SearchTermMaxLength} characters.");
 
         RuleFor(x => x.Filters.General.Checking)
-            .SetValidator(new CheckingValidator());
+            .SetValidator(new CheckingValidator()!)
+            .When(x => x.Filters.General.Checking is not null);
 
-        RuleFor(x => x.Filters.General.Checking.CheckInDate)
+        RuleFor(x => x.Filters.General.Checking!.CheckInDate)
             .GreaterThanOrEqualTo(DateTime.Today)
+            .When(x => x.Filters.General.Checking is not null)
             .WithMessage("Check-in date cannot be in the past.");
 
         RuleFor(x => x.Filters.General.NumberOfGuests)
-            .SetValidator(new NumberOfGuestsValidator());
+            .SetValidator(new NumberOfGuestsValidator()!)
+            .When(x => x.Filters.General.Checking is not null);
 
         RuleFor(x => x.Filters.General.Rooms)
             .GreaterThan(0)
