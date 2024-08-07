@@ -1,9 +1,8 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 using TravelAccommodationBookingPlatform.Presentation.Filters;
 
 namespace TravelAccommodationBookingPlatform.App.DependencyInjection;
@@ -17,10 +16,12 @@ public static class PresentationServicesExtension
         services.AddProblemDetails();
         services.AddControllers(options => options.Filters.Add(new ValidationExceptionFilter()))
             .AddApplicationPart(Presentation.AssemblyReference.Assembly)
-            .AddJsonOptions(options =>
+            .AddNewtonsoftJson(options =>
             {
-                options.JsonSerializerOptions.Converters.Add(
-                    new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+                options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                });
             });
 
         services.AddApiVersioning(options =>
