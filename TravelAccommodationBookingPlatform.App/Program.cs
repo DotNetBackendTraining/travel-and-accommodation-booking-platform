@@ -21,8 +21,7 @@ await app.Migrate();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerWithConfigurations();
 }
 
 app.UseHttpsRedirection();

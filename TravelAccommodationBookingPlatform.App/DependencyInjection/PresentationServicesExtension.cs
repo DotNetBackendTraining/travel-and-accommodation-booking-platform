@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
 using TravelAccommodationBookingPlatform.Presentation.Filters;
@@ -23,12 +24,18 @@ public static class PresentationServicesExtension
             });
 
         services.AddApiVersioning(options =>
-        {
-            options.ReportApiVersions = true;
-            options.AssumeDefaultVersionWhenUnspecified = true;
-            options.DefaultApiVersion = new ApiVersion(1, 0);
-            options.ApiVersionReader = new UrlSegmentApiVersionReader();
-        });
+            {
+                options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.ApiVersionReader = new UrlSegmentApiVersionReader();
+            })
+            .AddMvc()
+            .AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
     }
 
     public static void AddSwaggerDocumentation(this IServiceCollection services)
@@ -46,11 +53,18 @@ public static class PresentationServicesExtension
 
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo
+            var apiVersionDescriptionProvider = services
+                .BuildServiceProvider()
+                .GetRequiredService<IApiVersionDescriptionProvider>();
+
+            foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
             {
-                Title = "Travel and Accommodation Booking Platform API",
-                Version = "v1"
-            });
+                options.SwaggerDoc(description.GroupName, new OpenApiInfo
+                {
+                    Title = $"Travel and Accommodation Booking Platform API {description.ApiVersion}",
+                    Version = description.ApiVersion.ToString()
+                });
+            }
 
             // Add XML output from Presentation assembly
             var assembly = Presentation.AssemblyReference.Assembly;
