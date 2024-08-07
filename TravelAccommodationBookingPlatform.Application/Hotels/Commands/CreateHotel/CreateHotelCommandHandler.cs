@@ -1,5 +1,6 @@
 using AutoMapper;
 using TravelAccommodationBookingPlatform.Application.Cities.Specifications;
+using TravelAccommodationBookingPlatform.Application.Interfaces;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;

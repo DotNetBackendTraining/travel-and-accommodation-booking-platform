@@ -1,4 +1,4 @@
-namespace TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
+namespace TravelAccommodationBookingPlatform.Application.Interfaces;
 
 public interface IUnitOfWork
 {

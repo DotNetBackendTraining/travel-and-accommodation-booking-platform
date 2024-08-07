@@ -1,4 +1,4 @@
-using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
+using TravelAccommodationBookingPlatform.Application.Interfaces;
 
 namespace TravelAccommodationBookingPlatform.Persistence.Repositories;
 

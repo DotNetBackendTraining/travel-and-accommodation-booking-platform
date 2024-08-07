@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TravelAccommodationBookingPlatform.Application.Interfaces;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Persistence;
 using TravelAccommodationBookingPlatform.Persistence.Repositories;

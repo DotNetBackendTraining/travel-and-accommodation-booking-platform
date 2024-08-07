@@ -2,6 +2,7 @@ using AutoFixture.Xunit2;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
+using TravelAccommodationBookingPlatform.Application.Interfaces;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Auth;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
