@@ -2,7 +2,7 @@ using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
 using TravelAccommodationBookingPlatform.Presentation.Filters;
 
 namespace TravelAccommodationBookingPlatform.App.DependencyInjection;
@@ -16,13 +16,7 @@ public static class PresentationServicesExtension
         services.AddProblemDetails();
         services.AddControllers(options => options.Filters.Add(new ValidationExceptionFilter()))
             .AddApplicationPart(Presentation.AssemblyReference.Assembly)
-            .AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter
-                {
-                    NamingStrategy = new CamelCaseNamingStrategy()
-                });
-            });
+            .AddNewtonsoftJson(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 
         services.AddApiVersioning(options =>
             {
@@ -44,6 +38,9 @@ public static class PresentationServicesExtension
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+
+        // Add Newtonsoft.Json Support
+        services.AddSwaggerGenNewtonsoftSupport();
 
         // Add fluent validation rules documentation
         services.AddFluentValidationRulesToSwagger(options =>
