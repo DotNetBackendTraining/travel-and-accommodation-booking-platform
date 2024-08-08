@@ -20,5 +20,9 @@ public static class PersistenceServicesExtension
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped(typeof(ICudRepository<>), typeof(CudRepository<>));
+
+        services.AddScoped<ImageRepository>();
+        services.AddScoped<IImageRepository>(p => p.GetRequiredService<ImageRepository>());
+        services.AddScopedTransactionHandler(p => p.GetRequiredService<ImageRepository>());
     }
 }
