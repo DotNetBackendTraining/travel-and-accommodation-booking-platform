@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using TravelAccommodationBookingPlatform.Infrastructure.Services.Files;
+using TravelAccommodationBookingPlatform.Infrastructure.Files;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 using TravelAccommodationBookingPlatform.IntegrationTests.Shared;
 

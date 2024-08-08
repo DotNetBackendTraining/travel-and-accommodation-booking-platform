@@ -6,7 +6,7 @@ using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
 using TravelAccommodationBookingPlatform.Domain.Shared;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 
-namespace TravelAccommodationBookingPlatform.Infrastructure.Services.Files;
+namespace TravelAccommodationBookingPlatform.Infrastructure.Files;
 
 public class CloudinaryImageStorageService : IImageStorageService
 {

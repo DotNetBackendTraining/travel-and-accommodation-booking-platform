@@ -5,8 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Auth;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
 using TravelAccommodationBookingPlatform.Domain.Shared;
-using TravelAccommodationBookingPlatform.Infrastructure.Services.Auth;
-using TravelAccommodationBookingPlatform.Infrastructure.Services.Files;
+using TravelAccommodationBookingPlatform.Infrastructure.Auth;
+using TravelAccommodationBookingPlatform.Infrastructure.Files;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
