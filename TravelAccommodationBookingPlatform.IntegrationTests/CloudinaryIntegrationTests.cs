@@ -1,12 +1,9 @@
 using FluentAssertions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
 using TravelAccommodationBookingPlatform.Infrastructure.Services.Files;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 using TravelAccommodationBookingPlatform.IntegrationTests.Shared;
-using TravelAccommodationBookingPlatform.Presentation.Shared;
 
 namespace TravelAccommodationBookingPlatform.IntegrationTests;
 
@@ -24,14 +21,8 @@ public class CloudinaryIntegrationTests : BaseIntegrationTest
     [Fact]
     public async Task UploadAndDeleteImageTest()
     {
-        // Open test image
-        var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "test_image.png");
-        await using var fileStream = File.OpenRead(filePath);
-        var formFile = new FormFile(fileStream, 0, fileStream.Length, "test_image", "test_image.png");
-        var fileWrapper = new FormFileWrapper(formFile);
-
         // Upload file
-        var result = await _service.SaveAllAsync(new List<IFile> { fileWrapper });
+        var result = await _service.SaveAllAsync([DataUtility.GetTestImageFile()]);
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeEmpty();
 

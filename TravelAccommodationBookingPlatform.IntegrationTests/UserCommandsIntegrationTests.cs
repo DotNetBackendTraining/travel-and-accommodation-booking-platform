@@ -1,9 +1,12 @@
 using FluentAssertions;
 using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.IntegrationTests.Shared;
+using TravelAccommodationBookingPlatform.Persistence;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
 namespace TravelAccommodationBookingPlatform.IntegrationTests;
@@ -11,8 +14,16 @@ namespace TravelAccommodationBookingPlatform.IntegrationTests;
 [Collection("IntegrationTests")]
 public class UserCommandsIntegrationTests : BaseIntegrationTest
 {
+    private readonly ISender _sender;
+    private readonly AppDbContext _dbContext;
+
     public UserCommandsIntegrationTests(IntegrationTestWebAppFactory factory) : base(factory)
     {
+        _sender = Scope.ServiceProvider.GetRequiredService<ISender>();
+        _dbContext = Scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        _dbContext.Users.RemoveRange(_dbContext.Users);
+        _dbContext.SaveChanges();
     }
 
     private const string ValidUsername = "username";
@@ -24,7 +35,7 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
         command.Username = ValidUsername;
         command.Password = ValidPassword;
         command.Email = ValidEmail;
-        var registerResult = await Sender.Send(command);
+        var registerResult = await _sender.Send(command);
         registerResult.IsSuccess.Should().BeTrue();
     }
 
@@ -36,8 +47,8 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
         commandWithEmptyUsername.Username = "";
         commandWithEmptyPassword.Password = "";
 
-        var loginWithEmptyUsername = async () => await Sender.Send(commandWithEmptyUsername);
-        var loginWithEmptyPassword = async () => await Sender.Send(commandWithEmptyPassword);
+        var loginWithEmptyUsername = async () => await _sender.Send(commandWithEmptyUsername);
+        var loginWithEmptyPassword = async () => await _sender.Send(commandWithEmptyPassword);
 
         await loginWithEmptyUsername.Should().ThrowAsync<ValidationException>();
         await loginWithEmptyPassword.Should().ThrowAsync<ValidationException>();
@@ -48,7 +59,7 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
     {
         command.Username = "unknown";
 
-        var result = await Sender.Send(command);
+        var result = await _sender.Send(command);
 
         result.IsFailure.Should().BeTrue();
         result.Error.Should().Be(DomainErrors.User.UsernameNotFound);
@@ -63,7 +74,7 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
         loginUserCommand.Username = ValidUsername;
         loginUserCommand.Password = "wrong_password";
 
-        var result = await Sender.Send(loginUserCommand);
+        var result = await _sender.Send(loginUserCommand);
 
         result.IsFailure.Should().BeTrue();
         result.Error.Should().Be(DomainErrors.User.InvalidCredentials);
@@ -81,7 +92,7 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
         loginUserCommand.Password = ValidPassword;
 
         // Login
-        var loginResult = await Sender.Send(loginUserCommand);
+        var loginResult = await _sender.Send(loginUserCommand);
 
         // Must succeed
         loginResult.IsSuccess.Should().BeTrue();
@@ -95,10 +106,10 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
         command.Password = ValidPassword;
         command.Email = ValidEmail;
 
-        var result = await Sender.Send(command);
+        var result = await _sender.Send(command);
 
         result.IsSuccess.Should().BeTrue();
-        DbContext.Users.Any(u => u.Username == command.Username).Should().BeTrue();
+        _dbContext.Users.Any(u => u.Username == command.Username).Should().BeTrue();
     }
 
     [Theory, AutoMoqData]
@@ -111,7 +122,7 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
         command.Email = ValidEmail;
 
         // register again
-        var result = await Sender.Send(command);
+        var result = await _sender.Send(command);
 
         result.IsFailure.Should().BeTrue();
         result.Error.Should().Be(DomainErrors.User.UsernameAlreadyExists);
@@ -124,7 +135,7 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
         command.Password = "weak_password";
         command.Email = ValidEmail;
 
-        var action = async () => await Sender.Send(command);
+        var action = async () => await _sender.Send(command);
 
         await action.Should().ThrowAsync<ValidationException>();
     }
