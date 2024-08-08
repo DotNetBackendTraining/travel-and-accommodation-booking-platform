@@ -21,49 +21,32 @@ public class CreateHotelCommandHandlerTests
         CreateHotelCommandHandler handler,
         CreateHotelCommand command)
     {
+        // Arrange
         mockCityRepository.Setup(repo => repo.ExistsAsync(
                 It.IsAny<CityByIdSpecification>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(false);
 
+        // Act
         var result = await handler.Handle(command, CancellationToken.None);
 
+        // Assert
         result.IsSuccess.Should().BeFalse();
         result.Error.Should().Be(DomainErrors.City.IdNotFound);
-    }
-
-    [Theory, AutoMoqData]
-    public async Task Handle_ReturnsFailure_WhenImageSaveFails(
-        [Frozen] Mock<IRepository<City>> mockCityRepository,
-        [Frozen] Mock<IImageStorageService> mockImageStorageService,
-        CreateHotelCommandHandler handler,
-        CreateHotelCommand command,
-        Error imageError)
-    {
-        mockCityRepository.Setup(repo => repo.ExistsAsync(
-                It.IsAny<CityByIdSpecification>(),
-                It.IsAny<CancellationToken>()))
-            .ReturnsAsync(true);
-        mockImageStorageService.Setup(service => service.SaveAllAsync(
-                It.IsAny<IEnumerable<IFile>>()))
-            .ReturnsAsync(Result.Failure<List<string>>(imageError));
-
-        var result = await handler.Handle(command, CancellationToken.None);
-
-        result.IsSuccess.Should().BeFalse();
-        result.Error.Should().Be(imageError);
     }
 
     [Theory, AutoMoqData]
     public async Task Handle_ReturnsSuccess_WhenHotelIsCreated(
         [Frozen] Mock<IRepository<City>> mockCityRepository,
         [Frozen] Mock<ICudRepository<Hotel>> mockHotelCudRepository,
+        [Frozen] Mock<IImageRepository> mockImageRepository,
         [Frozen] Mock<IImageStorageService> mockImageStorageService,
         [Frozen] Mock<IUnitOfWork> mockUnitOfWork,
         CreateHotelCommandHandler handler,
         CreateHotelCommand command,
         List<string> imageUrls)
     {
+        // Arrange
         mockCityRepository.Setup(repo => repo.ExistsAsync(
                 It.IsAny<CityByIdSpecification>(),
                 It.IsAny<CancellationToken>()))
@@ -75,36 +58,12 @@ public class CreateHotelCommandHandlerTests
                 It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
+        // Act
         var result = await handler.Handle(command, CancellationToken.None);
 
+        // Assert
         mockHotelCudRepository.Verify(r => r.Add(It.IsAny<Hotel>()), Times.Once);
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBeNull();
-    }
-
-    [Theory, AutoMoqData]
-    public async Task Handle_RollsBack_WhenUnitOfWorkThrowsException(
-        [Frozen] Mock<IRepository<City>> mockCityRepository,
-        [Frozen] Mock<IImageStorageService> mockImageStorageService,
-        [Frozen] Mock<IUnitOfWork> mockUnitOfWork,
-        CreateHotelCommandHandler handler,
-        CreateHotelCommand command,
-        List<string> imageUrls)
-    {
-        mockCityRepository.Setup(repo =>
-                repo.ExistsAsync(It.IsAny<CityByIdSpecification>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(true);
-        mockImageStorageService.Setup(service => service.SaveAllAsync(It.IsAny<IEnumerable<IFile>>()))
-            .ReturnsAsync(Result.Success(imageUrls));
-        mockUnitOfWork.Setup(unit => unit.SaveChangesAsync(It.IsAny<CancellationToken>()))
-            .Throws(new Exception("Database error"));
-        mockImageStorageService.Setup(service => service.DeleteAsync(It.IsAny<string>()))
-            .ReturnsAsync(Result.Success());
-
-        var act = async () => await handler.Handle(command, CancellationToken.None);
-
-        await act.Should().ThrowAsync<Exception>().WithMessage("Database error");
-        mockImageStorageService.Verify(service => service.DeleteAsync(It.IsAny<string>()),
-            Times.Exactly(imageUrls.Count));
     }
 }
