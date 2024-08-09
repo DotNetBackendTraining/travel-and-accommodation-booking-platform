@@ -2,9 +2,11 @@ using Asp.Versioning;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Cities.Commands.CreateCity;
 using TravelAccommodationBookingPlatform.Application.Cities.Commands.DeleteCity;
+using TravelAccommodationBookingPlatform.Application.Cities.Commands.PatchCity;
 using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Cities.Requests;
@@ -55,6 +57,43 @@ public class CityAdminController : AbstractController
         var result = await Sender.Send(command, cancellationToken);
         return result.IsSuccess
             ? CreatedAtAction("GetCityDetails", "City", new { id = result.Value.Id }, result.Value)
+            : result.ToProblemDetails();
+    }
+
+    /// <summary>
+    /// Updates an existing city.
+    /// </summary>
+    /// <param name="id">The ID of the city to update.</param>
+    /// <param name="patchDoc">The JSON Patch document containing the updates.</param>
+    /// <param name="cancellationToken">Cancellation token for the request.</param>
+    /// <returns>No content if the update is successful.</returns>
+    /// <response code="204">No content if the update is successful.</response>
+    /// <response code="400">If the request is invalid (input format error).</response>
+    /// <response code="401">Unauthorized if credentials are invalid.</response>
+    /// <response code="403">Forbidden if user is not an admin.</response>
+    /// <response code="404">If a resource is not found (e.g. City).</response>
+    /// <response code="422">If the request is invalid (validation error).</response>
+    [HttpPatch("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> PatchCity(
+        Guid id,
+        [FromBody] JsonPatchDocument<PatchCityModel> patchDoc,
+        CancellationToken cancellationToken)
+    {
+        var command = new PatchCityCommand
+        {
+            Id = id,
+            PatchDocument = new JsonPatchDocumentWrapper<PatchCityModel>(patchDoc)
+        };
+
+        var result = await Sender.Send(command, cancellationToken);
+        return result.IsSuccess
+            ? NoContent()
             : result.ToProblemDetails();
     }
 
