@@ -14,7 +14,11 @@ public static class PresentationServicesExtension
         services.AddAutoMapper(Presentation.AssemblyReference.Assembly);
 
         services.AddProblemDetails();
-        services.AddControllers(options => options.Filters.Add(new ValidationExceptionFilter()))
+        services.AddControllers(options =>
+            {
+                options.Filters.Add(new ValidationExceptionFilter());
+                options.Filters.Add(new JsonPatchExceptionFilter());
+            })
             .AddApplicationPart(Presentation.AssemblyReference.Assembly)
             .AddNewtonsoftJson(options => options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 
