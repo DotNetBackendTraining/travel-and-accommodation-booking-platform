@@ -18,7 +18,8 @@ public class RoomDetailsQueryHandler : IQueryHandler<RoomDetailsQuery, RoomDetai
     public async Task<Result<RoomDetailsResponse>> Handle(RoomDetailsQuery request, CancellationToken cancellationToken)
     {
         var specification = new RoomDetailsSpecification(request);
-        var roomDetailsResponse = await _repository.GetAsync(specification, cancellationToken);
+        var roomDetailsResponse = await _repository
+            .GetWithProjectionAsync<RoomDetailsResponse>(specification, cancellationToken);
 
         return roomDetailsResponse is null
             ? Result.Failure<RoomDetailsResponse>(DomainErrors.Room.IdNotFound)

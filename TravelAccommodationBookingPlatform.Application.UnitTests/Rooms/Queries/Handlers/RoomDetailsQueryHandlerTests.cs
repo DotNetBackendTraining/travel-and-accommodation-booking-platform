@@ -16,9 +16,10 @@ public class RoomDetailsQueryHandlerTests :
 
     protected override Task SetupRepositoryForFailure(Mock<IRepository<Room>> mockRepository)
     {
-        mockRepository.Setup(repo => repo.GetAsync(
-                It.IsAny<Specification<Room, RoomDetailsResponse>>(),
-                It.IsAny<CancellationToken>()))
+        mockRepository.Setup(repo => repo
+                .GetWithProjectionAsync<RoomDetailsResponse>(
+                    It.IsAny<Specification<Room>>(),
+                    It.IsAny<CancellationToken>()))
             .ReturnsAsync((RoomDetailsResponse)null!);
         return Task.CompletedTask;
     }
@@ -26,9 +27,10 @@ public class RoomDetailsQueryHandlerTests :
     protected override Task SetupRepositoryForSuccess(Mock<IRepository<Room>> mockRepository,
         RoomDetailsResponse response)
     {
-        mockRepository.Setup(repo => repo.GetAsync(
-                It.IsAny<Specification<Room, RoomDetailsResponse>>(),
-                It.IsAny<CancellationToken>()))
+        mockRepository.Setup(repo => repo
+                .GetWithProjectionAsync<RoomDetailsResponse>(
+                    It.IsAny<Specification<Room>>(),
+                    It.IsAny<CancellationToken>()))
             .ReturnsAsync(response);
         return Task.CompletedTask;
     }
