@@ -82,7 +82,7 @@ public class DeleteHotelCommandHandlerTests
             .ReturnsAsync(true);
 
         imageRepositoryMock.Setup(repo => repo.Delete(It.IsAny<string>()));
-        imageRepositoryMock.Setup(repo => repo.DeleteAll(It.IsAny<List<string>>()));
+        imageRepositoryMock.Setup(repo => repo.DeleteAll(It.IsAny<IEnumerable<string>>()));
         cudHotelRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Hotel>()));
         unitOfWorkMock.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
@@ -93,7 +93,7 @@ public class DeleteHotelCommandHandlerTests
         result.IsSuccess.Should().BeTrue();
         cudHotelRepositoryMock.Verify(repo => repo.Delete(hotel), Times.Once);
         imageRepositoryMock.Verify(repo => repo.Delete(hotel.ThumbnailImage.Url), Times.Once);
-        imageRepositoryMock.Verify(repo => repo.DeleteAll(It.IsAny<List<string>>()), Times.Once);
+        imageRepositoryMock.Verify(repo => repo.DeleteAll(It.IsAny<IEnumerable<string>>()), Times.Once);
         unitOfWorkMock.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }

@@ -15,7 +15,7 @@ public class PatchHotelCommandHandler : IRequestHandler<PatchHotelCommand, Resul
 {
     private readonly IRepository<Hotel> _hotelRepository;
     private readonly IRepository<City> _cityRepository;
-    private readonly ICudRepository<Hotel> _cudHotelRepository;
+    private readonly ICudRepository<Hotel> _hotelCudRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IValidator<PatchHotelModel> _validator;
@@ -23,14 +23,14 @@ public class PatchHotelCommandHandler : IRequestHandler<PatchHotelCommand, Resul
     public PatchHotelCommandHandler(
         IRepository<Hotel> hotelRepository,
         IRepository<City> cityRepository,
-        ICudRepository<Hotel> cudHotelRepository,
+        ICudRepository<Hotel> hotelCudRepository,
         IUnitOfWork unitOfWork,
         IMapper mapper,
         IValidator<PatchHotelModel> validator)
     {
         _hotelRepository = hotelRepository;
         _cityRepository = cityRepository;
-        _cudHotelRepository = cudHotelRepository;
+        _hotelCudRepository = hotelCudRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _validator = validator;
@@ -47,14 +47,14 @@ public class PatchHotelCommandHandler : IRequestHandler<PatchHotelCommand, Resul
         }
 
         // Apply patch to model
-        var updateHotelModel = _mapper.Map<PatchHotelModel>(hotel);
-        request.PatchDocument.ApplyTo(updateHotelModel);
+        var hotelModel = _mapper.Map<PatchHotelModel>(hotel);
+        request.PatchDocument.ApplyTo(hotelModel);
 
         // Validate changes
-        await _validator.ValidateAndThrowAsync(updateHotelModel, cancellationToken);
+        await _validator.ValidateAndThrowAsync(hotelModel, cancellationToken);
 
         // Apply back to entity
-        _mapper.Map(updateHotelModel, hotel);
+        _mapper.Map(hotelModel, hotel);
 
         // DB Integrity conditions
         // City must exist
@@ -66,7 +66,7 @@ public class PatchHotelCommandHandler : IRequestHandler<PatchHotelCommand, Resul
         }
 
         // Update and save changes
-        _cudHotelRepository.Update(hotel);
+        _hotelCudRepository.Update(hotel);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();

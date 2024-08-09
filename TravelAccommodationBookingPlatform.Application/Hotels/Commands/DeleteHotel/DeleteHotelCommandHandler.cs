@@ -44,7 +44,7 @@ public class DeleteHotelCommandHandler : ICommandHandler<DeleteHotelCommand>
         }
 
         _imageRepository.Delete(hotel.ThumbnailImage.Url);
-        _imageRepository.DeleteAll(hotel.Images.Select(i => i.Url).ToList());
+        _imageRepository.DeleteAll(hotel.Images.Select(i => i.Url));
         _cudRepository.Delete(hotel);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

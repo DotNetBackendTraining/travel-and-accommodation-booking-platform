@@ -43,14 +43,14 @@ public class PatchCityCommandHandler : ICommandHandler<PatchCityCommand>
         }
 
         // Apply patch to model
-        var updateCityModel = _mapper.Map<PatchCityModel>(city);
-        request.PatchDocument.ApplyTo(updateCityModel);
+        var cityModel = _mapper.Map<PatchCityModel>(city);
+        request.PatchDocument.ApplyTo(cityModel);
 
         // Validate changes
-        await _validator.ValidateAndThrowAsync(updateCityModel, cancellationToken);
+        await _validator.ValidateAndThrowAsync(cityModel, cancellationToken);
 
         // Apply back to entity
-        _mapper.Map(updateCityModel, city);
+        _mapper.Map(cityModel, city);
 
         // Update and save changes
         _cudRepository.Update(city);
