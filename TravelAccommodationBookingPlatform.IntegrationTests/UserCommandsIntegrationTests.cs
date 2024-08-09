@@ -21,8 +21,14 @@ public class UserCommandsIntegrationTests : BaseIntegrationTest
     {
         _sender = Scope.ServiceProvider.GetRequiredService<ISender>();
         _dbContext = Scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        RemoveTestUser();
+    }
 
-        _dbContext.Users.RemoveRange(_dbContext.Users);
+    private void RemoveTestUser()
+    {
+        var user = _dbContext.Users.FirstOrDefault(u => u.Username == ValidUsername);
+        if (user is null) return;
+        _dbContext.Users.Remove(user);
         _dbContext.SaveChanges();
     }
 
