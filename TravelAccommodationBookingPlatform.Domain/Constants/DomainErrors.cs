@@ -35,6 +35,11 @@ public static class DomainErrors
             ErrorType.Forbidden,
             "User.InvalidRole",
             "User does not have the required role(s)");
+
+        public static readonly Error CannotDeleteUserWithBookings = new(
+            ErrorType.Conflict,
+            "User.CannotDeleteUserWithBookings",
+            "Cannot delete user as they have existing bookings");
     }
 
     public static class Hotel
@@ -43,6 +48,11 @@ public static class DomainErrors
             ErrorType.NotFound,
             "Hotel.IdNotFound",
             "Hotel with the given ID does not exist");
+
+        public static readonly Error CannotDeleteHotelWithBookings = new(
+            ErrorType.Conflict,
+            "Hotel.CannotDeleteHotelWithBookings",
+            "Cannot delete hotel as it has existing bookings");
     }
 
     public static class Room
@@ -51,6 +61,11 @@ public static class DomainErrors
             ErrorType.NotFound,
             "Room.IdNotFound",
             "Room with the given ID does not exist");
+
+        public static readonly Error CannotDeleteRoomWithBookings = new(
+            ErrorType.Conflict,
+            "Room.CannotDeleteRoomWithBookings",
+            "Cannot delete room as it has existing bookings");
     }
 
     public static class City
@@ -59,5 +74,49 @@ public static class DomainErrors
             ErrorType.NotFound,
             "City.IdNotFound",
             "City with the given ID does not exist");
+
+        public static readonly Error CannotDeleteCityWithHotels = new(
+            ErrorType.Conflict,
+            "City.CannotDeleteCityWithHotels",
+            "Cannot delete city as it has existing hotels");
+    }
+
+    public static class Payment
+    {
+        public static readonly Error IdNotFound = new(
+            ErrorType.NotFound,
+            "Payment.IdNotFound",
+            "Payment with the given ID does not exist");
+
+        public static readonly Error CannotDeletePaymentWithBooking = new(
+            ErrorType.Conflict,
+            "Payment.CannotDeletePaymentWithBooking",
+            "Cannot delete payment as it is associated with an existing booking");
+    }
+
+    public static class Booking
+    {
+        public static readonly Error IdNotFound = new(
+            ErrorType.NotFound,
+            "Booking.IdNotFound",
+            "Booking with the given ID does not exist");
+
+        public static readonly Error CannotDeleteBookingWithPayment = new(
+            ErrorType.Conflict,
+            "Booking.CannotDeleteBookingWithPayment",
+            "Cannot delete booking as it has an associated payment");
+    }
+
+    public static class Discount
+    {
+        public static readonly Error IdNotFound = new(
+            ErrorType.NotFound,
+            "Discount.IdNotFound",
+            "Discount with the given ID does not exist");
+
+        public static readonly Error CannotDeleteDiscountAppliedToBooking = new(
+            ErrorType.Conflict,
+            "Discount.CannotDeleteDiscountAppliedToBooking",
+            "Cannot delete discount as it is applied to an existing booking");
     }
 }
