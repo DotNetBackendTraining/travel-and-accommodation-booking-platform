@@ -2,7 +2,6 @@ using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using TravelAccommodationBookingPlatform.Application.Interfaces;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
-using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 using TravelAccommodationBookingPlatform.IntegrationTests.Shared;
 using TravelAccommodationBookingPlatform.Persistence;
 
@@ -27,14 +26,13 @@ public class ImageTransactionIntegrationTests : BaseIntegrationTest
     {
         // Arrange
         var hotel = _dbContext.Hotels.First();
-        hotel.Images = [];
         var imageFile = DataUtility.GetTestImageFile();
 
         // Act
         _imageRepository.SaveAndAdd(imageFile, hotel, e => e.Images);
 
         // Assert
-        hotel.Images.Should().BeEmpty();
+        hotel.Images.Should().BeNullOrEmpty();
 
         // Act
         await _unitOfWork.SaveChangesAsync(CancellationToken.None);

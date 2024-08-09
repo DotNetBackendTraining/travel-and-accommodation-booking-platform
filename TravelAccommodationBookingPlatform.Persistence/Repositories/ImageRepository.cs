@@ -58,13 +58,15 @@ public class ImageRepository : IImageRepository, ITransactionHandler
             _addedImageUrls.AddRange(imageUrls);
 
             var imageCollectionProperty = (PropertyInfo)((MemberExpression)imageCollectionSelector.Body).Member;
-            var imageCollection = (ICollection<Image>?)imageCollectionProperty.GetValue(entity) ?? new List<Image>();
+            var imageCollection = (ICollection<Image>?)imageCollectionProperty.GetValue(entity) ?? [];
 
             imageCollection.Clear();
             foreach (var url in imageUrls)
             {
                 imageCollection.Add(new Image { Url = url });
             }
+
+            imageCollectionProperty.SetValue(entity, imageCollection);
         });
     }
 
@@ -85,6 +87,7 @@ public class ImageRepository : IImageRepository, ITransactionHandler
             var imageCollection = (ICollection<Image>?)imageCollectionProperty.GetValue(entity) ?? [];
 
             imageCollection.Add(new Image { Url = imageUrl });
+            imageCollectionProperty.SetValue(entity, imageCollection);
         });
     }
 
