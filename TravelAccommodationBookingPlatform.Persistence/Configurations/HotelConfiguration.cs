@@ -41,7 +41,8 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
 
         builder.HasMany(h => h.Rooms)
             .WithOne(r => r.Hotel)
-            .HasForeignKey(r => r.HotelId);
+            .HasForeignKey(r => r.HotelId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.OwnsMany(h => h.Images, img =>
         {
@@ -61,11 +62,13 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
 
         builder.HasMany(h => h.Discounts)
             .WithOne(d => d.Hotel)
-            .HasForeignKey(d => d.HotelId);
+            .HasForeignKey(d => d.HotelId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne(h => h.ActiveDiscount)
             .WithOne()
             .HasForeignKey<Hotel>(h => h.ActiveDiscountId)
-            .IsRequired(false);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

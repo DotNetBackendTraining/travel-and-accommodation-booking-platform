@@ -28,6 +28,7 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
 
         builder.HasMany(c => c.Hotels)
             .WithOne(h => h.City)
-            .HasForeignKey(h => h.CityId);
+            .HasForeignKey(h => h.CityId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

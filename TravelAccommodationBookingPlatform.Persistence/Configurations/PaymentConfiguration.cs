@@ -16,7 +16,8 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
 
         builder.HasOne(p => p.AppliedDiscount)
             .WithMany()
-            .HasForeignKey(p => p.AppliedDiscountId);
+            .HasForeignKey(p => p.AppliedDiscountId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(p => p.ConfirmationNumber)
             .IsRequired()

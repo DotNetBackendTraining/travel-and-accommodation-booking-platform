@@ -32,6 +32,7 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
         builder.HasOne(b => b.Payment)
             .WithOne(p => p.Booking)
             .HasForeignKey<Booking>(b => b.PaymentId)
-            .IsRequired(false);
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
