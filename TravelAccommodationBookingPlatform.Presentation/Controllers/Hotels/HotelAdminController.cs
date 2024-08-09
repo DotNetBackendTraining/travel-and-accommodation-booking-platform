@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Hotels.Commands.CreateHotel;
+using TravelAccommodationBookingPlatform.Application.Hotels.Commands.DeleteHotel;
 using TravelAccommodationBookingPlatform.Application.Hotels.Commands.PatchHotel;
 using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
@@ -80,7 +81,6 @@ public class HotelAdminController : AbstractController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-
     public async Task<IActionResult> PatchHotel(
         Guid id,
         [FromBody] JsonPatchDocument<PatchHotelModel> patchDoc,
@@ -92,6 +92,34 @@ public class HotelAdminController : AbstractController
             PatchDocument = new JsonPatchDocumentWrapper<PatchHotelModel>(patchDoc)
         };
 
+        var result = await Sender.Send(command, cancellationToken);
+        return result.IsSuccess
+            ? NoContent()
+            : result.ToProblemDetails();
+    }
+
+    /// <summary>
+    /// Deletes an existing hotel.
+    /// </summary>
+    /// <param name="id">The ID of the hotel to delete.</param>
+    /// <param name="cancellationToken">Cancellation token for the request.</param>
+    /// <returns>No content if the delete is successful.</returns>
+    /// <response code="204">No content if the deletion is successful.</response>
+    /// <response code="401">Unauthorized if credentials are invalid.</response>
+    /// <response code="403">Forbidden if user is not an admin.</response>
+    /// <response code="404">If the hotel is not found.</response>
+    /// <response code="409">If the hotel cannot be deleted due to conflicts (e.g. existing bookings).</response>
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> DeleteHotel(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeleteHotelCommand { Id = id };
         var result = await Sender.Send(command, cancellationToken);
         return result.IsSuccess
             ? NoContent()
