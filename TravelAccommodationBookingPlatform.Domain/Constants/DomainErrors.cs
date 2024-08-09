@@ -66,6 +66,11 @@ public static class DomainErrors
             ErrorType.Conflict,
             "Room.CannotDeleteRoomWithBookings",
             "Cannot delete room as it has existing bookings");
+
+        public static readonly Error RoomNumberAlreadyExists = new(
+            ErrorType.Conflict,
+            "Room.RoomNumberAlreadyExists",
+            "Room with this RoomNumber already exists");
     }
 
     public static class City
