@@ -12,7 +12,7 @@ public class ImageRepository : IImageRepository, ITransactionHandler
 {
     private readonly IImageStorageService _imageStorageService;
     private readonly List<Func<Task>> _saveActions = [];
-    private readonly List<Func<Task>> _deleteActions = [];
+    private readonly List<string> _imageUrlsToDelete = [];
     private readonly List<string> _addedImageUrls = [];
 
     public ImageRepository(IImageStorageService imageStorageService)
@@ -20,7 +20,7 @@ public class ImageRepository : IImageRepository, ITransactionHandler
         _imageStorageService = imageStorageService;
     }
 
-    public void SaveAndSet<T>(
+    public void SaveAndUpdate<T>(
         IFile image,
         T entity,
         Expression<Func<T, Image>> imageSelector)
@@ -41,7 +41,7 @@ public class ImageRepository : IImageRepository, ITransactionHandler
         });
     }
 
-    public void SaveAndSetAll<T>(
+    public void SaveAndUpdateAll<T>(
         IEnumerable<IFile> images,
         T entity,
         Expression<Func<T, ICollection<Image>>> imageCollectionSelector)
@@ -59,8 +59,8 @@ public class ImageRepository : IImageRepository, ITransactionHandler
 
             var imageCollectionProperty = (PropertyInfo)((MemberExpression)imageCollectionSelector.Body).Member;
             var imageCollection = (ICollection<Image>?)imageCollectionProperty.GetValue(entity) ?? new List<Image>();
-            imageCollection.Clear();
 
+            imageCollection.Clear();
             foreach (var url in imageUrls)
             {
                 imageCollection.Add(new Image { Url = url });
@@ -68,42 +68,34 @@ public class ImageRepository : IImageRepository, ITransactionHandler
         });
     }
 
-    public void Delete<T>(T entity, Expression<Func<T, Image>> imageSelector)
+    public void SaveAndAdd<T>(IFile image, T entity, Expression<Func<T, ICollection<Image>>> imageCollectionSelector)
     {
-        _deleteActions.Add(async () =>
+        _saveActions.Add(async () =>
         {
-            var imageProperty = (PropertyInfo)((MemberExpression)imageSelector.Body).Member;
-            var image = (Image?)imageProperty.GetValue(entity);
-            ArgumentNullException.ThrowIfNull(image);
+            var imageSaveResult = await _imageStorageService.SaveAllAsync([image]);
+            if (imageSaveResult.IsFailure)
+            {
+                throw new Exception(imageSaveResult.Error);
+            }
 
-            await _imageStorageService.DeleteAsync(image.Url);
-            imageProperty.SetValue(entity, null);
+            var imageUrl = imageSaveResult.Value.First();
+            _addedImageUrls.Add(imageUrl);
+
+            var imageCollectionProperty = (PropertyInfo)((MemberExpression)imageCollectionSelector.Body).Member;
+            var imageCollection = (ICollection<Image>?)imageCollectionProperty.GetValue(entity) ?? [];
+
+            imageCollection.Add(new Image { Url = imageUrl });
         });
     }
 
-    public void DeleteAll<T>(T entity, Expression<Func<T, ICollection<Image>>> imageCollectionSelector,
-        Func<Image, bool>? predicate = null)
+    public void Delete(string imageUrl)
     {
-        _deleteActions.Add(async () =>
-        {
-            var imageCollectionProperty = (PropertyInfo)((MemberExpression)imageCollectionSelector.Body).Member;
-            var imageCollection = (ICollection<Image>?)imageCollectionProperty.GetValue(entity);
-            ArgumentNullException.ThrowIfNull(imageCollection);
+        _imageUrlsToDelete.Add(imageUrl);
+    }
 
-            var imagesToDelete = predicate is not null
-                ? imageCollection.Where(predicate).ToList()
-                : imageCollection.ToList();
-
-            foreach (var image in imagesToDelete)
-            {
-                await _imageStorageService.DeleteAsync(image.Url);
-            }
-
-            foreach (var image in imagesToDelete)
-            {
-                imageCollection.Remove(image);
-            }
-        });
+    public void DeleteAll(IEnumerable<string> imageUrls)
+    {
+        _imageUrlsToDelete.AddRange(imageUrls);
     }
 
     public async Task Handle(TransactionStartNotification notification, CancellationToken cancellationToken)
@@ -116,9 +108,9 @@ public class ImageRepository : IImageRepository, ITransactionHandler
 
     public async Task Handle(TransactionSuccessNotification notification, CancellationToken cancellationToken)
     {
-        foreach (var action in _deleteActions)
+        foreach (var url in _imageUrlsToDelete)
         {
-            await action();
+            await _imageStorageService.DeleteAsync(url);
         }
     }
 
@@ -132,9 +124,9 @@ public class ImageRepository : IImageRepository, ITransactionHandler
 
     public Task Handle(TransactionCleanupNotification notification, CancellationToken cancellationToken)
     {
-        _addedImageUrls.Clear();
         _saveActions.Clear();
-        _deleteActions.Clear();
+        _imageUrlsToDelete.Clear();
+        _addedImageUrls.Clear();
         return Task.CompletedTask;
     }
 }
