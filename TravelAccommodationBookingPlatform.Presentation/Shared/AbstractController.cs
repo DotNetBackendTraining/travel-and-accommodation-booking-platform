@@ -27,6 +27,16 @@ public abstract class AbstractController : ControllerBase
             : result.ToProblemDetails();
     }
 
+    protected async Task<ActionResult> HandleNoContentCommand(
+        ICommand command,
+        CancellationToken cancellationToken)
+    {
+        var result = await Sender.Send(command, cancellationToken);
+        return result.IsSuccess
+            ? NoContent()
+            : result.ToProblemDetails();
+    }
+
     protected Result<Guid> GetUserIdOrFailure()
     {
         var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);

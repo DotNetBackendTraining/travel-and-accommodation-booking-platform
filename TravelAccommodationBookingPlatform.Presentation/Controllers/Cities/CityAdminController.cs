@@ -90,11 +90,7 @@ public class CityAdminController : AbstractController
             Id = id,
             PatchDocument = new JsonPatchDocumentWrapper<PatchCityModel>(patchDoc)
         };
-
-        var result = await Sender.Send(command, cancellationToken);
-        return result.IsSuccess
-            ? NoContent()
-            : result.ToProblemDetails();
+        return await HandleNoContentCommand(command, cancellationToken);
     }
 
 
@@ -120,9 +116,6 @@ public class CityAdminController : AbstractController
         CancellationToken cancellationToken)
     {
         var command = new DeleteCityCommand { Id = id };
-        var result = await Sender.Send(command, cancellationToken);
-        return result.IsSuccess
-            ? NoContent()
-            : result.ToProblemDetails();
+        return await HandleNoContentCommand(command, cancellationToken);
     }
 }

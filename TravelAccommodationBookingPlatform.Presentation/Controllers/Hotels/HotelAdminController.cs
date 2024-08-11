@@ -91,11 +91,7 @@ public class HotelAdminController : AbstractController
             Id = id,
             PatchDocument = new JsonPatchDocumentWrapper<PatchHotelModel>(patchDoc)
         };
-
-        var result = await Sender.Send(command, cancellationToken);
-        return result.IsSuccess
-            ? NoContent()
-            : result.ToProblemDetails();
+        return await HandleNoContentCommand(command, cancellationToken);
     }
 
     /// <summary>
@@ -120,9 +116,6 @@ public class HotelAdminController : AbstractController
         CancellationToken cancellationToken)
     {
         var command = new DeleteHotelCommand { Id = id };
-        var result = await Sender.Send(command, cancellationToken);
-        return result.IsSuccess
-            ? NoContent()
-            : result.ToProblemDetails();
+        return await HandleNoContentCommand(command, cancellationToken);
     }
 }

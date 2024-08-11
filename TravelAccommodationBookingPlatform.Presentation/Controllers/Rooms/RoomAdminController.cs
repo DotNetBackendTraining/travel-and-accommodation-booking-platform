@@ -92,10 +92,6 @@ public class RoomAdminController : AbstractController
             Id = id,
             PatchDocument = new JsonPatchDocumentWrapper<PatchRoomModel>(patchDoc)
         };
-
-        var result = await Sender.Send(command, cancellationToken);
-        return result.IsSuccess
-            ? NoContent()
-            : result.ToProblemDetails();
+        return await HandleNoContentCommand(command, cancellationToken);
     }
 }
