@@ -11,17 +11,18 @@ namespace TravelAccommodationBookingPlatform.Persistence.Repositories;
 public class ImageRepository : IImageRepository, ITransactionHandler
 {
     private readonly IImageStorageService _imageStorageService;
-    private readonly ICudRepository<Image> _imageCudRepository;
+    private readonly AppDbContext _dbContext;
+
     private readonly List<Func<Task>> _saveActions = [];
     private readonly List<string> _imageUrlsToDelete = [];
     private readonly List<string> _addedImageUrls = [];
 
     public ImageRepository(
         IImageStorageService imageStorageService,
-        ICudRepository<Image> imageCudRepository)
+        AppDbContext dbContext)
     {
         _imageStorageService = imageStorageService;
-        _imageCudRepository = imageCudRepository;
+        _dbContext = dbContext;
     }
 
     public void SaveAndSet<T>(
@@ -44,7 +45,7 @@ public class ImageRepository : IImageRepository, ITransactionHandler
             var imageEntity = (Image?)imageProperty.GetValue(entity) ?? new Image();
 
             imageEntity.Url = imageUrl;
-            _imageCudRepository.Add(imageEntity);
+            _dbContext.Add(imageEntity);
             imageProperty.SetValue(entity, imageEntity);
         });
     }
@@ -71,7 +72,7 @@ public class ImageRepository : IImageRepository, ITransactionHandler
             imageCollection.Clear();
             foreach (var image in imageUrls.Select(url => new Image { Url = url }))
             {
-                _imageCudRepository.Add(image);
+                _dbContext.Add(image);
                 imageCollection.Add(image);
             }
 
@@ -96,7 +97,7 @@ public class ImageRepository : IImageRepository, ITransactionHandler
             var imageCollection = (ICollection<Image>?)imageCollectionProperty.GetValue(entity) ?? [];
 
             var imageEntity = new Image { Url = imageUrl };
-            _imageCudRepository.Add(imageEntity);
+            _dbContext.Add(imageEntity);
             imageCollection.Add(imageEntity);
             imageCollectionProperty.SetValue(entity, imageCollection);
         });
@@ -105,7 +106,12 @@ public class ImageRepository : IImageRepository, ITransactionHandler
     public void Delete(Image image)
     {
         _imageUrlsToDelete.Add(image.Url);
-        _imageCudRepository.Delete(image);
+        _dbContext.Remove(image);
+
+        _dbContext.RemoveRange(_dbContext.RoomImageAssociations
+            .Where(ia => ia.ImageId == image.Id));
+        _dbContext.RemoveRange(_dbContext.HotelImageAssociations
+            .Where(ia => ia.ImageId == image.Id));
     }
 
     public void DeleteAll(IEnumerable<Image> images)
