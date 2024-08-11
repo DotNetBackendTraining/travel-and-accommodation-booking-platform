@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using TravelAccommodationBookingPlatform.Domain.Entities;
+using TravelAccommodationBookingPlatform.Persistence.Configurations.Associations;
 
 namespace TravelAccommodationBookingPlatform.Persistence;
 
@@ -14,6 +15,8 @@ public class AppDbContext : DbContext
     public DbSet<Discount> Discounts { get; set; }
     public DbSet<Payment> Payments { get; set; }
     public DbSet<Image> Images { get; set; }
+    public DbSet<HotelImageAssociation> HotelImageAssociations { get; set; }
+    public DbSet<RoomImageAssociation> RoomImageAssociations { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {

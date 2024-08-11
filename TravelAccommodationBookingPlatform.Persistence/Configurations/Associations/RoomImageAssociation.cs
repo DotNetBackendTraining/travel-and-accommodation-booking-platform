@@ -2,7 +2,7 @@ using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Persistence.Configurations.Associations;
 
-public class RoomImageAssociation
+public class RoomImageAssociation : BaseEntity
 {
     public Guid ImageId { get; set; }
     public Image Image { get; set; } = default!;

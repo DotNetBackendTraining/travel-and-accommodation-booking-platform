@@ -37,12 +37,12 @@ public class RoomConfiguration : IEntityTypeConfiguration<Room>
                     .HasOne(ia => ia.Image)
                     .WithMany()
                     .HasForeignKey(ia => ia.ImageId)
-                    .OnDelete(DeleteBehavior.Cascade),
+                    .OnDelete(DeleteBehavior.NoAction),
                 j => j
                     .HasOne<Room>()
                     .WithMany()
                     .HasForeignKey(ia => ia.RoomId)
-                    .OnDelete(DeleteBehavior.Restrict));
+                    .OnDelete(DeleteBehavior.NoAction));
 
         builder.HasMany(r => r.Bookings);
     }

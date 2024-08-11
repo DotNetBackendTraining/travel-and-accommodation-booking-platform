@@ -50,12 +50,12 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
                     .HasOne(ia => ia.Image)
                     .WithMany()
                     .HasForeignKey(ia => ia.ImageId)
-                    .OnDelete(DeleteBehavior.Cascade),
+                    .OnDelete(DeleteBehavior.NoAction),
                 j => j
                     .HasOne<Hotel>()
                     .WithMany()
                     .HasForeignKey(ia => ia.HotelId)
-                    .OnDelete(DeleteBehavior.Restrict));
+                    .OnDelete(DeleteBehavior.NoAction));
 
         builder.OwnsMany(h => h.Reviews, rev =>
         {
