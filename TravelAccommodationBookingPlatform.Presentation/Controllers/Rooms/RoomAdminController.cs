@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Rooms.Commands.CreateRoom;
+using TravelAccommodationBookingPlatform.Application.Rooms.Commands.DeleteRoom;
 using TravelAccommodationBookingPlatform.Application.Rooms.Commands.PatchRoom;
 using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
@@ -92,6 +93,31 @@ public class RoomAdminController : AbstractController
             Id = id,
             PatchDocument = new JsonPatchDocumentWrapper<PatchRoomModel>(patchDoc)
         };
+        return await HandleNoContentCommand(command, cancellationToken);
+    }
+
+    /// <summary>
+    /// Deletes an existing room.
+    /// </summary>
+    /// <param name="id">The ID of the room to delete.</param>
+    /// <param name="cancellationToken">Cancellation token for the request.</param>
+    /// <returns>No content if the delete is successful.</returns>
+    /// <response code="204">No content if the deletion is successful.</response>
+    /// <response code="401">Unauthorized if credentials are invalid.</response>
+    /// <response code="403">Forbidden if user is not an admin.</response>
+    /// <response code="404">If the room is not found.</response>
+    /// <response code="409">If the room cannot be deleted due to conflicts (e.g. existing bookings).</response>
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> DeleteRoom(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeleteRoomCommand { Id = id };
         return await HandleNoContentCommand(command, cancellationToken);
     }
 }
