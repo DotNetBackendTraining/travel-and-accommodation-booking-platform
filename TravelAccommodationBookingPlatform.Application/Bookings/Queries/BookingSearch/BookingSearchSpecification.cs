@@ -1,15 +1,16 @@
 using Ardalis.Specification;
+using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch.SpecificationExtensions;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
 namespace TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch;
 
-public sealed class BookingSearchSpecification : Specification<Booking, BookingSearchResponse.BookingSearchResult>
+public sealed class BookingSearchSpecification : Specification<Booking, BookingSearchResult>
 {
-    public BookingSearchSpecification(Guid userId, BookingSearchQuery.BookingSearchFilters filters)
+    public BookingSearchSpecification(Guid userId, BookingSearchFilters filters)
     {
-        Query.Select(b => new BookingSearchResponse.BookingSearchResult
+        Query.Select(b => new BookingSearchResult
             {
                 Checking = b.Checking,
                 Hotel = new()

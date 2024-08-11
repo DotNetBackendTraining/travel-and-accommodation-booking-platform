@@ -1,4 +1,5 @@
 using Ardalis.Specification;
+using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch.DTOs;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch.SpecificationExtensions;
@@ -7,7 +8,7 @@ public static class BookingSearchSpecificationExtensions
 {
     public static ISpecificationBuilder<Booking> ApplyBookingSearchFilters(
         this ISpecificationBuilder<Booking> query,
-        BookingSearchQuery.BookingSearchFilters filters,
+        BookingSearchFilters filters,
         Guid userId)
     {
         return query
@@ -20,7 +21,7 @@ public static class BookingSearchSpecificationExtensions
     public static ISpecificationBuilder<Booking> ApplyLatestPerHotelFilter(
         this ISpecificationBuilder<Booking> query,
         bool latestPerHotel,
-        BookingSearchQuery.TimespanOption timespan,
+        BookingSearchFilters.TimespanOption timespan,
         Guid userId)
     {
         var now = DateTime.UtcNow;
@@ -33,9 +34,9 @@ public static class BookingSearchSpecificationExtensions
                     .Any(otherBooking =>
                         otherBooking.UserId == userId &&
                         // Consider the right timespan only for bookings
-                        (timespan != BookingSearchQuery.TimespanOption.PastOnly ||
+                        (timespan != BookingSearchFilters.TimespanOption.PastOnly ||
                          otherBooking.Checking.CheckOutDate < now) &&
-                        (timespan != BookingSearchQuery.TimespanOption.FutureOnly ||
+                        (timespan != BookingSearchFilters.TimespanOption.FutureOnly ||
                          otherBooking.Checking.CheckInDate > now) &&
                         // This booking should be the latest booking among them
                         otherBooking.Checking.CheckInDate > b.Checking.CheckInDate));
@@ -82,18 +83,18 @@ public static class BookingSearchSpecificationExtensions
 
     public static ISpecificationBuilder<Booking> ApplyTimespanFilter(
         this ISpecificationBuilder<Booking> query,
-        BookingSearchQuery.TimespanOption timespan)
+        BookingSearchFilters.TimespanOption timespan)
     {
         var now = DateTime.UtcNow;
         switch (timespan)
         {
-            case BookingSearchQuery.TimespanOption.PastOnly:
+            case BookingSearchFilters.TimespanOption.PastOnly:
                 query.Where(b => b.Checking.CheckOutDate < now);
                 break;
-            case BookingSearchQuery.TimespanOption.FutureOnly:
+            case BookingSearchFilters.TimespanOption.FutureOnly:
                 query.Where(b => b.Checking.CheckInDate > now);
                 break;
-            case BookingSearchQuery.TimespanOption.All:
+            case BookingSearchFilters.TimespanOption.All:
             default:
                 break;
         }

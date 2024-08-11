@@ -1,5 +1,5 @@
 using FluentAssertions;
-using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch;
+using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch.SpecificationExtensions;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
@@ -11,7 +11,7 @@ public class BookingSearchSpecificationExtensionsTests
 {
     [Theory, AutoMoqData(omitOnRecursion: true, typeof(CheckingDatesCustomization))]
     public void ApplyBookingSearchFilters_ShouldFilterCorrectly_WhenCriteriaAreMet(
-        BookingSearchQuery.BookingSearchFilters filters,
+        BookingSearchFilters filters,
         List<Booking> bookings,
         Guid userId)
     {
@@ -21,7 +21,7 @@ public class BookingSearchSpecificationExtensionsTests
         filters.CheckingInEndDate = DateTime.UtcNow.AddDays(10);
         filters.CheckingOutStartDate = DateTime.UtcNow.AddDays(-5);
         filters.CheckingOutEndDate = DateTime.UtcNow.AddDays(15);
-        filters.Timespan = BookingSearchQuery.TimespanOption.All;
+        filters.Timespan = BookingSearchFilters.TimespanOption.All;
         filters.LatestBookingPerHotel = false;
 
         // Act
@@ -63,9 +63,9 @@ public class BookingSearchSpecificationExtensionsTests
         var rooms = booking1.Rooms.First().Hotel.Rooms.ToList();
         rooms.ForEach(r => r.Bookings = bookings.ToList());
 
-        var filters = new BookingSearchQuery.BookingSearchFilters
+        var filters = new BookingSearchFilters
         {
-            Timespan = BookingSearchQuery.TimespanOption.PastOnly,
+            Timespan = BookingSearchFilters.TimespanOption.PastOnly,
             LatestBookingPerHotel = true
         };
 
@@ -104,9 +104,9 @@ public class BookingSearchSpecificationExtensionsTests
         var rooms = booking1.Rooms.First().Hotel.Rooms.ToList();
         rooms.ForEach(r => r.Bookings = bookings.ToList());
 
-        var filters = new BookingSearchQuery.BookingSearchFilters
+        var filters = new BookingSearchFilters
         {
-            Timespan = BookingSearchQuery.TimespanOption.FutureOnly,
+            Timespan = BookingSearchFilters.TimespanOption.FutureOnly,
             LatestBookingPerHotel = true
         };
 
@@ -165,7 +165,7 @@ public class BookingSearchSpecificationExtensionsTests
         bookings.ForEach(b => b.Checking.CheckOutDate = now.AddDays(-1));
 
         // Act
-        var spec = new TestSpec<Booking>(q => q.ApplyTimespanFilter(BookingSearchQuery.TimespanOption.PastOnly));
+        var spec = new TestSpec<Booking>(q => q.ApplyTimespanFilter(BookingSearchFilters.TimespanOption.PastOnly));
         var result = spec.Evaluate(bookings.AsQueryable()).ToList();
 
         // Assert
@@ -182,7 +182,7 @@ public class BookingSearchSpecificationExtensionsTests
         bookings.ForEach(b => b.Checking.CheckInDate = now.AddDays(1));
 
         // Act
-        var spec = new TestSpec<Booking>(q => q.ApplyTimespanFilter(BookingSearchQuery.TimespanOption.FutureOnly));
+        var spec = new TestSpec<Booking>(q => q.ApplyTimespanFilter(BookingSearchFilters.TimespanOption.FutureOnly));
         var result = spec.Evaluate(bookings.AsQueryable()).ToList();
 
         // Assert
@@ -195,7 +195,7 @@ public class BookingSearchSpecificationExtensionsTests
         List<Booking> bookings)
     {
         // Act
-        var spec = new TestSpec<Booking>(q => q.ApplyTimespanFilter(BookingSearchQuery.TimespanOption.All));
+        var spec = new TestSpec<Booking>(q => q.ApplyTimespanFilter(BookingSearchFilters.TimespanOption.All));
         var result = spec.Evaluate(bookings.AsQueryable()).ToList();
 
         // Assert

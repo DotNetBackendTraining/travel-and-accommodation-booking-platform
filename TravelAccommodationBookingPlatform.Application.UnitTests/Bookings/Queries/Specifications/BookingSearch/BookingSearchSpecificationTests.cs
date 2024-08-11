@@ -1,5 +1,6 @@
 using FluentAssertions;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch;
+using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch.DTOs;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
@@ -33,7 +34,7 @@ public class BookingSearchSpecificationTests
         }
 
         // Act
-        var spec = new BookingSearchSpecification(userId, new BookingSearchQuery.BookingSearchFilters());
+        var spec = new BookingSearchSpecification(userId, new BookingSearchFilters());
         var result = spec.Evaluate(bookings.AsQueryable()).ToList();
 
         // Assert
@@ -70,7 +71,7 @@ public class BookingSearchSpecificationTests
         }
 
         // Act
-        var spec = new BookingSearchSpecification(userId1, new BookingSearchQuery.BookingSearchFilters());
+        var spec = new BookingSearchSpecification(userId1, new BookingSearchFilters());
         var result = spec.Evaluate(bookings.AsQueryable()).ToList();
 
         // Assert
@@ -103,7 +104,7 @@ public class BookingSearchSpecificationTests
         };
 
         // Act
-        var spec = new BookingSearchSpecification(userId, new BookingSearchQuery.BookingSearchFilters());
+        var spec = new BookingSearchSpecification(userId, new BookingSearchFilters());
         var result = spec.Evaluate(new List<Booking> { booking }.AsQueryable()).FirstOrDefault();
 
         // Assert

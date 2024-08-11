@@ -1,4 +1,4 @@
-using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch;
+using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Shared;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Bookings.Requests;
@@ -21,7 +21,7 @@ public class BookingSearchRequest
     /// </item>
     /// </list>
     /// </summary>
-    public BookingSearchQuery.TimespanOption Timespan { get; set; } = BookingSearchQuery.TimespanOption.All;
+    public BookingSearchFilters.TimespanOption Timespan { get; set; } = BookingSearchFilters.TimespanOption.All;
 
     /// <summary>
     /// Indicates whether to retrieve only the latest booking per hotel. If set to true,
