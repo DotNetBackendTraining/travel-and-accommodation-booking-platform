@@ -39,6 +39,7 @@ public sealed class HotelSearchResultSpecification : Specification<Hotel, HotelS
                     : null
             })
             .Include(h => h.City)
+            .Include(h => h.ThumbnailImage)
             .ApplyHotelSearchFilters(filters)
             .ApplyHotelSortingOption(options.Sorting);
     }

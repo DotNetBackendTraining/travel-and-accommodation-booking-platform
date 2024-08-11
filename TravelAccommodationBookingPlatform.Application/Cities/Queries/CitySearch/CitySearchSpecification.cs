@@ -11,6 +11,7 @@ public sealed class CitySearchSpecification : Specification<City, CitySearchResp
     {
         Query.Select(c => mapper.Map<CitySearchResponse.CitySearchResult>(c))
             .SortByVisitsDescending()
-            .ThenBy(c => c.Name);
+            .ThenBy(c => c.Name)
+            .Include(c => c.ThumbnailImage);
     }
 }
