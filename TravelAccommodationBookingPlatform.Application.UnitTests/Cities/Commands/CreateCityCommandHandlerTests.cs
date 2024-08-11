@@ -29,7 +29,7 @@ public class CreateCityCommandHandlerTests
 
         cudRepositoryMock.Setup(repo => repo.Add(It.IsAny<City>()));
         imageRepositoryMock.Setup(repo => repo
-            .SaveAndUpdate(request.ThumbnailImage, city, It.IsAny<Expression<Func<City, Image>>>()));
+            .SaveAndSet(request.ThumbnailImage, city, It.IsAny<Expression<Func<City, Image>>>()));
         unitOfWorkMock.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
@@ -43,7 +43,7 @@ public class CreateCityCommandHandlerTests
         cudRepositoryMock.Verify(repo => repo.Add(city),
             Times.Once);
         imageRepositoryMock.Verify(repo => repo
-                .SaveAndUpdate(request.ThumbnailImage, city, It.IsAny<Expression<Func<City, Image>>>()),
+                .SaveAndSet(request.ThumbnailImage, city, It.IsAny<Expression<Func<City, Image>>>()),
             Times.Once);
         unitOfWorkMock.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()),
             Times.Once);

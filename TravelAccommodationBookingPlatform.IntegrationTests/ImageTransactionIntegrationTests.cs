@@ -35,7 +35,15 @@ public class ImageTransactionIntegrationTests : BaseIntegrationTest
         hotel.Images.Should().BeNullOrEmpty();
 
         // Act
-        await _unitOfWork.SaveChangesAsync(CancellationToken.None);
+        await _unitOfWork.SaveChangesAsync(default);
+
+        // Assert
+        hotel.Images.Should().ContainSingle();
+        Uri.IsWellFormedUriString(hotel.Images.First().Url, UriKind.Absolute).Should().BeTrue();
+
+        // Act
+        _imageRepository.SaveAndSetAll([imageFile], hotel, h => h.Images);
+        await _unitOfWork.SaveChangesAsync(default);
 
         // Assert
         hotel.Images.Should().ContainSingle();
@@ -44,8 +52,8 @@ public class ImageTransactionIntegrationTests : BaseIntegrationTest
         // Act
         var image = hotel.Images.First();
         hotel.Images.Remove(image);
-        _imageRepository.Delete(image.Url);
-        await _unitOfWork.SaveChangesAsync(CancellationToken.None);
+        _imageRepository.Delete(image);
+        await _unitOfWork.SaveChangesAsync(default);
 
         // Assert
         hotel.Images.Should().BeEmpty();

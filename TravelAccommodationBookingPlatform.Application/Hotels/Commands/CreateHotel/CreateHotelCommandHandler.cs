@@ -44,8 +44,8 @@ public class CreateHotelCommandHandler : ICommandHandler<CreateHotelCommand, Cre
 
         var hotel = _mapper.Map<Hotel>(request);
 
-        _imageRepository.SaveAndUpdate(request.ThumbnailImage, hotel, h => h.ThumbnailImage);
-        _imageRepository.SaveAndUpdateAll(request.Images, hotel, h => h.Images);
+        _imageRepository.SaveAndSet(request.ThumbnailImage, hotel, h => h.ThumbnailImage);
+        _imageRepository.SaveAndSetAll(request.Images, hotel, h => h.Images);
         _hotelCudRepository.Add(hotel);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

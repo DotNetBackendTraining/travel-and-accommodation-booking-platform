@@ -43,8 +43,8 @@ public class DeleteHotelCommandHandler : ICommandHandler<DeleteHotelCommand>
             return Result.Failure(DomainErrors.Hotel.CannotDeleteHotelWithBookings);
         }
 
-        _imageRepository.Delete(hotel.ThumbnailImage.Url);
-        _imageRepository.DeleteAll(hotel.Images.Select(i => i.Url));
+        _imageRepository.Delete(hotel.ThumbnailImage);
+        _imageRepository.DeleteAll(hotel.Images);
         _cudRepository.Delete(hotel);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

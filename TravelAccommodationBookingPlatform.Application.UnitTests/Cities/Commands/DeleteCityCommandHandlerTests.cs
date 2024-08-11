@@ -80,7 +80,7 @@ public class DeleteCityCommandHandlerTests
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(true); // Meaning city has not hotels
 
-        imageRepositoryMock.Setup(repo => repo.Delete(It.IsAny<string>()));
+        imageRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Image>()));
         cudCityRepositoryMock.Setup(repo => repo.Delete(It.IsAny<City>()));
         unitOfWorkMock.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
@@ -90,7 +90,7 @@ public class DeleteCityCommandHandlerTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         cudCityRepositoryMock.Verify(repo => repo.Delete(city), Times.Once);
-        imageRepositoryMock.Verify(repo => repo.Delete(city.ThumbnailImage.Url), Times.Once);
+        imageRepositoryMock.Verify(repo => repo.Delete(city.ThumbnailImage), Times.Once);
         unitOfWorkMock.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }

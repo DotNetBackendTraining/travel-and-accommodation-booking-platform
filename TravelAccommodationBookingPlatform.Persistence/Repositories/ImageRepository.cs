@@ -11,16 +11,20 @@ namespace TravelAccommodationBookingPlatform.Persistence.Repositories;
 public class ImageRepository : IImageRepository, ITransactionHandler
 {
     private readonly IImageStorageService _imageStorageService;
+    private readonly ICudRepository<Image> _imageCudRepository;
     private readonly List<Func<Task>> _saveActions = [];
     private readonly List<string> _imageUrlsToDelete = [];
     private readonly List<string> _addedImageUrls = [];
 
-    public ImageRepository(IImageStorageService imageStorageService)
+    public ImageRepository(
+        IImageStorageService imageStorageService,
+        ICudRepository<Image> imageCudRepository)
     {
         _imageStorageService = imageStorageService;
+        _imageCudRepository = imageCudRepository;
     }
 
-    public void SaveAndUpdate<T>(
+    public void SaveAndSet<T>(
         IFile image,
         T entity,
         Expression<Func<T, Image>> imageSelector)
@@ -37,11 +41,15 @@ public class ImageRepository : IImageRepository, ITransactionHandler
             _addedImageUrls.Add(imageUrl);
 
             var imageProperty = (PropertyInfo)((MemberExpression)imageSelector.Body).Member;
-            imageProperty.SetValue(entity, new Image { Url = imageUrl });
+            var imageEntity = (Image?)imageProperty.GetValue(entity) ?? new Image();
+
+            imageEntity.Url = imageUrl;
+            _imageCudRepository.Add(imageEntity);
+            imageProperty.SetValue(entity, imageEntity);
         });
     }
 
-    public void SaveAndUpdateAll<T>(
+    public void SaveAndSetAll<T>(
         IEnumerable<IFile> images,
         T entity,
         Expression<Func<T, ICollection<Image>>> imageCollectionSelector)
@@ -61,9 +69,10 @@ public class ImageRepository : IImageRepository, ITransactionHandler
             var imageCollection = (ICollection<Image>?)imageCollectionProperty.GetValue(entity) ?? [];
 
             imageCollection.Clear();
-            foreach (var url in imageUrls)
+            foreach (var image in imageUrls.Select(url => new Image { Url = url }))
             {
-                imageCollection.Add(new Image { Url = url });
+                _imageCudRepository.Add(image);
+                imageCollection.Add(image);
             }
 
             imageCollectionProperty.SetValue(entity, imageCollection);
@@ -86,19 +95,25 @@ public class ImageRepository : IImageRepository, ITransactionHandler
             var imageCollectionProperty = (PropertyInfo)((MemberExpression)imageCollectionSelector.Body).Member;
             var imageCollection = (ICollection<Image>?)imageCollectionProperty.GetValue(entity) ?? [];
 
-            imageCollection.Add(new Image { Url = imageUrl });
+            var imageEntity = new Image { Url = imageUrl };
+            _imageCudRepository.Add(imageEntity);
+            imageCollection.Add(imageEntity);
             imageCollectionProperty.SetValue(entity, imageCollection);
         });
     }
 
-    public void Delete(string imageUrl)
+    public void Delete(Image image)
     {
-        _imageUrlsToDelete.Add(imageUrl);
+        _imageUrlsToDelete.Add(image.Url);
+        _imageCudRepository.Delete(image);
     }
 
-    public void DeleteAll(IEnumerable<string> imageUrls)
+    public void DeleteAll(IEnumerable<Image> images)
     {
-        _imageUrlsToDelete.AddRange(imageUrls);
+        foreach (var image in images)
+        {
+            Delete(image);
+        }
     }
 
     public async Task Handle(TransactionStartNotification notification, CancellationToken cancellationToken)

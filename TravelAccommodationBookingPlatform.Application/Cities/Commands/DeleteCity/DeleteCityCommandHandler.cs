@@ -43,7 +43,7 @@ public class DeleteCityCommandHandler : ICommandHandler<DeleteCityCommand>
             return Result.Failure(DomainErrors.City.CannotDeleteCityWithHotels);
         }
 
-        _imageRepository.Delete(city.ThumbnailImage.Url);
+        _imageRepository.Delete(city.ThumbnailImage);
         _cudRepository.Delete(city);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

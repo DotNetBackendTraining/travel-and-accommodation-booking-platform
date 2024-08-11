@@ -30,7 +30,7 @@ public class CreateCityCommandHandler : ICommandHandler<CreateCityCommand, Creat
     {
         var city = _mapper.Map<City>(request);
 
-        _imageRepository.SaveAndUpdate(request.ThumbnailImage, city, c => c.ThumbnailImage);
+        _imageRepository.SaveAndSet(request.ThumbnailImage, city, c => c.ThumbnailImage);
         _cudRepository.Add(city);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

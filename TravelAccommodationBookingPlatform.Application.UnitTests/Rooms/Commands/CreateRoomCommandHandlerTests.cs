@@ -88,7 +88,7 @@ public class CreateRoomCommandHandlerTests
 
         mapperMock.Setup(m => m.Map<Room>(request)).Returns(room);
 
-        imageRepositoryMock.Setup(repo => repo.SaveAndUpdateAll(
+        imageRepositoryMock.Setup(repo => repo.SaveAndSetAll(
             It.IsAny<IEnumerable<IFile>>(), room, It.IsAny<Expression<Func<Room, ICollection<Image>>>>()));
 
         roomCudRepositoryMock.Setup(repo => repo.Add(It.IsAny<Room>()));

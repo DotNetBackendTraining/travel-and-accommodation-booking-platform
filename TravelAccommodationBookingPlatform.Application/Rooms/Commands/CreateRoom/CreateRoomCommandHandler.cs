@@ -53,7 +53,7 @@ public class CreateRoomCommandHandler : ICommandHandler<CreateRoomCommand, Creat
 
         var room = _mapper.Map<Room>(request);
 
-        _imageRepository.SaveAndUpdateAll(request.Images, room, r => r.Images);
+        _imageRepository.SaveAndSetAll(request.Images, room, r => r.Images);
         _roomCudRepository.Add(room);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

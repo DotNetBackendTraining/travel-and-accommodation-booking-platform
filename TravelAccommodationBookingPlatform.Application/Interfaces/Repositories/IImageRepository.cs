@@ -16,7 +16,7 @@ public interface IImageRepository
     /// <param name="image">The image file to be saved.</param>
     /// <param name="entity">The entity to which the image will be set.</param>
     /// <param name="imageSelector">An expression to select the image property of the entity.</param>
-    void SaveAndUpdate<T>(
+    void SaveAndSet<T>(
         IFile image,
         T entity,
         Expression<Func<T, Image>> imageSelector);
@@ -28,7 +28,7 @@ public interface IImageRepository
     /// <param name="images">The collection of image files to be saved.</param>
     /// <param name="entity">The entity to which the images will be set.</param>
     /// <param name="imageCollectionSelector">An expression to select the image collection property of the entity.</param>
-    void SaveAndUpdateAll<T>(
+    void SaveAndSetAll<T>(
         IEnumerable<IFile> images,
         T entity,
         Expression<Func<T, ICollection<Image>>> imageCollectionSelector);
@@ -46,14 +46,14 @@ public interface IImageRepository
         Expression<Func<T, ICollection<Image>>> imageCollectionSelector);
 
     /// <summary>
-    /// Deletes an image by its URL.
+    /// Deletes an image.
     /// </summary>
-    /// <param name="imageUrl">The URL of the image to be deleted.</param>
-    void Delete(string imageUrl);
+    /// <param name="image">The image entity to be deleted.</param>
+    void Delete(Image image);
 
     /// <summary>
-    /// Deletes multiple images by their URLs.
+    /// Deletes multiple images.
     /// </summary>
-    /// <param name="imageUrls">The URLs of the images to be deleted.</param>
-    void DeleteAll(IEnumerable<string> imageUrls);
+    /// <param name="images">The image entities to be deleted.</param>
+    void DeleteAll(IEnumerable<Image> images);
 }
