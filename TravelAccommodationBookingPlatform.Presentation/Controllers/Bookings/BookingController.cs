@@ -17,11 +17,8 @@ namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Bookings;
 [RoleAuthorize]
 public class BookingController : AbstractController
 {
-    private readonly IMapper _mapper;
-
-    public BookingController(ISender sender, IMapper mapper) : base(sender)
+    public BookingController(ISender sender, IMapper mapper) : base(sender, mapper)
     {
-        _mapper = mapper;
     }
 
     /// <summary>
@@ -49,7 +46,7 @@ public class BookingController : AbstractController
             return userIdResult.ToProblemDetails();
         }
 
-        var query = _mapper.Map<BookingSearchQuery>(request);
+        var query = Mapper.Map<BookingSearchQuery>(request);
         query.UserId = userIdResult.Value;
 
         return await HandleQueryResult(query, cancellationToken);

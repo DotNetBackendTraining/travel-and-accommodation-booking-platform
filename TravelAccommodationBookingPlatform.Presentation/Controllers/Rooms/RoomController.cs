@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Rooms;
 [RoleAuthorize]
 public class RoomController : AbstractController
 {
-    public RoomController(ISender sender) : base(sender)
+    public RoomController(ISender sender, IMapper mapper) : base(sender, mapper)
     {
     }
 

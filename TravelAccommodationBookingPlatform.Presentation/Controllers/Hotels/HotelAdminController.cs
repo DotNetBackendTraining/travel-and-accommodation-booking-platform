@@ -21,14 +21,8 @@ namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels;
 [RoleAuthorize(UserRole.Admin)]
 public class HotelAdminController : AbstractController
 {
-    private readonly IMapper _mapper;
-
-    public HotelAdminController(
-        ISender sender,
-        IMapper mapper)
-        : base(sender)
+    public HotelAdminController(ISender sender, IMapper mapper) : base(sender, mapper)
     {
-        _mapper = mapper;
     }
 
     /// <summary>
@@ -54,7 +48,7 @@ public class HotelAdminController : AbstractController
         [FromForm] CreateHotelRequest request,
         CancellationToken cancellationToken)
     {
-        var command = _mapper.Map<CreateHotelCommand>(request);
+        var command = Mapper.Map<CreateHotelCommand>(request);
         var result = await Sender.Send(command, cancellationToken);
         return result.IsSuccess
             ? CreatedAtAction("GetHotelDetails", "Hotel", new { id = result.Value.Id }, result.Value)

@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Cities;
 [RoleAuthorize]
 public class CityController : AbstractController
 {
-    public CityController(ISender sender) : base(sender)
+    public CityController(ISender sender, IMapper mapper) : base(sender, mapper)
     {
     }
 
@@ -24,7 +25,7 @@ public class CityController : AbstractController
     /// </summary>
     /// <param name="id">The unique identifier of the city.</param>
     /// <param name="cancellationToken">Cancellation token for the request.</param>
-    /// <returns>The details of the requested room.</returns>
+    /// <returns>The details of the requested city.</returns>
     /// <response code="200">Returns the details of the city.</response>
     /// <response code="401">Unauthorized if credentials are invalid.</response>
     /// <response code="404">If the city is not found.</response>
@@ -38,7 +39,6 @@ public class CityController : AbstractController
         var query = new CityDetailsQuery { Id = id };
         return await HandleQueryResult(query, cancellationToken);
     }
-
 
     /// <summary>
     /// Searches for cities based on provided filters and returns available search filters.

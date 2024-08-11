@@ -23,14 +23,8 @@ namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels;
 [RoleAuthorize]
 public class HotelController : AbstractController
 {
-    private readonly IMapper _mapper;
-
-    public HotelController(
-        ISender sender,
-        IMapper mapper)
-        : base(sender)
+    public HotelController(ISender sender, IMapper mapper) : base(sender, mapper)
     {
-        _mapper = mapper;
     }
 
     /// <summary>
@@ -54,7 +48,7 @@ public class HotelController : AbstractController
     {
         var result = await Sender.Send(query, cancellationToken);
         return result.IsSuccess
-            ? Ok(_mapper.Map<HotelSearchViewModel>(result.Value))
+            ? Ok(Mapper.Map<HotelSearchViewModel>(result.Value))
             : result.ToProblemDetails();
     }
 

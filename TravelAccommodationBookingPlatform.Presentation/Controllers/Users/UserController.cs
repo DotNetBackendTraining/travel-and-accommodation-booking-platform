@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Users.Requests;
+using TravelAccommodationBookingPlatform.Presentation.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Users;
@@ -13,17 +14,10 @@ namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Users;
 [ApiController]
 [ApiVersion("1")]
 [Route("api/v{version:apiVersion}/users")]
-public class UserController : ControllerBase
+public class UserController : AbstractController
 {
-    private readonly ISender _sender;
-    private readonly IMapper _mapper;
-
-    public UserController(
-        ISender sender,
-        IMapper mapper)
+    public UserController(ISender sender, IMapper mapper) : base(sender, mapper)
     {
-        _sender = sender;
-        _mapper = mapper;
     }
 
     /// <summary>
@@ -43,8 +37,8 @@ public class UserController : ControllerBase
         [FromBody] LoginUserRequest request,
         CancellationToken cancellationToken)
     {
-        var command = _mapper.Map<LoginUserCommand>(request);
-        var result = await _sender.Send(command, cancellationToken);
+        var command = Mapper.Map<LoginUserCommand>(request);
+        var result = await Sender.Send(command, cancellationToken);
         return result.IsSuccess
             ? Ok(result.Value)
             : result.ToProblemDetails();
@@ -67,8 +61,8 @@ public class UserController : ControllerBase
         [FromBody] RegisterUserRequest request,
         CancellationToken cancellationToken)
     {
-        var command = _mapper.Map<RegisterUserCommand>(request);
-        var result = await _sender.Send(command, cancellationToken);
+        var command = Mapper.Map<RegisterUserCommand>(request);
+        var result = await Sender.Send(command, cancellationToken);
         return result.IsSuccess
             ? Created()
             : result.ToProblemDetails();

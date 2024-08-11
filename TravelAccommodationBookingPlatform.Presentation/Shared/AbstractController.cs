@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
@@ -11,10 +12,12 @@ namespace TravelAccommodationBookingPlatform.Presentation.Shared;
 public abstract class AbstractController : ControllerBase
 {
     protected readonly ISender Sender;
+    protected readonly IMapper Mapper;
 
-    protected AbstractController(ISender sender)
+    protected AbstractController(ISender sender, IMapper mapper)
     {
         Sender = sender;
+        Mapper = mapper;
     }
 
     protected async Task<ActionResult<TResponse>> HandleQueryResult<TResponse>(

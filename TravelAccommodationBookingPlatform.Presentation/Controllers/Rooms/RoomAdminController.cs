@@ -21,14 +21,8 @@ namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Rooms;
 [RoleAuthorize(UserRole.Admin)]
 public class RoomAdminController : AbstractController
 {
-    private readonly IMapper _mapper;
-
-    public RoomAdminController(
-        ISender sender,
-        IMapper mapper)
-        : base(sender)
+    public RoomAdminController(ISender sender, IMapper mapper) : base(sender, mapper)
     {
-        _mapper = mapper;
     }
 
     /// <summary>
@@ -56,7 +50,7 @@ public class RoomAdminController : AbstractController
         [FromForm] CreateRoomRequest request,
         CancellationToken cancellationToken)
     {
-        var command = _mapper.Map<CreateRoomCommand>(request);
+        var command = Mapper.Map<CreateRoomCommand>(request);
         var result = await Sender.Send(command, cancellationToken);
         return result.IsSuccess
             ? CreatedAtAction("GetRoomDetails", "Room", new { id = result.Value.Id }, result.Value)

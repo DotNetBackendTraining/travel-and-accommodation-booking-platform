@@ -21,14 +21,8 @@ namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Cities;
 [RoleAuthorize(UserRole.Admin)]
 public class CityAdminController : AbstractController
 {
-    private readonly IMapper _mapper;
-
-    public CityAdminController(
-        ISender sender,
-        IMapper mapper)
-        : base(sender)
+    public CityAdminController(ISender sender, IMapper mapper) : base(sender, mapper)
     {
-        _mapper = mapper;
     }
 
     /// <summary>
@@ -53,7 +47,7 @@ public class CityAdminController : AbstractController
         [FromForm] CreateCityRequest request,
         CancellationToken cancellationToken)
     {
-        var command = _mapper.Map<CreateCityCommand>(request);
+        var command = Mapper.Map<CreateCityCommand>(request);
         var result = await Sender.Send(command, cancellationToken);
         return result.IsSuccess
             ? CreatedAtAction("GetCityDetails", "City", new { id = result.Value.Id }, result.Value)
