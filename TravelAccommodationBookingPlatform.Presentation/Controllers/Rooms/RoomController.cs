@@ -32,6 +32,7 @@ public class RoomController : AbstractController
     /// <response code="404">If the room is not found.</response>
     [HttpGet]
     [ProducesResponseType(typeof(RoomDetailsResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<RoomDetailsResponse>> GetRoomDetails(
         [FromRoute] Guid id,
@@ -54,8 +55,9 @@ public class RoomController : AbstractController
     /// <response code="404">If the room is not found.</response>
     [HttpGet("images")]
     [ProducesResponseType(typeof(RoomImagesResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<RoomImagesResponse>> GetHotelImages(
         [FromRoute] Guid id,
         [FromQuery] PaginationParameters paginationParameters,

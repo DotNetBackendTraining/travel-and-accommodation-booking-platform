@@ -31,6 +31,7 @@ public class CityController : AbstractController
     /// <response code="404">If the city is not found.</response>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(CityDetailsResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CityDetailsResponse>> GetCityDetails(
         [FromRoute] Guid id,
