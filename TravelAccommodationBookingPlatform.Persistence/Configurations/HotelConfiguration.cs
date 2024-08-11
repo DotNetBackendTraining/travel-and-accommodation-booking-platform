@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.Entities;
+using TravelAccommodationBookingPlatform.Persistence.Configurations.Associations;
 using TravelAccommodationBookingPlatform.Persistence.Configurations.PropertyBuilderExtensions;
 
 namespace TravelAccommodationBookingPlatform.Persistence.Configurations;
@@ -25,11 +26,9 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
         builder.Property(h => h.StarRate)
             .IsRequired();
 
-        builder.OwnsOne(h => h.ThumbnailImage, img =>
-        {
-            img.WithOwner();
-            img.ApplyImageConfiguration();
-        });
+        builder.HasOne(h => h.ThumbnailImage)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne(h => h.City)
             .WithMany(c => c.Hotels)
@@ -44,13 +43,19 @@ public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
             .HasForeignKey(r => r.HotelId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.OwnsMany(h => h.Images, img =>
-        {
-            img.WithOwner().HasForeignKey("HotelId");
-            img.Property<int>("Id");
-            img.HasKey("Id");
-            img.ApplyImageConfiguration();
-        }).Navigation(e => e.Images).AutoInclude(false);
+        builder.HasMany(h => h.Images)
+            .WithMany()
+            .UsingEntity<HotelImageAssociation>(
+                j => j
+                    .HasOne(ia => ia.Image)
+                    .WithMany()
+                    .HasForeignKey(ia => ia.ImageId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j
+                    .HasOne<Hotel>()
+                    .WithMany()
+                    .HasForeignKey(ia => ia.HotelId)
+                    .OnDelete(DeleteBehavior.Restrict));
 
         builder.OwnsMany(h => h.Reviews, rev =>
         {

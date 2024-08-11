@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.Entities;
+using TravelAccommodationBookingPlatform.Persistence.Configurations.Associations;
 using TravelAccommodationBookingPlatform.Persistence.Configurations.PropertyBuilderExtensions;
 
 namespace TravelAccommodationBookingPlatform.Persistence.Configurations;
@@ -29,13 +30,19 @@ public class RoomConfiguration : IEntityTypeConfiguration<Room>
         builder.ComplexProperty(r => r.MaxNumberOfGuests)
             .ApplyNumberOfGuestsConfiguration();
 
-        builder.OwnsMany(r => r.Images, img =>
-        {
-            img.WithOwner().HasForeignKey("HotelId");
-            img.Property<int>("Id");
-            img.HasKey("Id");
-            img.ApplyImageConfiguration();
-        }).Navigation(e => e.Images).AutoInclude(false);
+        builder.HasMany(r => r.Images)
+            .WithMany()
+            .UsingEntity<RoomImageAssociation>(
+                j => j
+                    .HasOne(ia => ia.Image)
+                    .WithMany()
+                    .HasForeignKey(ia => ia.ImageId)
+                    .OnDelete(DeleteBehavior.Cascade),
+                j => j
+                    .HasOne<Room>()
+                    .WithMany()
+                    .HasForeignKey(ia => ia.RoomId)
+                    .OnDelete(DeleteBehavior.Restrict));
 
         builder.HasMany(r => r.Bookings);
     }

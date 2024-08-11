@@ -20,11 +20,9 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
         builder.ComplexProperty(c => c.PostOffice)
             .ApplyPostOfficeConfiguration();
 
-        builder.OwnsOne(c => c.ThumbnailImage, img =>
-        {
-            img.WithOwner();
-            img.ApplyImageConfiguration();
-        });
+        builder.HasOne(r => r.ThumbnailImage)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(c => c.Hotels)
             .WithOne(h => h.City)
