@@ -13,5 +13,5 @@ public class CreateRoomRequest
     public string Description { get; set; } = string.Empty;
     public Price Price { get; set; } = default!;
     public NumberOfGuests MaxNumberOfGuests { get; set; } = default!;
-    [ValidImageExtensions] public ICollection<IFormFile> Images { get; set; } = default!;
+    [ValidImageExtensions] public ICollection<IFormFile> Images { get; set; } = [];
 }
