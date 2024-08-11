@@ -1,6 +1,6 @@
 using FluentValidation;
 using TravelAccommodationBookingPlatform.Domain.Constants;
-using TravelAccommodationBookingPlatform.Domain.ValueObjects;
+using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Application.Validators;
 

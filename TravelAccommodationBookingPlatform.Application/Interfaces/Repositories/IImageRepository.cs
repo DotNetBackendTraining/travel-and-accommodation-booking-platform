@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
-using TravelAccommodationBookingPlatform.Domain.ValueObjects;
+using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 

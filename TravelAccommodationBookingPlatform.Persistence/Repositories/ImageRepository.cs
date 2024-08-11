@@ -4,7 +4,7 @@ using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Application.Shared.Notifications;
-using TravelAccommodationBookingPlatform.Domain.ValueObjects;
+using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Persistence.Repositories;
 

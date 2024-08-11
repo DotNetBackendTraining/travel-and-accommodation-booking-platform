@@ -1,6 +1,6 @@
 using TravelAccommodationBookingPlatform.Application.Shared.Responses;
+using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.Enums;
-using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
 namespace TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 

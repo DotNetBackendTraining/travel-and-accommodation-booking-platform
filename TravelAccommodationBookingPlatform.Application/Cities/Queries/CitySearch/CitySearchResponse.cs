@@ -1,4 +1,5 @@
 using TravelAccommodationBookingPlatform.Application.Shared.Responses;
+using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
 namespace TravelAccommodationBookingPlatform.Application.Cities.Queries.CitySearch;

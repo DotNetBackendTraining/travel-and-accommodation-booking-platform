@@ -1,5 +1,5 @@
 using TravelAccommodationBookingPlatform.Application.Shared.Responses;
-using TravelAccommodationBookingPlatform.Domain.ValueObjects;
+using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomImages;
 

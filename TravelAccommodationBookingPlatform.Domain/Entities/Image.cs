@@ -1,4 +1,4 @@
-namespace TravelAccommodationBookingPlatform.Domain.ValueObjects;
+namespace TravelAccommodationBookingPlatform.Domain.Entities;
 
 public class Image
 {
