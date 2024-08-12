@@ -106,6 +106,11 @@ public static class DomainErrors
             "Booking.IdNotFound",
             "Booking with the given ID does not exist");
 
+        public static readonly Error PaymentNotFound = new(
+            ErrorType.NotFound,
+            "Booking.PaymentNotFound",
+            "Payment for the booking with the given ID was not found");
+
         public static readonly Error CannotDeleteBookingWithPayment = new(
             ErrorType.Conflict,
             "Booking.CannotDeleteBookingWithPayment",
