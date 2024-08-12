@@ -34,6 +34,15 @@ public class Repository<TEntity> : IRepository<TEntity>
             .AnyAsync(cancellationToken);
     }
 
+    public async Task<int> CountAsync(
+        Specification<TEntity> specification,
+        CancellationToken cancellationToken)
+    {
+        return await _context.Set<TEntity>()
+            .WithSpecification(specification)
+            .CountAsync(cancellationToken);
+    }
+
     public async Task<IEnumerable<TEntity>> ListAsync(
         Specification<TEntity> specification,
         CancellationToken cancellationToken)

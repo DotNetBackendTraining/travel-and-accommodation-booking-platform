@@ -19,6 +19,16 @@ public interface IRepository<TEntity> where TEntity : BaseEntity
         CancellationToken cancellationToken);
 
     /// <summary>
+    /// Retrieves the count of all entities that satisfy the given specification.
+    /// </summary>
+    /// <param name="specification">The specification to test against the entities.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    /// <returns>The count of entities that satisfy the specification.</returns>
+    Task<int> CountAsync(
+        Specification<TEntity> specification,
+        CancellationToken cancellationToken);
+
+    /// <summary>
     /// Retrieves a list of <typeparamref name="TEntity"/> according to the specification.
     /// </summary>
     /// <param name="specification">Specification that will be applied on the query</param>
