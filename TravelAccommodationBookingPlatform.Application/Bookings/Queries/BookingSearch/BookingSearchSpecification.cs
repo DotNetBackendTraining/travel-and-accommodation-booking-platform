@@ -12,6 +12,7 @@ public sealed class BookingSearchSpecification : Specification<Booking, BookingS
     {
         Query.Select(b => new BookingSearchResult
             {
+                Id = b.Id,
                 Checking = b.Checking,
                 Hotel = new()
                 {
