@@ -3,6 +3,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TravelAccommodationBookingPlatform.Application.Bookings.Commands.CreateBooking;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingDetails;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingDetails.DTOs;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingPayment;
@@ -120,5 +121,44 @@ public class BookingController : AbstractController
         };
 
         return await HandleQueryResult(query, cancellationToken);
+    }
+
+    /// <summary>
+    /// Creates a new booking for the user.
+    /// </summary>
+    /// <param name="request">The request containing the details of the booking to create.</param>
+    /// <param name="cancellationToken">Cancellation token for the request.</param>
+    /// <returns>The ID of the newly created booking.</returns>
+    /// <response code="201">Returns the ID of the newly created booking.</response>
+    /// <response code="400">If the request is invalid (input format error).</response>
+    /// <response code="401">Unauthorized if credentials are invalid.</response>
+    /// <response code="404">If a required resource is not found (e.g. Room).</response>
+    /// <response code="404">If the booking cannot be created due to conflicts
+    /// (e.g. Rooms from different hotels, Number of guests exceeds the limit, Rooms not available).</response>
+    /// <response code="422">If the request is invalid (validation error).</response>
+    [HttpPost]
+    [ProducesResponseType(typeof(CreateBookingResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<ActionResult<CreateBookingResponse>> CreateBooking(
+        [FromForm] CreateBookingRequest request,
+        CancellationToken cancellationToken)
+    {
+        var userIdResult = GetUserIdOrFailure();
+        if (userIdResult.IsFailure)
+        {
+            return userIdResult.ToProblemDetails();
+        }
+
+        var command = Mapper.Map<CreateBookingCommand>(request);
+        command.UserId = userIdResult.Value;
+
+        var result = await Sender.Send(command, cancellationToken);
+        return result.IsSuccess
+            ? CreatedAtAction("GetBookingDetails", "Booking", new { id = result.Value.Id }, result.Value)
+            : result.ToProblemDetails();
     }
 }
