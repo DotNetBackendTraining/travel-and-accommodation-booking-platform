@@ -111,6 +111,16 @@ public static class DomainErrors
             "Booking.PaymentNotFound",
             "Payment for the booking with the given ID was not found");
 
+        public static readonly Error InvalidBookingOperation = new(
+            ErrorType.Conflict,
+            "Booking.InvalidBookingOperation",
+            "This booking operation is not allowed due to conflicts");
+
+        public static readonly Error RoomsNotAvailable = new(
+            ErrorType.Conflict,
+            "Booking.RoomsNotAvailable",
+            "One or more of the booking rooms are not available in the given checking time");
+
         public static readonly Error CannotDeleteBookingWithPayment = new(
             ErrorType.Conflict,
             "Booking.CannotDeleteBookingWithPayment",
