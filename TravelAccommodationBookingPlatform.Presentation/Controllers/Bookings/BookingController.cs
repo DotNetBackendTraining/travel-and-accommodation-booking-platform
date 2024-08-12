@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingDetails;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingDetails.DTOs;
+using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingPayment;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Bookings.Requests;
@@ -84,6 +85,38 @@ public class BookingController : AbstractController
             Id = id,
             UserId = userIdResult.Value,
             Parameters = parameters
+        };
+
+        return await HandleQueryResult(query, cancellationToken);
+    }
+
+    /// <summary>
+    /// Retrieves the details of a specific booking payment for the user.
+    /// </summary>
+    /// <param name="id">The unique identifier of the booking.</param>
+    /// <param name="cancellationToken">Cancellation token for the request.</param>
+    /// <returns>The details of the requested payment.</returns>
+    /// <response code="200">Returns the details of the payment.</response>
+    /// <response code="401">Unauthorized if credentials are invalid.</response>
+    /// <response code="404">If a resource is not found (e.g. Booking, Payment).</response>
+    [HttpGet("{id:guid}/payment")]
+    [ProducesResponseType(typeof(BookingPaymentResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<BookingPaymentResponse>> GetBookingPaymentDetails(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken)
+    {
+        var userIdResult = GetUserIdOrFailure();
+        if (userIdResult.IsFailure)
+        {
+            return userIdResult.ToProblemDetails();
+        }
+
+        var query = new BookingPaymentQuery
+        {
+            BookingId = id,
+            UserId = userIdResult.Value
         };
 
         return await HandleQueryResult(query, cancellationToken);
