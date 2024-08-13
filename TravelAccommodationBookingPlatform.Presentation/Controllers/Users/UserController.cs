@@ -34,7 +34,7 @@ public class UserController : AbstractController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<LoginUserResponse>> Login(
-        [FromBody] LoginUserRequest request,
+        [FromForm] LoginUserRequest request,
         CancellationToken cancellationToken)
     {
         var command = Mapper.Map<LoginUserCommand>(request);
@@ -58,7 +58,7 @@ public class UserController : AbstractController
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Register(
-        [FromBody] RegisterUserRequest request,
+        [FromForm] RegisterUserRequest request,
         CancellationToken cancellationToken)
     {
         var command = Mapper.Map<RegisterUserCommand>(request);
