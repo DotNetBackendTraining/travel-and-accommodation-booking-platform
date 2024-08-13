@@ -5,6 +5,9 @@ namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Bookings.R
 
 public class BookingSearchRequest
 {
+    /// <summary>
+    /// The pagination parameters to control the paging of the search results.
+    /// </summary>
     public PaginationParameters PaginationParameters { get; set; } = default!;
 
     /// <summary>

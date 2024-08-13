@@ -87,7 +87,6 @@ public class CityAdminController : AbstractController
         return await HandleNoContentCommand(command, cancellationToken);
     }
 
-
     /// <summary>
     /// Deletes an existing city.
     /// </summary>

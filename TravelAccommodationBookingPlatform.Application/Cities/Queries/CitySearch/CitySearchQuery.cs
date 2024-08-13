@@ -5,5 +5,8 @@ namespace TravelAccommodationBookingPlatform.Application.Cities.Queries.CitySear
 
 public class CitySearchQuery : IQuery<CitySearchResponse>
 {
+    /// <summary>
+    /// The parameters to control the pagination of the search results.
+    /// </summary>
     public PaginationParameters PaginationParameters { get; set; } = default!;
 }
