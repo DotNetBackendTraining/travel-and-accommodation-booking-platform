@@ -1,3 +1,4 @@
+using System.Reflection;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
@@ -68,11 +69,18 @@ public static class PresentationServicesExtension
                 });
             }
 
-            // Add XML output from Presentation assembly
-            var assembly = Presentation.AssemblyReference.Assembly;
-            var xmlFile = $"{assembly.GetName().Name}.xml";
-            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            options.IncludeXmlComments(xmlPath);
+            // Add XML output from documented assemblies
+            var documentedAssemblies = new List<Assembly>
+            {
+                Presentation.AssemblyReference.Assembly,
+                Application.AssemblyReference.Assembly
+            };
+            foreach (var assembly in documentedAssemblies)
+            {
+                var xmlFile = $"{assembly.GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
+            }
 
             // Add JWT authentication support in swagger
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
