@@ -9,6 +9,9 @@ internal static class UserDataGenerator
     /// Use this username to log in as admin
     private const string AdminUsername = "admin";
 
+    /// Use this username to log in as user
+    private const string UserUsername = "user";
+
     /// Use this password to log in with any user
     private const string Password = "q~>k6Dz'kD27";
 
@@ -30,6 +33,8 @@ internal static class UserDataGenerator
             };
             users.Add(user);
         }
+
+        users[0].Username = UserUsername;
 
         users.Add(new User
         {
