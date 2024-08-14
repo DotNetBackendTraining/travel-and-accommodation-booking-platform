@@ -22,7 +22,7 @@ public static class ApplicationServicesExtension
 
     /// <summary>
     /// Use this to register an ITransactionHandler,
-    /// otherwise MediatR will a separate transient service to handle each notification
+    /// otherwise MediatR will create a separate transient service each time it handle each notification
     /// </summary>
     internal static void AddScopedTransactionHandler(
         this IServiceCollection services,
