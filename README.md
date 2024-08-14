@@ -28,20 +28,22 @@ Page, Search Results, Hotel Details, Secure Checkout, and Admin Management.
 ## Project Requirements
 
 To understand the project requirements in detail, please refer to
-the [Project Requirements documentation](documentations/ProjectRequirements.md).
+the [Project Requirements documentation](assets/pages/ProjectRequirements.md).
 
 ## Domain Models
 
 The domain models used in this project were derived from the project requirements to reflect the business logic
 accurately.
-To view the detailed domain models, please refer to the [Domain Models documentation](documentations/DomainModels.md).
+To view the detailed domain models, please refer to the [Domain Models documentation](assets/pages/DomainModels.md).
 
 ## Project Architecture
 
 This project is designed using the **Clean Architecture**.
 Here is an overview of the architecture of the project:
 
-![Excalidraw-ComponentDiagram](documentations/Excalidraw-ComponentDiagram.png)
+![Excalidraw-ComponentDiagram](assets/diagrams/Excalidraw-ComponentDiagram.png)
+
+[Excalidraw Link](https://excalidraw.com/#json=2KQ1qLnnBh6JigmvWwM-Q,Kyaa-b37jo4jAKrFqi_C-Q)
 
 ### Structure & Dependencies
 
@@ -98,7 +100,9 @@ The following diagram illustrates the flow of a query request through the system
 validated, authenticated, and processed by the application, eventually retrieving data from the repositories.
 Command requests follow a similar flow.
 
-![Query Request Flow](documentations/Excalidraw-QueryRequestFlow.png)
+![Query Request Flow](assets/diagrams/Excalidraw-QueryRequestFlow.png)
+
+[Excalidraw Link](https://excalidraw.com/#json=CaKnYJd4sZyoX4xNqBI_Z,PlG81VPTs_YiamjrEmUCUA)
 
 ## Getting Started
 
@@ -129,7 +133,7 @@ docker-compose up
 
 ### Postman Collection
 
-1. **Import into Postman**: Json file is located at [postman_collection.json](documentations/postman_collection.json)
+1. **Import into Postman**: Json file is located at [postman_collection.json](assets/postman_collection.json)
 2. **Configure Environment Variables**:
     - **baseURL**: For example to `localhost:8080`
     - **bearerToken**: Generate it from `users/token` endpoint. Use the user or admin examples as you need.
