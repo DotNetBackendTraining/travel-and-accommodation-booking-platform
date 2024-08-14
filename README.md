@@ -20,6 +20,9 @@ Page, Search Results, Hotel Details, Secure Checkout, and Admin Management.
     5. [Persistence Layer](#persistence-layer)
     6. [Infrastructure Layer](#infrastructure-layer)
 5. [Getting Started](#getting-started)
+    1. [Setup](#setup)
+    2. [Running](#running)
+    3. [Postman Collection](#postman-collection)
 
 ## Project Requirements
 
@@ -114,3 +117,10 @@ Use the following command to run docker-compose:
 ```bash
 docker-compose up
 ```
+
+### Postman Collection
+
+1. **Import into Postman**: Json file is located at [postman_collection.json](documentations/postman_collection.json)
+2. **Configure Environment Variables**:
+    - **baseURL**: For example to `localhost:8080`
+    - **bearerToken**: Generate it from `users/token` endpoint. Use the user or admin examples as you need.
