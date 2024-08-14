@@ -12,7 +12,13 @@ Page, Search Results, Hotel Details, Secure Checkout, and Admin Management.
 1. [Overview](#overview)
 2. [Project Requirements](#project-requirements)
 3. [Domain Models](#domain-models)
-4. [Component Diagram](#component-diagram)
+4. [Project Architecture](#project-architecture)
+    1. [Structure & Dependencies](#structure--dependencies)
+    2. [Presentation Layer](#presentation-layer)
+    3. [Application Layer](#application-layer)
+    4. [Domain Layer](#domain-layer)
+    5. [Persistence Layer](#persistence-layer)
+    6. [Infrastructure Layer](#infrastructure-layer)
 5. [Getting Started](#getting-started)
 
 ## Project Requirements
@@ -26,12 +32,61 @@ The domain models used in this project were derived from the project requirement
 accurately.
 To view the detailed domain models, please refer to the [Domain Models documentation](documentations/DomainModels.md).
 
-## Component Diagram
+## Project Architecture
 
 This project is designed using the **Clean Architecture**.
 Here is an overview of the architecture of the project:
 
 ![Excalidraw-ComponentDiagram](documentations/Excalidraw-ComponentDiagram.png)
+
+### Structure & Dependencies
+
+- The `App` project serves as the entry point of the application and is responsible for configuring all the necessary
+  services, dependency injections, and application settings.
+  It depends on all projects and that's why it was separated from the Presentation layer.
+- The **Application Layer** is the core of the system and **does not depend on any other layers**. It contains the
+  business logic, commands, queries, and validation logic that drive the system.
+- The **Presentation, Persistence, and Infrastructure layers** are structured to depend only on the Application layer
+  and never on each other. This isolation ensures that changes in one layer (e.g., switching the database in the
+  Persistence layer or changing the UI framework in the Presentation layer) do not affect the others.
+
+### Presentation Layer
+
+- **Controllers**: All endpoints should be defined here.
+- **Filters**: All filters should be defined here, including swagger filters.
+- **ViewModels**: Application response objects should be mapped to ViewModels when complex UI model is required.
+- **Requests**: Complex application request objects can be created and mapped from Requests objects.
+
+### **Application Layer**
+
+- **Commands**: All business logic commands.
+- **Queries**: All business logic queries.
+- **Responses**: Models that are returned from Command & Query Handlers.
+- **Command Handlers**: Orchestrate command logic, including error handling and calling repositories or services.
+- **Query Handlers**: Orchestrate query logic, including error handling and calling specifications and repositories.
+- **Validators**: Fluent validators that ensures Commands & Queries always receive valid requests.
+- **Specifications**: Adralis Specifications which are fine-grained query logic pieces sent to generic repositories.
+
+### **Domain Layer**
+
+- **Entities**: Core objects of the system representing the main business concepts.
+- **Value Objects**: Objects with unique attributes structure but do not have unique identity.
+  They are part of other domain entities.
+- **Rules**: Domain rules have general constants which application services and entity configurations in persistence
+  layer should follow.
+- **Result**: A unified result object which all services and request handlers should return.
+- **Errors**: Domain error constants which application services and handlers can return for failure results.
+
+### **Persistence Layer**
+
+- **Entity Configurations**: How entities are mapped to database schema. Defined by EF Core.
+- **Migrations**: All migrations should be in the persistence layer.
+- **EF Core Repositories**: Generic repositories that take specifications and perform simple functions using DbContext.
+
+### **Infrastructure Layer**
+
+- **Auth Services**: Authentication related services should be in the infrastructure.
+- **Cloudinary Image Storage**: Application Image Storage is implemented with Cloudinary in the Infrastructure.
 
 ## Getting Started
 
