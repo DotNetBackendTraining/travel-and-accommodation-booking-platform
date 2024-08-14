@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Bookings.Commands.CreateBooking;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingDetails;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingDetails.DTOs;
-using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingPayment;
 using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Bookings.Requests;
@@ -92,38 +91,6 @@ public class BookingController : AbstractController
     }
 
     /// <summary>
-    /// Retrieves the details of a specific booking payment for the user.
-    /// </summary>
-    /// <param name="id">The unique identifier of the booking.</param>
-    /// <param name="cancellationToken">Cancellation token for the request.</param>
-    /// <returns>The details of the requested payment.</returns>
-    /// <response code="200">Returns the details of the payment.</response>
-    /// <response code="401">Unauthorized if credentials are invalid.</response>
-    /// <response code="404">If a resource is not found (e.g. Booking, Payment).</response>
-    [HttpGet("{id:guid}/payment")]
-    [ProducesResponseType(typeof(BookingPaymentResponse), StatusCodes.Status200OK)]
-    [ProducesError(StatusCodes.Status401Unauthorized)]
-    [ProducesError(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BookingPaymentResponse>> GetBookingPaymentDetails(
-        [FromRoute] Guid id,
-        CancellationToken cancellationToken)
-    {
-        var userIdResult = GetUserIdOrFailure();
-        if (userIdResult.IsFailure)
-        {
-            return userIdResult.ToProblemDetails();
-        }
-
-        var query = new BookingPaymentQuery
-        {
-            BookingId = id,
-            UserId = userIdResult.Value
-        };
-
-        return await HandleQueryResult(query, cancellationToken);
-    }
-
-    /// <summary>
     /// Creates a new booking for the user.
     /// </summary>
     /// <param name="request">The request containing the details of the booking to create.</param>
@@ -133,7 +100,7 @@ public class BookingController : AbstractController
     /// <response code="400">If the request is invalid (input format error).</response>
     /// <response code="401">Unauthorized if credentials are invalid.</response>
     /// <response code="404">If a required resource is not found (e.g. Room).</response>
-    /// <response code="404">If the booking cannot be created due to conflicts
+    /// <response code="409">If the booking cannot be created due to conflicts
     /// (e.g. Rooms from different hotels, Number of guests exceeds the limit, Rooms not available).</response>
     /// <response code="422">If the request is invalid (validation error).</response>
     [HttpPost]
