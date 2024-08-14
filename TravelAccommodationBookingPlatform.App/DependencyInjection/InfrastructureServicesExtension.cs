@@ -18,6 +18,7 @@ public static class InfrastructureServicesExtension
     {
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
         services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
+        services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
 
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IPasswordHashService, PasswordHashService>();

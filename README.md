@@ -118,6 +118,13 @@ Add the following `appsettings.json` in the `TravelAccommodationBookingPlatform.
     "CloudName": "...",
     "ApiKey": "...",
     "ApiSecret": "..."
+  },
+  "SmtpSettings": {
+    "Host": "...",
+    "Port": "...",
+    "Username": "...",
+    "Password": "...",
+    "From": "..."
   }
 }
 ```
