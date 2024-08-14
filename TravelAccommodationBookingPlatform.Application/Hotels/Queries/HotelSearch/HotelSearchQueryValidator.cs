@@ -23,7 +23,7 @@ public class HotelSearchQueryValidator : AbstractValidator<HotelSearchQuery>
 
         RuleFor(x => x.Filters.General.NumberOfGuests)
             .SetValidator(new NumberOfGuestsValidator()!)
-            .When(x => x.Filters.General.Checking is not null);
+            .When(x => x.Filters.General.NumberOfGuests is not null);
 
         RuleFor(x => x.Filters.General.Rooms)
             .GreaterThan(0)
@@ -37,8 +37,8 @@ public class HotelSearchQueryValidator : AbstractValidator<HotelSearchQuery>
             .SetValidator(new PriceValidator()!)
             .When(x => x.Filters.Advanced.MaxPrice is not null);
 
-        RuleFor(x => x)
-            .Must(x => x.Filters.Advanced.MaxPrice!.Value >= x.Filters.Advanced.MinPrice!.Value)
+        RuleFor(x => x.Filters.Advanced)
+            .Must(x => x.MaxPrice!.Value >= x.MinPrice!.Value)
             .WithMessage("Max price must be greater than or equal min price.")
             .When(x => x.Filters.Advanced is { MinPrice: not null, MaxPrice: not null });
 
