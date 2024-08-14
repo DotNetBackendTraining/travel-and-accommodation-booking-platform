@@ -14,12 +14,12 @@ Page, Search Results, Hotel Details, Secure Checkout, and Admin Management.
 3. [Domain Models](#domain-models)
 4. [Project Architecture](#project-architecture)
     1. [Structure & Dependencies](#structure--dependencies)
-    2. [Request Flow](#request-flow)
-    3. [Presentation Layer](#presentation-layer)
-    4. [Application Layer](#application-layer)
-    5. [Domain Layer](#domain-layer)
-    6. [Persistence Layer](#persistence-layer)
-    7. [Infrastructure Layer](#infrastructure-layer)
+    2. [Presentation Layer](#presentation-layer)
+    3. [Application Layer](#application-layer)
+    4. [Domain Layer](#domain-layer)
+    5. [Persistence Layer](#persistence-layer)
+    6. [Infrastructure Layer](#infrastructure-layer)
+    7. [Request Flow](#request-flow)
 5. [Getting Started](#getting-started)
     1. [Setup](#setup)
     2. [Running](#running)
@@ -53,14 +53,6 @@ Here is an overview of the architecture of the project:
 - The **Presentation, Persistence, and Infrastructure layers** are structured to depend only on the Application layer
   and never on each other. This isolation ensures that changes in one layer (e.g., switching the database in the
   Persistence layer or changing the UI framework in the Presentation layer) do not affect the others.
-
-### Request Flow
-
-The following diagram illustrates the flow of a query request through the system. It shows how a user's request is
-validated, authenticated, and processed by the application, eventually retrieving data from the repositories.
-Command requests follow a similar flow.
-
-![Query Request Flow](documentations/Excalidraw-QueryRequestFlow.png)
 
 ### Presentation Layer
 
@@ -99,6 +91,14 @@ Command requests follow a similar flow.
 
 - **Auth Services**: Authentication related services should be in the infrastructure.
 - **Cloudinary Image Storage**: Application Image Storage is implemented with Cloudinary in the Infrastructure.
+
+### Request Flow
+
+The following diagram illustrates the flow of a query request through the system. It shows how a user's request is
+validated, authenticated, and processed by the application, eventually retrieving data from the repositories.
+Command requests follow a similar flow.
+
+![Query Request Flow](documentations/Excalidraw-QueryRequestFlow.png)
 
 ## Getting Started
 
