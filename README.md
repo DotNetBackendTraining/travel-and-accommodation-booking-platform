@@ -43,7 +43,7 @@ Here is an overview of the architecture of the project:
 
 ![Excalidraw-ComponentDiagram](assets/diagrams/Excalidraw-ComponentDiagram.png)
 
-[Excalidraw Link](https://excalidraw.com/#json=2KQ1qLnnBh6JigmvWwM-Q,Kyaa-b37jo4jAKrFqi_C-Q)
+[Excalidraw Link](https://excalidraw.com/#json=VVEnNR_ZxEd3IDYuvFedJ,y0CtCT1rVGHWRrmZ5gV_Vw)
 
 ### Structure & Dependencies
 
