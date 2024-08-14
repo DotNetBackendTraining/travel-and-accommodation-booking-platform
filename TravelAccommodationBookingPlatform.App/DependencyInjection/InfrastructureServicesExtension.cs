@@ -23,6 +23,7 @@ public static class InfrastructureServicesExtension
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IPasswordHashService, PasswordHashService>();
         services.AddScoped<IImageStorageService, CloudinaryImageStorageService>();
+        services.AddScoped<IEmailService, SmtpEmailService>();
 
         services.AddAuthentication(options =>
             {
