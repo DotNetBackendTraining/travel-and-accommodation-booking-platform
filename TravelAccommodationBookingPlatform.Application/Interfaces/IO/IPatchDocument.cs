@@ -1,4 +1,4 @@
-namespace TravelAccommodationBookingPlatform.Application.Interfaces.Files;
+namespace TravelAccommodationBookingPlatform.Application.Interfaces.IO;
 
 public interface IPatchDocument<in T> where T : class
 {

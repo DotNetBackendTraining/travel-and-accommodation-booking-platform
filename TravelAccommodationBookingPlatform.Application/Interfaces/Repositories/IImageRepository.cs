@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
+using TravelAccommodationBookingPlatform.Application.Interfaces.IO;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;

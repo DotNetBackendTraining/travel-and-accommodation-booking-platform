@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.JsonPatch;
-using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
+using TravelAccommodationBookingPlatform.Application.Interfaces.IO;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Shared;
 

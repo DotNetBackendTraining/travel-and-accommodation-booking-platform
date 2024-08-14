@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using System.Reflection;
-using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
+using TravelAccommodationBookingPlatform.Application.Interfaces.IO;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Application.Shared.Notifications;

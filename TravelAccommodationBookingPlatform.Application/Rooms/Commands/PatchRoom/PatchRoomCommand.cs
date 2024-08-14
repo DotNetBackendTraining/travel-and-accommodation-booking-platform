@@ -1,4 +1,4 @@
-using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
+using TravelAccommodationBookingPlatform.Application.Interfaces.IO;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
 
 namespace TravelAccommodationBookingPlatform.Application.Rooms.Commands.PatchRoom;

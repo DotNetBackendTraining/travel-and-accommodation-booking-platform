@@ -4,7 +4,7 @@ using Moq;
 using TravelAccommodationBookingPlatform.Application.Cities.Specifications;
 using TravelAccommodationBookingPlatform.Application.Hotels.Commands.CreateHotel;
 using TravelAccommodationBookingPlatform.Application.Interfaces;
-using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
+using TravelAccommodationBookingPlatform.Application.Interfaces.IO;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.Entities;

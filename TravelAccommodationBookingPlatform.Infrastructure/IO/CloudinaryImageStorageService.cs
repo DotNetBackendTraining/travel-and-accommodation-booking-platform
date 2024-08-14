@@ -2,11 +2,11 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
 using TravelAccommodationBookingPlatform.Application.Constants;
-using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
+using TravelAccommodationBookingPlatform.Application.Interfaces.IO;
 using TravelAccommodationBookingPlatform.Domain.Shared;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 
-namespace TravelAccommodationBookingPlatform.Infrastructure.Files;
+namespace TravelAccommodationBookingPlatform.Infrastructure.IO;
 
 public class CloudinaryImageStorageService : IImageStorageService
 {

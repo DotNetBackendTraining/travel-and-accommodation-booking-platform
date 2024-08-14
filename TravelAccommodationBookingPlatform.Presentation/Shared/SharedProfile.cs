@@ -1,6 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using TravelAccommodationBookingPlatform.Application.Interfaces.Files;
+using TravelAccommodationBookingPlatform.Application.Interfaces.IO;
 using TravelAccommodationBookingPlatform.Application.Shared.Responses;
 using TravelAccommodationBookingPlatform.Presentation.TypeConverters;
 

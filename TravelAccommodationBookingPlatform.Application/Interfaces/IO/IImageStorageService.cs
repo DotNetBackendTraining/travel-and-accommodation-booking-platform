@@ -1,6 +1,6 @@
 using TravelAccommodationBookingPlatform.Domain.Shared;
 
-namespace TravelAccommodationBookingPlatform.Application.Interfaces.Files;
+namespace TravelAccommodationBookingPlatform.Application.Interfaces.IO;
 
 public interface IImageStorageService
 {
