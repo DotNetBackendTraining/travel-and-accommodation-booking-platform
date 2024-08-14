@@ -2,32 +2,15 @@
 
 [![.NET and Docker](https://github.com/DotNetBackendTraining/travel-and-accommodation-booking-platform/actions/workflows/build-test-push.yml/badge.svg)](https://github.com/DotNetBackendTraining/travel-and-accommodation-booking-platform/actions/workflows/build-test-push.yml)
 
-# Introduction
+## Project Graphs
 
-We are thrilled to present to you a hands-on project where you'll be responsible for designing and implementing the APIs
-for an advanced online hotel booking system. Your task is to develop a series of APIs that will drive the core
-functionalities of various components of the platform, including the Login Page, Home Page, Search Results, Hotel
-Details, Secure Checkout, and Admin Management.
+### Architecture Component Diagram
 
-We encourage you to thoroughly read and understand the project features outlined in the documentation. Your challenge is
-to translate these features into efficient, secure, and well-structured APIs. These APIs should follow RESTful
-principles and be designed with clean code practices in mind.
+![Excalidraw-ComponentDiagram](assets/Excalidraw-ComponentDiagram.png)
 
-Key aspects of your development should include robust error handling, secure JWT authentication, effective user
-permissions management, and comprehensive unit testing. These elements are crucial for ensuring the reliability and
-maintainability of your code.
+https://excalidraw.com/#json=gnhjXbXssmpgWOvIyoS-H,R0_YDxdKLpHafGSdF7pmAQ
 
-Additionally, your ability to manage this project effectively using tools like Jira will be crucial. This project
-management aspect is vital for tracking progress, managing tasks, and ensuring timely delivery of your work.
-
-This project is not just about coding; it's an opportunity for you to engage in the full lifecycle of software
-development, from conception to deployment. We are excited to see how you interpret the requirements and look forward to
-your innovative approaches to these challenges.
-
-Dive into the project, bring your best ideas to the forefront, and let's create a remarkable online booking experience
-together!
-
-# Project **Features**
+### User Experience
 
 [Excalidraw — Collaborative whiteboarding made easy](https://excalidraw.com/#json=E95OwtS_yCQIeY6z2C1y2,hVOE2l7QvJXilwsDqrIqDg)
 
