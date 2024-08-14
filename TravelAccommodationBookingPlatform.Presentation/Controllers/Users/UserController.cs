@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
 using TravelAccommodationBookingPlatform.Application.Users.Commands.RegisterUser;
+using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Users.Requests;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
@@ -31,8 +32,8 @@ public class UserController : AbstractController
     /// <response code="401">Unauthorized if credentials are incorrect.</response>
     [HttpPost("token")]
     [ProducesResponseType(typeof(LoginUserResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<LoginUserResponse>> Login(
         [FromForm] LoginUserRequest request,
         CancellationToken cancellationToken)
@@ -55,8 +56,8 @@ public class UserController : AbstractController
     /// <response code="409">Conflict if credentials causes a conflict.</response>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+    [ProducesError(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesError(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Register(
         [FromForm] RegisterUserRequest request,
         CancellationToken cancellationToken)

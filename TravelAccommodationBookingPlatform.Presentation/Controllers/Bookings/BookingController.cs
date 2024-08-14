@@ -37,9 +37,9 @@ public class BookingController : AbstractController
     /// <response code="422">If the request is invalid (validation error).</response>
     [HttpGet]
     [ProducesResponseType(typeof(BookingSearchResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesError(StatusCodes.Status400BadRequest)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<BookingSearchResponse>> BookingSearch(
         [FromQuery] BookingSearchRequest request,
         CancellationToken cancellationToken)
@@ -68,8 +68,8 @@ public class BookingController : AbstractController
     /// <response code="404">If the booking is not found for the user.</response>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(BookingDetailsResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<BookingDetailsResponse>> GetBookingDetails(
         [FromRoute] Guid id,
         [FromQuery] BookingDetailsParameters parameters,
@@ -102,8 +102,8 @@ public class BookingController : AbstractController
     /// <response code="404">If a resource is not found (e.g. Booking, Payment).</response>
     [HttpGet("{id:guid}/payment")]
     [ProducesResponseType(typeof(BookingPaymentResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<BookingPaymentResponse>> GetBookingPaymentDetails(
         [FromRoute] Guid id,
         CancellationToken cancellationToken)
@@ -138,11 +138,11 @@ public class BookingController : AbstractController
     /// <response code="422">If the request is invalid (validation error).</response>
     [HttpPost]
     [ProducesResponseType(typeof(CreateBookingResponse), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesError(StatusCodes.Status400BadRequest)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status404NotFound)]
+    [ProducesError(StatusCodes.Status409Conflict)]
+    [ProducesError(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<CreateBookingResponse>> CreateBooking(
         [FromForm] CreateBookingRequest request,
         CancellationToken cancellationToken)

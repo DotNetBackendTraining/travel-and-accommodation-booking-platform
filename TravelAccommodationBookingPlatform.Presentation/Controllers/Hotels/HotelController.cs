@@ -39,9 +39,9 @@ public class HotelController : AbstractController
     /// <response code="422">If the request is invalid (validation error).</response>
     [HttpGet]
     [ProducesResponseType(typeof(HotelSearchResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesError(StatusCodes.Status400BadRequest)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<HotelSearchViewModel>> HotelSearch(
         [FromQuery] HotelSearchQuery query,
         CancellationToken cancellationToken)
@@ -63,8 +63,8 @@ public class HotelController : AbstractController
     /// <response code="404">If the hotel is not found.</response>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(HotelDetailsResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<HotelDetailsResponse>> GetHotelDetails(
         [FromRoute] Guid id,
         CancellationToken cancellationToken)
@@ -86,9 +86,9 @@ public class HotelController : AbstractController
     /// <response code="422">If the request is invalid (validation error).</response>
     [HttpGet("{id:guid}/images")]
     [ProducesResponseType(typeof(HotelImagesResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status404NotFound)]
+    [ProducesError(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<HotelImagesResponse>> GetHotelImages(
         [FromRoute] Guid id,
         [FromQuery] PaginationParameters paginationParameters,
@@ -111,9 +111,9 @@ public class HotelController : AbstractController
     /// <response code="422">If the request is invalid (validation error).</response>
     [HttpGet("{id:guid}/reviews")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status404NotFound)]
+    [ProducesError(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<HotelReviewsResponse>> GetHotelReviews(
         [FromRoute] Guid id,
         [FromQuery] PaginationParameters paginationParameters,
@@ -137,9 +137,9 @@ public class HotelController : AbstractController
     /// <response code="422">If the request is invalid (validation error).</response>
     [HttpGet("{id:guid}/rooms")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status404NotFound)]
+    [ProducesError(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<HotelRoomsResponse>> GetHotelRooms(
         [FromRoute] Guid id,
         [FromQuery] PaginationParameters paginationParameters,

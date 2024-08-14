@@ -38,11 +38,11 @@ public class CityAdminController : AbstractController
     /// <response code="422">If the request is invalid (validation error).</response>
     [HttpPost]
     [ProducesResponseType(typeof(CreateCityResponse), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesError(StatusCodes.Status400BadRequest)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status403Forbidden)]
+    [ProducesError(StatusCodes.Status404NotFound)]
+    [ProducesError(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<CreateCityResponse>> CreateCity(
         [FromForm] CreateCityRequest request,
         CancellationToken cancellationToken)
@@ -69,11 +69,11 @@ public class CityAdminController : AbstractController
     /// <response code="422">If the request is invalid (validation error).</response>
     [HttpPatch("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesError(StatusCodes.Status400BadRequest)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status403Forbidden)]
+    [ProducesError(StatusCodes.Status404NotFound)]
+    [ProducesError(StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> PatchCity(
         Guid id,
         [FromBody] JsonPatchDocument<PatchCityModel> patchDoc,
@@ -100,10 +100,10 @@ public class CityAdminController : AbstractController
     /// <response code="409">If the city cannot be deleted due to conflicts (e.g. existing hotels).</response>
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status403Forbidden)]
+    [ProducesError(StatusCodes.Status404NotFound)]
+    [ProducesError(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> DeleteCity(
         Guid id,
         CancellationToken cancellationToken)

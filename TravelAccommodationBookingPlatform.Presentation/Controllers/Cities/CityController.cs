@@ -31,8 +31,8 @@ public class CityController : AbstractController
     /// <response code="404">If the city is not found.</response>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(CityDetailsResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CityDetailsResponse>> GetCityDetails(
         [FromRoute] Guid id,
         CancellationToken cancellationToken)
@@ -53,9 +53,9 @@ public class CityController : AbstractController
     /// <response code="422">If the request is invalid (validation error).</response>
     [HttpGet]
     [ProducesResponseType(typeof(CitySearchResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesError(StatusCodes.Status400BadRequest)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<CitySearchResponse>> CitySearch(
         [FromQuery] CitySearchQuery query,
         CancellationToken cancellationToken)
