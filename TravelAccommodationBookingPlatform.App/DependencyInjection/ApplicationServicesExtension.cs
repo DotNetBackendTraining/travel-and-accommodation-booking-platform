@@ -13,6 +13,7 @@ public static class ApplicationServicesExtension
         services.AddMediatR(config =>
             config.RegisterServicesFromAssembly(Application.AssemblyReference.Assembly));
 
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         services.AddValidatorsFromAssembly(Application.AssemblyReference.Assembly);
