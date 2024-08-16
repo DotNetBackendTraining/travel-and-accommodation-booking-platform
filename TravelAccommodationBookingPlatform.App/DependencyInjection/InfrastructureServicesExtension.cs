@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Auth;
@@ -8,6 +9,7 @@ using TravelAccommodationBookingPlatform.Domain.Shared;
 using TravelAccommodationBookingPlatform.Infrastructure.Auth;
 using TravelAccommodationBookingPlatform.Infrastructure.IO;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
+using TravelAccommodationBookingPlatform.Presentation.Constants;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
 namespace TravelAccommodationBookingPlatform.App.DependencyInjection;
@@ -54,7 +56,7 @@ public static class InfrastructureServicesExtension
                         context.NoResult();
 
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        context.Response.ContentType = "application/json";
+                        context.Response.ContentType = PresentationRules.ContentTypes.ProblemJson;
 
                         var error = new Error(
                             ErrorType.NotAuthorized,
@@ -64,7 +66,7 @@ public static class InfrastructureServicesExtension
                         var problemDetails = Result
                             .Failure(error)
                             .ToProblemDetails()
-                            .Value;
+                            .Value as ProblemDetails;
 
                         return context.Response.WriteAsJsonAsync(problemDetails);
                     }
