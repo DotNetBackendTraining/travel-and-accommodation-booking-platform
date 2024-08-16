@@ -97,7 +97,7 @@ Here is an overview of the architecture of the project:
 ### Request Flow
 
 - The following diagram illustrates the flow of a request through the system. It shows how a user's request is
-  validated, authenticated, and processed by the application, eventually retrieving data from the repositories.
+  filtered, validated, and processed by the application, eventually retrieving data from the repositories.
 - A request can be a **Query** or a **Command**.
 - Queries are typically handled by sending a specification to a query repository which returns the required DTO that is
   mapped and sent to the user.
@@ -106,7 +106,7 @@ Here is an overview of the architecture of the project:
 
 ![Request Flow](assets/diagrams/Excalidraw-RequestFlow.png)
 
-[Excalidraw Link](https://excalidraw.com/#json=gmwE4gshf6WWTboCFL07h,zF6-JX_EQmVv_mh08lC9eQ)
+[Excalidraw Link](https://excalidraw.com/#json=ElE9y_rwSaNfdk4hj5Wz1,mIa0FTtFGEZfTdiBDN-H4g)
 
 ## Getting Started
 
