@@ -30,7 +30,7 @@ app.UseHttpsRedirection();
 
 app.UseSerilogRequestLogging();
 
-app.UseAuthorization();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
