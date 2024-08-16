@@ -7,4 +7,9 @@ public static class PresentationRules
         public const string Json = "application/json";
         public const string ProblemJson = "application/problem+json";
     }
+
+    public static class RateLimitPolicies
+    {
+        public const string Fixed = "fixed";
+    }
 }

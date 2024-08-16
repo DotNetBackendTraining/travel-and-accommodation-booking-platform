@@ -1,10 +1,16 @@
+using System.Globalization;
 using System.Reflection;
+using System.Threading.RateLimiting;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
+using TravelAccommodationBookingPlatform.Domain.Shared;
+using TravelAccommodationBookingPlatform.Presentation.Constants;
 using TravelAccommodationBookingPlatform.Presentation.Filters;
+using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
 namespace TravelAccommodationBookingPlatform.App.DependencyInjection;
 
@@ -36,6 +42,39 @@ public static class PresentationServicesExtension
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
             });
+
+        services.AddRateLimiter(options =>
+        {
+            options.AddPolicy(PresentationRules.RateLimitPolicies.Fixed, httpContext =>
+                RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
+                    factory: _ => new FixedWindowRateLimiterOptions()
+                    {
+                        PermitLimit = 10,
+                        Window = TimeSpan.FromSeconds(10),
+                        AutoReplenishment = true
+                    }));
+
+            options.OnRejected = async (context, token) =>
+            {
+                context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+                context.HttpContext.Response.ContentType = PresentationRules.ContentTypes.ProblemJson;
+
+                var problemDetails = Result
+                    .Failure(PresentationErrors.TooManyRequests)
+                    .ToProblemDetails()
+                    .Value as ProblemDetails;
+
+                if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+                {
+                    context.HttpContext.Response.Headers.RetryAfter =
+                        retryAfter.TotalSeconds.ToString(CultureInfo.InvariantCulture);
+                    problemDetails!.Extensions["retryAfter"] = retryAfter.TotalSeconds;
+                }
+
+                await context.HttpContext.Response.WriteAsJsonAsync(problemDetails, token);
+            };
+        });
     }
 
     public static void AddSwaggerDocumentation(this IServiceCollection services)
