@@ -58,10 +58,8 @@ public static class InfrastructureServicesExtension
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                         context.Response.ContentType = PresentationRules.ContentTypes.ProblemJson;
 
-                        var error = new Error(
-                            ErrorType.NotAuthorized,
-                            "Authorization Failed",
-                            context.Exception.Message);
+                        var error = PresentationErrors
+                            .AuthenticationFailed(context.Exception.Message);
 
                         var problemDetails = Result
                             .Failure(error)
