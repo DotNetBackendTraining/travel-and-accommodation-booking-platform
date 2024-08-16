@@ -2,13 +2,16 @@ using System.Security.Claims;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.Shared;
+using TravelAccommodationBookingPlatform.Presentation.Constants;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Shared;
 
+[EnableRateLimiting(PresentationRules.RateLimitPolicies.Fixed)]
 public abstract class AbstractController : ControllerBase
 {
     protected readonly ISender Sender;
