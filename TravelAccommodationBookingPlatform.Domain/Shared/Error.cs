@@ -67,5 +67,6 @@ public enum ErrorType
     NotAuthorized = 3,
     Conflict = 4,
     InternalServerError = 5,
-    Forbidden = 6
+    Forbidden = 6,
+    TooManyRequests = 7
 }

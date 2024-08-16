@@ -16,6 +16,7 @@ public static class ProblemDetailsExtension
             ErrorType.Conflict => result.ToConflictProblemDetails(),
             ErrorType.InternalServerError => result.ToInternalServerErrorProblemDetails(),
             ErrorType.Forbidden => result.ToForbiddenProblemDetails(),
+            ErrorType.TooManyRequests => result.ToTooManyRequestsProblemDetails(),
             ErrorType.None => throw new InvalidOperationException(
                 $"Cannot create problem details for the successful result '{result}'"),
             _ => throw new ArgumentOutOfRangeException(nameof(result.Error.Type) + " undefined type")
@@ -79,6 +80,18 @@ public static class ProblemDetailsExtension
             "https://tools.ietf.org/html/rfc7231#section-6.5.3"))
         {
             StatusCode = StatusCodes.Status403Forbidden
+        };
+    }
+
+    private static ObjectResult ToTooManyRequestsProblemDetails(this Result result)
+    {
+        return new ObjectResult(CreateProblemDetails(
+            result,
+            StatusCodes.Status429TooManyRequests,
+            "Too Many Requests",
+            "https://tools.ietf.org/html/rfc6585#section-4"))
+        {
+            StatusCode = StatusCodes.Status429TooManyRequests
         };
     }
 
