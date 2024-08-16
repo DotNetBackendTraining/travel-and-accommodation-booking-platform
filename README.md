@@ -96,13 +96,17 @@ Here is an overview of the architecture of the project:
 
 ### Request Flow
 
-The following diagram illustrates the flow of a query request through the system. It shows how a user's request is
-validated, authenticated, and processed by the application, eventually retrieving data from the repositories.
-Command requests follow a similar flow.
+- The following diagram illustrates the flow of a request through the system. It shows how a user's request is
+  validated, authenticated, and processed by the application, eventually retrieving data from the repositories.
+- A request can be a **Query** or a **Command**.
+- Queries are typically handled by sending a specification to a query repository which returns the required DTO that is
+  mapped and sent to the user.
+- Commands are typically handled by performing integrity checks, then calling specific CUD repository methods, and
+  finally committing changes.
 
-![Query Request Flow](assets/diagrams/Excalidraw-QueryRequestFlow.png)
+![Request Flow](assets/diagrams/Excalidraw-RequestFlow.png)
 
-[Excalidraw Link](https://excalidraw.com/#json=CaKnYJd4sZyoX4xNqBI_Z,PlG81VPTs_YiamjrEmUCUA)
+[Excalidraw Link](https://excalidraw.com/#json=gmwE4gshf6WWTboCFL07h,zF6-JX_EQmVv_mh08lC9eQ)
 
 ## Getting Started
 
