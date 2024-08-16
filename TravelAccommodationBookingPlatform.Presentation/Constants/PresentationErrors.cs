@@ -8,4 +8,9 @@ public static class PresentationErrors
         ErrorType.NotAuthorized,
         "Authorization Failed",
         message);
+
+    public static readonly Error TooManyRequests = new(
+        ErrorType.TooManyRequests,
+        "Rate limit exceeded",
+        "You have sent too many requests in a given time frame. Please try again later.");
 }
