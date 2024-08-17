@@ -27,7 +27,7 @@ together!
 
 ## **Project Features**
 
-[Excalidraw — Collaborative whiteboarding made easy](https://excalidraw.com/#json=E95OwtS_yCQIeY6z2C1y2,hVOE2l7QvJXilwsDqrIqDg)
+![Project Features](../diagrams/Excalidraw-ProjectFeatures.png)
 
 https://excalidraw.com/#json=E95OwtS_yCQIeY6z2C1y2,hVOE2l7QvJXilwsDqrIqDg
 

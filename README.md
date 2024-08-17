@@ -106,7 +106,7 @@ Here is an overview of the architecture of the project:
 
 ![Request Flow](assets/diagrams/Excalidraw-RequestFlow.png)
 
-[Excalidraw Link](https://excalidraw.com/#json=ElE9y_rwSaNfdk4hj5Wz1,mIa0FTtFGEZfTdiBDN-H4g)
+[Excalidraw Link](https://excalidraw.com/#json=fJVH74MDG3xiEtdRuKAZh,nU1nGgIUZbdecVB9ZNzepA)
 
 ## Getting Started
 
