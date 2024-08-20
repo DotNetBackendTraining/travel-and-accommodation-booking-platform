@@ -4,10 +4,13 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomDetails;
+using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomDetails.Admin;
 using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomImages;
 using TravelAccommodationBookingPlatform.Application.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
+using TravelAccommodationBookingPlatform.Presentation.Controllers.Rooms.ViewModels;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
+using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Rooms;
 
@@ -31,15 +34,32 @@ public class RoomController : AbstractController
     /// <response code="401">Unauthorized if credentials are invalid.</response>
     /// <response code="404">If the room is not found.</response>
     [HttpGet]
-    [ProducesResponseType(typeof(RoomDetailsResponse), StatusCodes.Status200OK)]
+    [MultipleResponseTypes(StatusCodes.Status200OK,
+        typeof(RoomDetailsResponse),
+        typeof(AdminRoomDetailsResponse))]
     [ProducesError(StatusCodes.Status401Unauthorized)]
     [ProducesError(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<RoomDetailsResponse>> GetRoomDetails(
+    public async Task<ObjectResult> GetRoomDetails(
         [FromRoute] Guid id,
         CancellationToken cancellationToken)
     {
-        var query = new RoomDetailsQuery { Id = id };
-        return await HandleQueryResult(query, cancellationToken);
+        return await HandleUserRoleResult(
+            adminResultFactory: async () =>
+            {
+                var query = new AdminRoomDetailsQuery { Id = id };
+                var result = await Sender.Send(query, cancellationToken);
+                return result.IsSuccess
+                    ? Ok(Mapper.Map<AdminRoomDetailsViewModel>(result.Value))
+                    : result.ToProblemDetails();
+            },
+            userResultFactory: async () =>
+            {
+                var query = new RoomDetailsQuery { Id = id };
+                var result = await Sender.Send(query, cancellationToken);
+                return result.IsSuccess
+                    ? Ok(Mapper.Map<RoomDetailsViewModel>(result.Value))
+                    : result.ToProblemDetails();
+            });
     }
 
     /// <summary>
