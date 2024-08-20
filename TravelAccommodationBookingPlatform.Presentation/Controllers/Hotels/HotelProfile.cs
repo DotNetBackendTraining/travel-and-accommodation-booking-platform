@@ -1,5 +1,7 @@
 using AutoMapper;
 using TravelAccommodationBookingPlatform.Application.Hotels.Commands.CreateHotel;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelDetails;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelDetails.Admin;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels.Requests;
@@ -21,5 +23,11 @@ public class HotelProfile : Profile
             .IncludeMembers(src => src.Summary, src => src.PriceDeal);
         CreateMap<AvailableFiltersResult, HotelSearchViewModel.AvailableFiltersResult>();
         CreateMap<HotelSearchResponse, HotelSearchViewModel>();
+
+        // HotelDetails
+        CreateMap<HotelDetailsResponse, HotelDetailsViewModel>();
+        CreateMap<HotelDetailsResponse, AdminHotelDetailsViewModel>();
+        CreateMap<AdminHotelDetailsResponse, AdminHotelDetailsViewModel>()
+            .IncludeMembers(src => src.HotelDetails);
     }
 }
