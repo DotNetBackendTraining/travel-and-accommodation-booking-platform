@@ -15,6 +15,6 @@ public sealed class AdminRoomDetailsSpecification : Specification<Room, AdminRoo
                 UpdatedAt = r.UpdatedAt
             })
             .Where(r => r.Id == id)
-            .EnableCache(nameof(AdminRoomDetailsResponse), id);
+            .EnableCache(nameof(AdminRoomDetailsSpecification), id);
     }
 }
