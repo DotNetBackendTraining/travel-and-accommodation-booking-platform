@@ -4,9 +4,12 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Cities.Queries.CityDetails;
+using TravelAccommodationBookingPlatform.Application.Cities.Queries.CityDetails.Admin;
 using TravelAccommodationBookingPlatform.Application.Cities.Queries.CitySearch;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
+using TravelAccommodationBookingPlatform.Presentation.Controllers.Cities.ViewModels;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
+using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Cities;
 
@@ -30,15 +33,32 @@ public class CityController : AbstractController
     /// <response code="401">Unauthorized if credentials are invalid.</response>
     /// <response code="404">If the city is not found.</response>
     [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(CityDetailsResponse), StatusCodes.Status200OK)]
+    [MultipleResponseTypes(StatusCodes.Status200OK,
+        typeof(CityDetailsResponse),
+        typeof(AdminCityDetailsResponse))]
     [ProducesError(StatusCodes.Status401Unauthorized)]
     [ProducesError(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CityDetailsResponse>> GetCityDetails(
         [FromRoute] Guid id,
         CancellationToken cancellationToken)
     {
-        var query = new CityDetailsQuery { Id = id };
-        return await HandleQueryResult(query, cancellationToken);
+        return await HandleUserRoleResult(
+            adminResultFactory: async () =>
+            {
+                var query = new AdminCityDetailsQuery { Id = id };
+                var result = await Sender.Send(query, cancellationToken);
+                return result.IsSuccess
+                    ? Ok(Mapper.Map<AdminCityDetailsViewModel>(result.Value))
+                    : result.ToProblemDetails();
+            },
+            userResultFactory: async () =>
+            {
+                var query = new CityDetailsQuery { Id = id };
+                var result = await Sender.Send(query, cancellationToken);
+                return result.IsSuccess
+                    ? Ok(Mapper.Map<CityDetailsViewModel>(result.Value))
+                    : result.ToProblemDetails();
+            });
     }
 
     /// <summary>
