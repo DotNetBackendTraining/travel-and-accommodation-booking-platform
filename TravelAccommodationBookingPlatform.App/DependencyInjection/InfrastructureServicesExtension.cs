@@ -1,12 +1,15 @@
 using System.Text;
+using Autofac;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Auth;
 using TravelAccommodationBookingPlatform.Application.Interfaces.IO;
+using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Domain.Shared;
 using TravelAccommodationBookingPlatform.Infrastructure.Auth;
+using TravelAccommodationBookingPlatform.Infrastructure.Caching;
 using TravelAccommodationBookingPlatform.Infrastructure.IO;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 using TravelAccommodationBookingPlatform.Presentation.Constants;
@@ -27,6 +30,18 @@ public static class InfrastructureServicesExtension
         services.AddScoped<IImageStorageService, CloudinaryImageStorageService>();
         services.AddScoped<IEmailService, SmtpEmailService>();
 
+        services.AddJwtAuthentication();
+
+        services.AddMemoryCache();
+    }
+
+    public static void ConfigureInfrastructure(this ContainerBuilder builder)
+    {
+        builder.RegisterGenericDecorator(typeof(CachingRepository<>), typeof(IRepository<>));
+    }
+
+    private static void AddJwtAuthentication(this IServiceCollection services)
+    {
         services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

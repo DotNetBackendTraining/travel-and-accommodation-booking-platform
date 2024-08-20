@@ -1,3 +1,4 @@
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Serilog;
 using TravelAccommodationBookingPlatform.App.DependencyInjection;
@@ -9,6 +10,7 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.ConfigureInfrastructure());
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
