@@ -10,6 +10,7 @@ using Newtonsoft.Json.Converters;
 using TravelAccommodationBookingPlatform.Domain.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Constants;
 using TravelAccommodationBookingPlatform.Presentation.Filters;
+using TravelAccommodationBookingPlatform.Presentation.Filters.Swagger;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
 
 namespace TravelAccommodationBookingPlatform.App.DependencyInjection;
@@ -107,6 +108,9 @@ public static class PresentationServicesExtension
                     Version = description.ApiVersion.ToString()
                 });
             }
+
+            // Add Filters
+            options.OperationFilter<MultipleResponseTypesOperationFilter>();
 
             // Add XML output from documented assemblies
             var documentedAssemblies = new List<Assembly>
