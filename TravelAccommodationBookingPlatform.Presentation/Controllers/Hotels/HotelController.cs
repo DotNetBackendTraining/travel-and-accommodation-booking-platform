@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelDetails;
+using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelDetails.Admin;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelImages;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelReviews;
 using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelRooms;
@@ -62,15 +63,32 @@ public class HotelController : AbstractController
     /// <response code="401">Unauthorized if credentials are invalid.</response>
     /// <response code="404">If the hotel is not found.</response>
     [HttpGet("{id:guid}")]
-    [ProducesResponseType(typeof(HotelDetailsResponse), StatusCodes.Status200OK)]
+    [MultipleResponseTypes(StatusCodes.Status200OK,
+        typeof(HotelDetailsViewModel),
+        typeof(AdminHotelDetailsViewModel))]
     [ProducesError(StatusCodes.Status401Unauthorized)]
     [ProducesError(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<HotelDetailsResponse>> GetHotelDetails(
+    public async Task<ObjectResult> GetHotelDetails(
         [FromRoute] Guid id,
         CancellationToken cancellationToken)
     {
-        var query = new HotelDetailsQuery { Id = id };
-        return await HandleQueryResult(query, cancellationToken);
+        return await HandleUserRoleResult(
+            adminResultFactory: async () =>
+            {
+                var query = new AdminHotelDetailsQuery { Id = id };
+                var result = await Sender.Send(query, cancellationToken);
+                return result.IsSuccess
+                    ? Ok(Mapper.Map<AdminHotelDetailsViewModel>(result.Value))
+                    : result.ToProblemDetails();
+            },
+            userResultFactory: async () =>
+            {
+                var query = new HotelDetailsQuery { Id = id };
+                var result = await Sender.Send(query, cancellationToken);
+                return result.IsSuccess
+                    ? Ok(Mapper.Map<HotelDetailsViewModel>(result.Value))
+                    : result.ToProblemDetails();
+            });
     }
 
     /// <summary>
