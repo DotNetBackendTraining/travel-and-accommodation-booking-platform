@@ -33,7 +33,7 @@ public class CreateCityCommandHandler : ICommandHandler<CreateCityCommand, Creat
         _imageRepository.SaveAndSet(request.ThumbnailImage, city, c => c.ThumbnailImage);
         _cudRepository.Add(city);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
 
         var response = new CreateCityResponse(city.Id);
         return Result.Success(response);

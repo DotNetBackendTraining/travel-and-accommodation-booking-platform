@@ -82,7 +82,7 @@ public class DeleteRoomCommandHandlerTests
 
         imageRepositoryMock.Setup(repo => repo.DeleteAll(It.IsAny<List<Image>>()));
         cudRoomRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Room>()));
-        unitOfWorkMock.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()))
+        unitOfWorkMock.Setup(uow => uow.CommitAsync(It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
         // Act
@@ -92,6 +92,6 @@ public class DeleteRoomCommandHandlerTests
         result.IsSuccess.Should().BeTrue();
         cudRoomRepositoryMock.Verify(repo => repo.Delete(room), Times.Once);
         imageRepositoryMock.Verify(repo => repo.DeleteAll(It.IsAny<List<Image>>()), Times.Once);
-        unitOfWorkMock.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+        unitOfWorkMock.Verify(uow => uow.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }

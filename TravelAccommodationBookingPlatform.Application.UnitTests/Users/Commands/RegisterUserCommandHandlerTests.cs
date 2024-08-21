@@ -85,6 +85,6 @@ public class RegisterUserCommandHandlerTests
 
         result.IsSuccess.Should().BeTrue();
         mockCudRepository.Verify(repo => repo.Add(mappedUser), Times.Once);
-        mockUnitOfWork.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+        mockUnitOfWork.Verify(uow => uow.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }

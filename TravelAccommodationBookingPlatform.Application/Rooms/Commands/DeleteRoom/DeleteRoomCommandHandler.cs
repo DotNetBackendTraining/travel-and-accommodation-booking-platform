@@ -45,7 +45,7 @@ public class DeleteRoomCommandHandler : ICommandHandler<DeleteRoomCommand>
 
         _imageRepository.DeleteAll(room.Images);
         _cudRepository.Delete(room);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
 
         return Result.Success();
     }

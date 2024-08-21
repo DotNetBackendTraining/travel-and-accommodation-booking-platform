@@ -15,7 +15,7 @@ public class UnitOfWork : IUnitOfWork
         _mediator = mediator;
     }
 
-    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    public async Task CommitAsync(CancellationToken cancellationToken)
     {
         await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
         try

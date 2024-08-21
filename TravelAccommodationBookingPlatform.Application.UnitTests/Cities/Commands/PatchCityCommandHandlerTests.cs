@@ -77,7 +77,7 @@ public class PatchCityCommandHandlerTests
             .ReturnsAsync(city);
 
         cudCityRepositoryMock.Setup(repo => repo.Update(It.IsAny<City>()));
-        unitOfWorkMock.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()))
+        unitOfWorkMock.Setup(uow => uow.CommitAsync(It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
         // Act
@@ -86,6 +86,6 @@ public class PatchCityCommandHandlerTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         cudCityRepositoryMock.Verify(repo => repo.Update(city), Times.Once);
-        unitOfWorkMock.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+        unitOfWorkMock.Verify(uow => uow.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }

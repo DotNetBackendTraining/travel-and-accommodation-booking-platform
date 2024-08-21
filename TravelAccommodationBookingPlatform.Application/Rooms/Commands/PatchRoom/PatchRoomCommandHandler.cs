@@ -67,7 +67,7 @@ public class PatchRoomCommandHandler : ICommandHandler<PatchRoomCommand>
 
         // Update and save changes
         _roomCudRepository.Update(room);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
 
         return Result.Success();
     }

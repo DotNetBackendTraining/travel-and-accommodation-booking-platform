@@ -110,7 +110,7 @@ public class PatchHotelCommandHandlerTests
             .ReturnsAsync(true);
 
         cudHotelRepositoryMock.Setup(repo => repo.Update(It.IsAny<Hotel>()));
-        unitOfWorkMock.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+        unitOfWorkMock.Setup(uow => uow.CommitAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
         // Act
         var result = await handler.Handle(request, CancellationToken.None);
@@ -118,6 +118,6 @@ public class PatchHotelCommandHandlerTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         cudHotelRepositoryMock.Verify(repo => repo.Update(hotel), Times.Once);
-        unitOfWorkMock.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+        unitOfWorkMock.Verify(uow => uow.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }

@@ -46,7 +46,7 @@ public class DeleteCityCommandHandler : ICommandHandler<DeleteCityCommand>
         _imageRepository.Delete(city.ThumbnailImage);
         _cudRepository.Delete(city);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
 
         return Result.Success();
     }

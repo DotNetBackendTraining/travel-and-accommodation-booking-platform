@@ -82,7 +82,7 @@ public class DeleteCityCommandHandlerTests
 
         imageRepositoryMock.Setup(repo => repo.Delete(It.IsAny<Image>()));
         cudCityRepositoryMock.Setup(repo => repo.Delete(It.IsAny<City>()));
-        unitOfWorkMock.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+        unitOfWorkMock.Setup(uow => uow.CommitAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
         // Act
         var result = await handler.Handle(request, CancellationToken.None);
@@ -91,6 +91,6 @@ public class DeleteCityCommandHandlerTests
         result.IsSuccess.Should().BeTrue();
         cudCityRepositoryMock.Verify(repo => repo.Delete(city), Times.Once);
         imageRepositoryMock.Verify(repo => repo.Delete(city.ThumbnailImage), Times.Once);
-        unitOfWorkMock.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+        unitOfWorkMock.Verify(uow => uow.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }

@@ -54,7 +54,7 @@ public class PatchCityCommandHandler : ICommandHandler<PatchCityCommand>
 
         // Update and save changes
         _cudRepository.Update(city);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
 
         return Result.Success();
     }

@@ -48,7 +48,7 @@ public class CreateHotelCommandHandler : ICommandHandler<CreateHotelCommand, Cre
         _imageRepository.SaveAndSetAll(request.Images, hotel, h => h.Images);
         _hotelCudRepository.Add(hotel);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
         return Result.Success(new CreateHotelResponse(hotel.Id));
     }
 }

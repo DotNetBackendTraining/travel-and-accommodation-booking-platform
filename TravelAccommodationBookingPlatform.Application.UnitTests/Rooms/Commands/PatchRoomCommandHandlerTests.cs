@@ -115,7 +115,7 @@ public class PatchRoomCommandHandlerTests
         mapperMock.Setup(m => m.Map(It.IsAny<PatchRoomModel>(), room)).Returns(room);
 
         roomCudRepositoryMock.Setup(repo => repo.Update(It.IsAny<Room>()));
-        unitOfWorkMock.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()))
+        unitOfWorkMock.Setup(uow => uow.CommitAsync(It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
         // Act
@@ -124,6 +124,6 @@ public class PatchRoomCommandHandlerTests
         // Assert
         result.IsSuccess.Should().BeTrue();
         roomCudRepositoryMock.Verify(repo => repo.Update(room), Times.Once);
-        unitOfWorkMock.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+        unitOfWorkMock.Verify(uow => uow.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }

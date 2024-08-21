@@ -56,7 +56,7 @@ public class CreateRoomCommandHandler : ICommandHandler<CreateRoomCommand, Creat
         _imageRepository.SaveAndSetAll(request.Images, room, r => r.Images);
         _roomCudRepository.Add(room);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
 
         var response = new CreateRoomResponse(room.Id);
         return Result.Success(response);

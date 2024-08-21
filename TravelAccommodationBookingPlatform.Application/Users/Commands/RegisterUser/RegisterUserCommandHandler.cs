@@ -54,7 +54,7 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
         user.UserRole = UserRole.User;
 
         _cudRepository.Add(user);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
 
         return Result.Success();
     }

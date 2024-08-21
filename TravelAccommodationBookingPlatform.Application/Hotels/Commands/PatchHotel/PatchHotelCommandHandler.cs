@@ -67,7 +67,7 @@ public class PatchHotelCommandHandler : IRequestHandler<PatchHotelCommand, Resul
 
         // Update and save changes
         _hotelCudRepository.Update(hotel);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
 
         return Result.Success();
     }

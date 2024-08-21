@@ -58,7 +58,7 @@ public class CreateBookingCommandHandler : ICommandHandler<CreateBookingCommand,
         booking.Rooms = (await _roomRepository.ListAsync(roomsSpec, cancellationToken)).ToList();
 
         _bookingCudRepository.Add(booking);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.CommitAsync(cancellationToken);
 
         var response = new CreateBookingResponse(booking.Id);
         return Result.Success(response);

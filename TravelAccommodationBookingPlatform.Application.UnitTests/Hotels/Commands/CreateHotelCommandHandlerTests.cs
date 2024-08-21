@@ -54,7 +54,7 @@ public class CreateHotelCommandHandlerTests
         mockImageStorageService.Setup(service => service.SaveAllAsync(
                 It.IsAny<IEnumerable<IFile>>()))
             .ReturnsAsync(Result.Success(imageUrls));
-        mockUnitOfWork.Setup(unit => unit.SaveChangesAsync(
+        mockUnitOfWork.Setup(unit => unit.CommitAsync(
                 It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 

@@ -92,7 +92,7 @@ public class CreateRoomCommandHandlerTests
             It.IsAny<IEnumerable<IFile>>(), room, It.IsAny<Expression<Func<Room, ICollection<Image>>>>()));
 
         roomCudRepositoryMock.Setup(repo => repo.Add(It.IsAny<Room>()));
-        unitOfWorkMock.Setup(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()))
+        unitOfWorkMock.Setup(uow => uow.CommitAsync(It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
         // Act
@@ -102,6 +102,6 @@ public class CreateRoomCommandHandlerTests
         result.IsSuccess.Should().BeTrue();
         result.Value.Id.Should().Be(room.Id);
         roomCudRepositoryMock.Verify(repo => repo.Add(room), Times.Once);
-        unitOfWorkMock.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+        unitOfWorkMock.Verify(uow => uow.CommitAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 }
