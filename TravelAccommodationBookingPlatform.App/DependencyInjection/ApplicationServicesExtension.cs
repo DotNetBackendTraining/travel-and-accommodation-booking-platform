@@ -1,6 +1,5 @@
 using FluentValidation;
 using MediatR;
-using TravelAccommodationBookingPlatform.Application.Behaviors;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
 using TravelAccommodationBookingPlatform.Application.Shared.Notifications;
 
@@ -12,9 +11,6 @@ public static class ApplicationServicesExtension
     {
         services.AddMediatR(config =>
             config.RegisterServicesFromAssembly(Application.AssemblyReference.Assembly));
-
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         services.AddValidatorsFromAssembly(Application.AssemblyReference.Assembly);
 

@@ -2,15 +2,15 @@ using FluentValidation;
 using MediatR;
 using TravelAccommodationBookingPlatform.Domain.Shared;
 
-namespace TravelAccommodationBookingPlatform.Application.Behaviors;
+namespace TravelAccommodationBookingPlatform.Infrastructure.PipelineBehaviors;
 
-public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
     where TResponse : Result
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
+    public ValidationPipelineBehavior(IEnumerable<IValidator<TRequest>> validators)
     {
         _validators = validators;
     }

@@ -1,5 +1,6 @@
 using System.Text;
 using Autofac;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -11,6 +12,7 @@ using TravelAccommodationBookingPlatform.Domain.Shared;
 using TravelAccommodationBookingPlatform.Infrastructure.Auth;
 using TravelAccommodationBookingPlatform.Infrastructure.Caching;
 using TravelAccommodationBookingPlatform.Infrastructure.IO;
+using TravelAccommodationBookingPlatform.Infrastructure.PipelineBehaviors;
 using TravelAccommodationBookingPlatform.Infrastructure.Settings;
 using TravelAccommodationBookingPlatform.Presentation.Constants;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
@@ -24,6 +26,9 @@ public static class InfrastructureServicesExtension
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
         services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
         services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
+
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IPasswordHashService, PasswordHashService>();
