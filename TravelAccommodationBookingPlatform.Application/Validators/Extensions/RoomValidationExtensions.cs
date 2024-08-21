@@ -1,7 +1,5 @@
 using FluentValidation;
 using TravelAccommodationBookingPlatform.Domain.Constants;
-using TravelAccommodationBookingPlatform.Domain.Entities;
-using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 
 namespace TravelAccommodationBookingPlatform.Application.Validators.Extensions;
 
@@ -20,25 +18,5 @@ public static class RoomValidationExtensions
         return ruleBuilder
             .MaximumLength(DomainRules.Rooms.DescriptionMaxLength)
             .WithMessage($"Room description cannot exceed {DomainRules.Rooms.DescriptionMaxLength} characters.");
-    }
-
-    public static IRuleBuilderOptions<T, Price> ValidPrice<T>(this IRuleBuilder<T, Price> ruleBuilder)
-    {
-        return ruleBuilder
-            .SetValidator(new PriceValidator());
-    }
-
-    public static IRuleBuilderOptions<T, NumberOfGuests> ValidMaxNumberOfGuests<T>(
-        this IRuleBuilder<T, NumberOfGuests> ruleBuilder)
-    {
-        return ruleBuilder
-            .SetValidator(new NumberOfGuestsValidator());
-    }
-
-    public static IRuleBuilder<T, IEnumerable<Image>> MustHaveValidImages<T>(
-        this IRuleBuilder<T, IEnumerable<Image>> ruleBuilder)
-    {
-        return ruleBuilder.ForEach(x =>
-            x.SetValidator(new ImageValidator()));
     }
 }
