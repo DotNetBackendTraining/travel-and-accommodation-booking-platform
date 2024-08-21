@@ -61,12 +61,12 @@ public class HotelSearchViewModel
         /// <summary>
         /// The deal for the minimum price available for the hotel.
         /// </summary>
-        public PriceDealResponse? MinimumPriceDeal { get; set; } = default!;
+        public PriceCalculationResponse? MinimumPriceDeal { get; set; } = default!;
 
         /// <summary>
         /// The deal for the maximum price available for the hotel.
         /// </summary>
-        public PriceDealResponse? MaximumPriceDeal { get; set; } = default!;
+        public PriceCalculationResponse? MaximumPriceDeal { get; set; } = default!;
     }
 
     /// <summary>

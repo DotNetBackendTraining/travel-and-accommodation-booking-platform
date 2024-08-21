@@ -21,19 +21,15 @@ public sealed class HotelSearchResultSpecification : Specification<Hotel, HotelS
                 PriceDeal = options.IncludePriceDealIfAvailable && h.Rooms.Any()
                     ? new HotelSearchResult.HotelPriceDeal
                     {
-                        MinimumPriceDeal = new PriceDealResponse
+                        MinimumPriceDeal = new PriceCalculationResponse
                         {
                             OriginalPrice = new Price { Value = h.Rooms.Min(r => r.Price.Value) },
-                            DiscountRate = h.ActiveDiscount != null
-                                ? h.ActiveDiscount.Rate
-                                : new DiscountRate { Percentage = 0 }
+                            AppliedDiscount = h.ActiveDiscount
                         },
-                        MaximumPriceDeal = new PriceDealResponse
+                        MaximumPriceDeal = new PriceCalculationResponse
                         {
                             OriginalPrice = new Price { Value = h.Rooms.Max(r => r.Price.Value) },
-                            DiscountRate = h.ActiveDiscount != null
-                                ? h.ActiveDiscount.Rate
-                                : new DiscountRate { Percentage = 0 }
+                            AppliedDiscount = h.ActiveDiscount
                         }
                     }
                     : null

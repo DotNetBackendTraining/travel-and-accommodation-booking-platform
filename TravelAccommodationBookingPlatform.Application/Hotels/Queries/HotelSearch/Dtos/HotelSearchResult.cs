@@ -22,7 +22,7 @@ public class HotelSearchResult
 
     public class HotelPriceDeal
     {
-        public PriceDealResponse MinimumPriceDeal { get; set; } = default!;
-        public PriceDealResponse MaximumPriceDeal { get; set; } = default!;
+        public PriceCalculationResponse MinimumPriceDeal { get; set; } = default!;
+        public PriceCalculationResponse MaximumPriceDeal { get; set; } = default!;
     }
 }

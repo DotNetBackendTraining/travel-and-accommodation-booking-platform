@@ -36,13 +36,13 @@ public class HotelSearchResultSpecificationTests
     [Theory, AutoMoqData(omitOnRecursion: true)]
     public void HotelSearchResultsSpecification_ShouldIncludePriceDeal_WhenAvailable(
         Hotel hotel,
-        [Frozen] DiscountRate discountRate,
+        [Frozen] Discount discount,
         IMapper mapper,
         HotelSearchOptions options)
     {
         // Arrange
         options.IncludePriceDealIfAvailable = true;
-        hotel.ActiveDiscount = new Discount { Rate = discountRate };
+        hotel.ActiveDiscount = discount;
         hotel.Rooms.ToList().ForEach(r => r.Price = new Price { Value = new Random().Next(100, 500) });
 
         var hotels = new List<Hotel> { hotel };
@@ -60,8 +60,8 @@ public class HotelSearchResultSpecificationTests
         hotelResult.PriceDeal.MaximumPriceDeal.Should().NotBeNull();
         hotelResult.PriceDeal.MinimumPriceDeal.OriginalPrice.Value.Should().Be(hotel.Rooms.Min(r => r.Price.Value));
         hotelResult.PriceDeal.MaximumPriceDeal.OriginalPrice.Value.Should().Be(hotel.Rooms.Max(r => r.Price.Value));
-        hotelResult.PriceDeal.MinimumPriceDeal.DiscountRate.Should().Be(discountRate);
-        hotelResult.PriceDeal.MaximumPriceDeal.DiscountRate.Should().Be(discountRate);
+        hotelResult.PriceDeal.MinimumPriceDeal.AppliedDiscount.Should().Be(discount);
+        hotelResult.PriceDeal.MaximumPriceDeal.AppliedDiscount.Should().Be(discount);
     }
 
     [Theory, AutoMoqData(omitOnRecursion: true)]
