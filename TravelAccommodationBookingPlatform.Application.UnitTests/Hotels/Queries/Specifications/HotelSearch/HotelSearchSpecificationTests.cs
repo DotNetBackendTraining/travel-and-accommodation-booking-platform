@@ -1,6 +1,6 @@
 using FluentAssertions;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.Specifications;
+using TravelAccommodationBookingPlatform.Application.Features.Hotels.Queries.HotelSearch.Dtos;
+using TravelAccommodationBookingPlatform.Application.Features.Hotels.Queries.HotelSearch.Specifications;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.Domain.Enums;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;

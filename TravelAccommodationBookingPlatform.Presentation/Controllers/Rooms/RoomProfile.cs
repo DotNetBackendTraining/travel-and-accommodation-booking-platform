@@ -1,7 +1,7 @@
 using AutoMapper;
-using TravelAccommodationBookingPlatform.Application.Rooms.Commands.CreateRoom;
-using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomDetails;
-using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomDetails.Admin;
+using TravelAccommodationBookingPlatform.Application.Features.Rooms.Commands.CreateRoom;
+using TravelAccommodationBookingPlatform.Application.Features.Rooms.Queries.RoomDetails;
+using TravelAccommodationBookingPlatform.Application.Features.Rooms.Queries.RoomDetails.Admin;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Rooms.Requests;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Rooms.ViewModels;
 

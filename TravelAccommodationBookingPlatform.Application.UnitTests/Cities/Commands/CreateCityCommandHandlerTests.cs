@@ -3,7 +3,7 @@ using AutoFixture.Xunit2;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
-using TravelAccommodationBookingPlatform.Application.Cities.Commands.CreateCity;
+using TravelAccommodationBookingPlatform.Application.Features.Cities.Commands.CreateCity;
 using TravelAccommodationBookingPlatform.Application.Interfaces;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Domain.Entities;

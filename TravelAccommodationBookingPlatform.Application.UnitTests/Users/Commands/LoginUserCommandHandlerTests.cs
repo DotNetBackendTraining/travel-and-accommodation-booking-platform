@@ -1,10 +1,10 @@
 using AutoFixture.Xunit2;
 using FluentAssertions;
 using Moq;
+using TravelAccommodationBookingPlatform.Application.Features.Users.Commands.LoginUser;
+using TravelAccommodationBookingPlatform.Application.Features.Users.Specifications;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Auth;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
-using TravelAccommodationBookingPlatform.Application.Users.Commands.LoginUser;
-using TravelAccommodationBookingPlatform.Application.Users.Specifications;
 using TravelAccommodationBookingPlatform.Domain.Constants;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;

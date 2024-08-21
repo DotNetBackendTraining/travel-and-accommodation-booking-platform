@@ -1,7 +1,7 @@
 using AutoMapper;
-using TravelAccommodationBookingPlatform.Application.Cities.Commands.CreateCity;
-using TravelAccommodationBookingPlatform.Application.Cities.Queries.CityDetails;
-using TravelAccommodationBookingPlatform.Application.Cities.Queries.CityDetails.Admin;
+using TravelAccommodationBookingPlatform.Application.Features.Cities.Commands.CreateCity;
+using TravelAccommodationBookingPlatform.Application.Features.Cities.Queries.CityDetails;
+using TravelAccommodationBookingPlatform.Application.Features.Cities.Queries.CityDetails.Admin;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Cities.Requests;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Cities.ViewModels;
 

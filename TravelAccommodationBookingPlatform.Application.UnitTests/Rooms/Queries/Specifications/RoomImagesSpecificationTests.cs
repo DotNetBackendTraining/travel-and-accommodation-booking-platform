@@ -1,7 +1,6 @@
 using FluentAssertions;
-using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomImages;
+using TravelAccommodationBookingPlatform.Application.Features.Rooms.Queries.RoomImages;
 using TravelAccommodationBookingPlatform.Domain.Entities;
-using TravelAccommodationBookingPlatform.Domain.ValueObjects;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 
 namespace TravelAccommodationBookingPlatform.Application.UnitTests.Rooms.Queries.Specifications;

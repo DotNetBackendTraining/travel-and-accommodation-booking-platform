@@ -1,6 +1,6 @@
 using AutoFixture.Xunit2;
 using Moq;
-using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch;
+using TravelAccommodationBookingPlatform.Application.Features.Bookings.Queries.BookingSearch;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;

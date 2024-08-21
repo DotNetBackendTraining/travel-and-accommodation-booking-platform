@@ -1,9 +1,9 @@
 using AutoMapper;
-using TravelAccommodationBookingPlatform.Application.Hotels.Commands.CreateHotel;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelDetails;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelDetails.Admin;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelSearch.DTOs;
+using TravelAccommodationBookingPlatform.Application.Features.Hotels.Commands.CreateHotel;
+using TravelAccommodationBookingPlatform.Application.Features.Hotels.Queries.HotelDetails;
+using TravelAccommodationBookingPlatform.Application.Features.Hotels.Queries.HotelDetails.Admin;
+using TravelAccommodationBookingPlatform.Application.Features.Hotels.Queries.HotelSearch;
+using TravelAccommodationBookingPlatform.Application.Features.Hotels.Queries.HotelSearch.Dtos;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels.Requests;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Hotels.ViewModels;
 

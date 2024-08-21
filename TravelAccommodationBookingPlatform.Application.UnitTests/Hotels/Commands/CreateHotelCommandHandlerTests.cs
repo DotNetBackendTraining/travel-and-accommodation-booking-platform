@@ -1,8 +1,8 @@
 using AutoFixture.Xunit2;
 using FluentAssertions;
 using Moq;
-using TravelAccommodationBookingPlatform.Application.Cities.Specifications;
-using TravelAccommodationBookingPlatform.Application.Hotels.Commands.CreateHotel;
+using TravelAccommodationBookingPlatform.Application.Features.Cities.Specifications;
+using TravelAccommodationBookingPlatform.Application.Features.Hotels.Commands.CreateHotel;
 using TravelAccommodationBookingPlatform.Application.Interfaces;
 using TravelAccommodationBookingPlatform.Application.Interfaces.IO;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;

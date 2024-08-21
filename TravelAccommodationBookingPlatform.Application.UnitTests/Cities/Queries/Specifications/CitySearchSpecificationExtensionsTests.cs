@@ -1,5 +1,5 @@
 using FluentAssertions;
-using TravelAccommodationBookingPlatform.Application.Cities.Queries.CitySearch.SpecificationExtensions;
+using TravelAccommodationBookingPlatform.Application.Features.Cities.Queries.CitySearch.SpecificationExtensions;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 

@@ -3,7 +3,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingPayment;
+using TravelAccommodationBookingPlatform.Application.Features.Bookings.Queries.BookingPayment;
 using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;

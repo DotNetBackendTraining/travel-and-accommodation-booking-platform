@@ -1,6 +1,6 @@
 using Ardalis.Specification;
 using Moq;
-using TravelAccommodationBookingPlatform.Application.Cities.Queries.CityDetails;
+using TravelAccommodationBookingPlatform.Application.Features.Cities.Queries.CityDetails;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 

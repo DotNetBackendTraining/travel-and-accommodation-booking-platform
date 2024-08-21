@@ -1,7 +1,7 @@
 using Ardalis.Specification;
 using Moq;
+using TravelAccommodationBookingPlatform.Application.Features.Rooms.Queries.RoomDetails;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
-using TravelAccommodationBookingPlatform.Application.Rooms.Queries.RoomDetails;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
 namespace TravelAccommodationBookingPlatform.Application.UnitTests.Rooms.Queries.Handlers;

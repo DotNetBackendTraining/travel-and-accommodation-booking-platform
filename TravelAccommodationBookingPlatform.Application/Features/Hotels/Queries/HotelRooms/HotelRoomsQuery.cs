@@ -1,0 +1,12 @@
+using TravelAccommodationBookingPlatform.Application.Interfaces.Messaging;
+using TravelAccommodationBookingPlatform.Application.Shared;
+using TravelAccommodationBookingPlatform.Domain.Enums;
+
+namespace TravelAccommodationBookingPlatform.Application.Features.Hotels.Queries.HotelRooms;
+
+public class HotelRoomsQuery : IQuery<HotelRoomsResponse>
+{
+    public Guid Id { get; set; }
+    public PaginationParameters PaginationParameters { get; set; } = default!;
+    public RoomType? RoomType { get; set; }
+}

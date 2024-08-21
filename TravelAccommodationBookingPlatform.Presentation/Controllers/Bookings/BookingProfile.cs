@@ -1,7 +1,7 @@
 using AutoMapper;
-using TravelAccommodationBookingPlatform.Application.Bookings.Commands.CreateBooking;
-using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch;
-using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch.DTOs;
+using TravelAccommodationBookingPlatform.Application.Features.Bookings.Commands.CreateBooking;
+using TravelAccommodationBookingPlatform.Application.Features.Bookings.Queries.BookingSearch;
+using TravelAccommodationBookingPlatform.Application.Features.Bookings.Queries.BookingSearch.DTOs;
 using TravelAccommodationBookingPlatform.Presentation.Controllers.Bookings.Requests;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Bookings;

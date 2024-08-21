@@ -1,6 +1,6 @@
 using AutoMapper;
 using FluentAssertions;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelRooms;
+using TravelAccommodationBookingPlatform.Application.Features.Hotels.Queries.HotelRooms;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 using TravelAccommodationBookingPlatform.TestsCommon.Attributes;
 

@@ -1,4 +1,4 @@
-using TravelAccommodationBookingPlatform.Application.Bookings.Queries.BookingSearch.DTOs;
+using TravelAccommodationBookingPlatform.Application.Features.Bookings.Queries.BookingSearch.DTOs;
 using TravelAccommodationBookingPlatform.Application.Shared;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Controllers.Bookings.Requests;

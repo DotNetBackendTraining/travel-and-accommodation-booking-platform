@@ -4,7 +4,7 @@ using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
-using TravelAccommodationBookingPlatform.Application.Cities.Commands.PatchCity;
+using TravelAccommodationBookingPlatform.Application.Features.Cities.Commands.PatchCity;
 using TravelAccommodationBookingPlatform.Application.Interfaces;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Domain.Constants;

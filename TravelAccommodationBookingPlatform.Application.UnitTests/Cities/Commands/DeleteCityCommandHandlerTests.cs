@@ -2,7 +2,7 @@ using Ardalis.Specification;
 using AutoFixture.Xunit2;
 using FluentAssertions;
 using Moq;
-using TravelAccommodationBookingPlatform.Application.Cities.Commands.DeleteCity;
+using TravelAccommodationBookingPlatform.Application.Features.Cities.Commands.DeleteCity;
 using TravelAccommodationBookingPlatform.Application.Interfaces;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Domain.Constants;

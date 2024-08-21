@@ -1,7 +1,7 @@
 using Ardalis.Specification;
 using AutoMapper;
 using Moq;
-using TravelAccommodationBookingPlatform.Application.Hotels.Queries.HotelRooms;
+using TravelAccommodationBookingPlatform.Application.Features.Hotels.Queries.HotelRooms;
 using TravelAccommodationBookingPlatform.Application.Interfaces.Repositories;
 using TravelAccommodationBookingPlatform.Domain.Entities;
 
