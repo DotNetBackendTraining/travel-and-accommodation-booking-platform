@@ -36,7 +36,7 @@ public class CachingRepository<TEntity> : IRepository<TEntity>
         if (!specification.CacheEnabled)
         {
             _logger.LogWarning(
-                "Cache disabled for specification: {@Specification}. Fetching data from the repository.",
+                "Cache disabled for specification: {Specification}. Fetching data from the repository.",
                 specification);
 
             return await fetchData();
