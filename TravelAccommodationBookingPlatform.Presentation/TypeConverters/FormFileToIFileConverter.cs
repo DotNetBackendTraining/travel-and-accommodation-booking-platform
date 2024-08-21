@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using TravelAccommodationBookingPlatform.Application.Interfaces.IO;
-using TravelAccommodationBookingPlatform.Presentation.Shared;
+using TravelAccommodationBookingPlatform.Presentation.Shared.Wrappers;
 
 namespace TravelAccommodationBookingPlatform.Presentation.TypeConverters;
 

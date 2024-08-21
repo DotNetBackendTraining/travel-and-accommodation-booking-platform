@@ -12,6 +12,7 @@ using TravelAccommodationBookingPlatform.Presentation.Attributes;
 using TravelAccommodationBookingPlatform.Presentation.Features.Cities.Requests;
 using TravelAccommodationBookingPlatform.Presentation.Shared;
 using TravelAccommodationBookingPlatform.Presentation.Shared.ResultExtensions;
+using TravelAccommodationBookingPlatform.Presentation.Shared.Wrappers;
 
 namespace TravelAccommodationBookingPlatform.Presentation.Features.Cities.Controllers;
 

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using TravelAccommodationBookingPlatform.Application.Interfaces.IO;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Shared;
+namespace TravelAccommodationBookingPlatform.Presentation.Shared.Wrappers;
 
 public class FormFileWrapper : IFile
 {

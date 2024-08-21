@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using TravelAccommodationBookingPlatform.Application.Interfaces.IO;
 
-namespace TravelAccommodationBookingPlatform.Presentation.Shared;
+namespace TravelAccommodationBookingPlatform.Presentation.Shared.Wrappers;
 
 public class JsonPatchDocumentWrapper<T> : IPatchDocument<T>
     where T : class
