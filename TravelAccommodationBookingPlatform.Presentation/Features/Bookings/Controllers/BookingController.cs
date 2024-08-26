@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TravelAccommodationBookingPlatform.Application.Features.Bookings.Commands.CreateBooking;
+using TravelAccommodationBookingPlatform.Application.Features.Bookings.Commands.DeleteBooking;
 using TravelAccommodationBookingPlatform.Application.Features.Bookings.Queries.BookingDetails;
 using TravelAccommodationBookingPlatform.Application.Features.Bookings.Queries.BookingDetails.DTOs;
 using TravelAccommodationBookingPlatform.Application.Features.Bookings.Queries.BookingSearch;
@@ -127,5 +128,34 @@ public class BookingController : AbstractController
         return result.IsSuccess
             ? CreatedAtAction("GetBookingDetails", "Booking", new { id = result.Value.Id }, result.Value)
             : result.ToProblemDetails();
+    }
+
+    /// <summary>
+    /// Deletes an existing booking for the user.
+    /// </summary>
+    /// <param name="id">The ID of the booking to delete.</param>
+    /// <param name="cancellationToken">Cancellation token for the request.</param>
+    /// <returns>No content if the delete is successful.</returns>
+    /// <response code="204">No content if the deletion is successful.</response>
+    /// <response code="401">Unauthorized if credentials are invalid.</response>
+    /// <response code="404">If the booking is not found.</response>
+    /// <response code="409">If the booking cannot be deleted due to conflicts (e.g. existing payment).</response>
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesError(StatusCodes.Status401Unauthorized)]
+    [ProducesError(StatusCodes.Status404NotFound)]
+    [ProducesError(StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> DeleteBooking(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var userIdResult = GetUserIdOrFailure();
+        if (userIdResult.IsFailure)
+        {
+            return userIdResult.ToProblemDetails();
+        }
+
+        var command = new DeleteBookingCommand { UserId = userIdResult.Value, BookingId = id };
+        return await HandleNoContentCommand(command, cancellationToken);
     }
 }
