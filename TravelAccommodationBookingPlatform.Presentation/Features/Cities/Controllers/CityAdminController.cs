@@ -42,7 +42,6 @@ public class CityAdminController : AbstractController
     [ProducesError(StatusCodes.Status400BadRequest)]
     [ProducesError(StatusCodes.Status401Unauthorized)]
     [ProducesError(StatusCodes.Status403Forbidden)]
-    [ProducesError(StatusCodes.Status404NotFound)]
     [ProducesError(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<CreateCityResponse>> CreateCity(
         [FromForm] CreateCityRequest request,
