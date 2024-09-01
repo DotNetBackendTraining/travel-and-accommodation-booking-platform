@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "7afc2f07-c293-48dc-8d4a-f9c05c34799b",
-		"name": "Travel and Accommodation Booking Platform API 1",
+		"name": "Travel and Accommodation Booking Platform API V1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27911723"
 	},
@@ -1601,7 +1601,7 @@
 							},
 							"response": [
 								{
-									"name": "Returns the details of the city.",
+									"name": "Returns the details of the city (User Token).",
 									"originalRequest": {
 										"method": "GET",
 										"header": [
@@ -1628,7 +1628,8 @@
 											],
 											"variable": [
 												{
-													"key": "id"
+													"key": "id",
+													"value": "<uuid>"
 												}
 											]
 										}
@@ -1644,6 +1645,52 @@
 									],
 									"cookie": [],
 									"body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"country\": {\n    \"name\": \"<string>\"\n  },\n  \"postOffice\": {\n    \"address\": \"<string>\",\n    \"description\": \"<string>\"\n  },\n  \"thumbnailImage\": {\n    \"url\": \"<string>\",\n    \"id\": \"<uuid>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  }\n}"
+								},
+								{
+									"name": "Returns the details of the city (Admin Token).",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/cities/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"cities",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<uuid>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime\",\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"country\": {\n    \"name\": \"<string>\"\n  },\n  \"postOffice\": {\n    \"address\": \"<string>\",\n    \"description\": \"<string>\"\n  },\n  \"thumbnailImage\": {\n    \"url\": \"<string>\",\n    \"id\": \"<uuid>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  }\n}"
 								},
 								{
 									"name": "Unauthorized if credentials are invalid.",
@@ -1718,7 +1765,8 @@
 											],
 											"variable": [
 												{
-													"key": "id"
+													"key": "id",
+													"value": "3b2ef1e7-ec5f-4c3a-56ac-08dcbba01772"
 												}
 											]
 										}
@@ -1733,7 +1781,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}"
+									"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"errors\": [\n        {\n            \"code\": \"City.IdNotFound\",\n            \"message\": \"City with the given ID does not exist\"\n        }\n    ]\n}"
 								}
 							]
 						},
@@ -2381,7 +2429,7 @@
 					]
 				},
 				{
-					"name": "Searches for cities based on provided filters and returns available search filters.",
+					"name": "Searches for cities based on provided filters.",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -2416,7 +2464,7 @@
 					},
 					"response": [
 						{
-							"name": "Returns the search results and filters.",
+							"name": "Returns the search results.",
 							"originalRequest": {
 								"method": "GET",
 								"header": [
@@ -2431,7 +2479,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/cities?PaginationParameters.PageNumber=<integer>&PaginationParameters.PageSize=<integer>",
+									"raw": "{{baseUrl}}/api/v1/cities?PaginationParameters.PageNumber=1&PaginationParameters.PageSize=5",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2443,12 +2491,12 @@
 									"query": [
 										{
 											"key": "PaginationParameters.PageNumber",
-											"value": "<integer>",
+											"value": "1",
 											"description": "The current page number to retrieve.\r\nMust be a positive integer."
 										},
 										{
 											"key": "PaginationParameters.PageSize",
-											"value": "<integer>",
+											"value": "5",
 											"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 										}
 									]
@@ -2465,57 +2513,6 @@
 							],
 							"cookie": [],
 							"body": "{\n  \"results\": {\n    \"totalCount\": \"<integer>\",\n    \"items\": [\n      {\n        \"id\": \"<uuid>\",\n        \"name\": \"<string>\",\n        \"country\": {\n          \"name\": \"<string>\"\n        },\n        \"postOffice\": {\n          \"address\": \"<string>\",\n          \"description\": \"<string>\"\n        },\n        \"thumbnailImage\": {\n          \"url\": \"<string>\",\n          \"id\": \"<uuid>\",\n          \"createdAt\": \"<dateTime>\",\n          \"updatedAt\": \"<dateTime>\"\n        }\n      },\n      {\n        \"id\": \"<uuid>\",\n        \"name\": \"<string>\",\n        \"country\": {\n          \"name\": \"<string>\"\n        },\n        \"postOffice\": {\n          \"address\": \"<string>\",\n          \"description\": \"<string>\"\n        },\n        \"thumbnailImage\": {\n          \"url\": \"<string>\",\n          \"id\": \"<uuid>\",\n          \"createdAt\": \"<dateTime>\",\n          \"updatedAt\": \"<dateTime>\"\n        }\n      }\n    ]\n  }\n}"
-						},
-						{
-							"name": "If the request is invalid.",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "text/plain"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer <token>",
-										"description": "Added as a part of security scheme: bearer"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/api/v1/cities?PaginationParameters.PageNumber=<integer>&PaginationParameters.PageSize=<integer>",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"cities"
-									],
-									"query": [
-										{
-											"key": "PaginationParameters.PageNumber",
-											"value": "<integer>",
-											"description": "The current page number to retrieve.\r\nMust be a positive integer."
-										},
-										{
-											"key": "PaginationParameters.PageSize",
-											"value": "<integer>",
-											"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
-										}
-									]
-								}
-							},
-							"status": "Bad Request",
-							"code": 400,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								}
-							],
-							"cookie": [],
-							"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}"
 						},
 						{
 							"name": "Unauthorized if credentials are invalid.",
@@ -2584,7 +2581,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/cities?PaginationParameters.PageNumber=<integer>&PaginationParameters.PageSize=<integer>",
+									"raw": "{{baseUrl}}/api/v1/cities?PaginationParameters.PageNumber=0&PaginationParameters.PageSize=0",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -2596,12 +2593,12 @@
 									"query": [
 										{
 											"key": "PaginationParameters.PageNumber",
-											"value": "<integer>",
+											"value": "0",
 											"description": "The current page number to retrieve.\r\nMust be a positive integer."
 										},
 										{
 											"key": "PaginationParameters.PageSize",
-											"value": "<integer>",
+											"value": "0",
 											"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 										}
 									]
@@ -3203,7 +3200,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/v1/hotels/:id/images?PageNumber=<integer>&PageSize=<integer>",
+													"raw": "{{baseUrl}}/api/v1/hotels/:id/images?PageNumber=1&PageSize=5",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -3217,18 +3214,19 @@
 													"query": [
 														{
 															"key": "PageNumber",
-															"value": "<integer>",
+															"value": "1",
 															"description": "The current page number to retrieve.\r\nMust be a positive integer."
 														},
 														{
 															"key": "PageSize",
-															"value": "<integer>",
+															"value": "5",
 															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 														}
 													],
 													"variable": [
 														{
-															"key": "id"
+															"key": "id",
+															"value": "<uuid>"
 														}
 													]
 												}
@@ -3319,7 +3317,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/v1/hotels/:id/images?PageNumber=<integer>&PageSize=<integer>",
+													"raw": "{{baseUrl}}/api/v1/hotels/:id/images?PageNumber=1&PageSize=5",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -3333,18 +3331,19 @@
 													"query": [
 														{
 															"key": "PageNumber",
-															"value": "<integer>",
+															"value": "1",
 															"description": "The current page number to retrieve.\r\nMust be a positive integer."
 														},
 														{
 															"key": "PageSize",
-															"value": "<integer>",
+															"value": "5",
 															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 														}
 													],
 													"variable": [
 														{
-															"key": "id"
+															"key": "id",
+															"value": "bcedf059-4835-4bcf-1e71-08dcbba01bc1"
 														}
 													]
 												}
@@ -3359,7 +3358,7 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}"
+											"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"errors\": [\n        {\n            \"code\": \"Hotel.IdNotFound\",\n            \"message\": \"Hotel with the given ID does not exist\"\n        }\n    ]\n}"
 										},
 										{
 											"name": "If the request is invalid (validation error).",
@@ -3377,7 +3376,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/v1/hotels/:id/images?PageNumber=<integer>&PageSize=<integer>",
+													"raw": "{{baseUrl}}/api/v1/hotels/:id/images?PageNumber=0&PageSize=0",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -3391,18 +3390,19 @@
 													"query": [
 														{
 															"key": "PageNumber",
-															"value": "<integer>",
+															"value": "0",
 															"description": "The current page number to retrieve.\r\nMust be a positive integer."
 														},
 														{
 															"key": "PageSize",
-															"value": "<integer>",
+															"value": "0",
 															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 														}
 													],
 													"variable": [
 														{
-															"key": "id"
+															"key": "id",
+															"value": "bcedf059-4835-4bcf-1e71-08dcbba01bc1"
 														}
 													]
 												}
@@ -3486,7 +3486,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/v1/hotels/:id/reviews?PageNumber=<integer>&PageSize=<integer>",
+													"raw": "{{baseUrl}}/api/v1/hotels/:id/reviews?PageNumber=1&PageSize=5",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -3500,18 +3500,19 @@
 													"query": [
 														{
 															"key": "PageNumber",
-															"value": "<integer>",
+															"value": "1",
 															"description": "The current page number to retrieve.\r\nMust be a positive integer."
 														},
 														{
 															"key": "PageSize",
-															"value": "<integer>",
+															"value": "5",
 															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 														}
 													],
 													"variable": [
 														{
-															"key": "id"
+															"key": "id",
+															"value": "<uuid>"
 														}
 													]
 												}
@@ -3602,7 +3603,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/v1/hotels/:id/reviews?PageNumber=<integer>&PageSize=<integer>",
+													"raw": "{{baseUrl}}/api/v1/hotels/:id/reviews?PageNumber=1&PageSize=5",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -3616,18 +3617,19 @@
 													"query": [
 														{
 															"key": "PageNumber",
-															"value": "<integer>",
+															"value": "1",
 															"description": "The current page number to retrieve.\r\nMust be a positive integer."
 														},
 														{
 															"key": "PageSize",
-															"value": "<integer>",
+															"value": "5",
 															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 														}
 													],
 													"variable": [
 														{
-															"key": "id"
+															"key": "id",
+															"value": "bcedf059-4835-4bcf-1e71-08dcbba01bc1"
 														}
 													]
 												}
@@ -3642,7 +3644,7 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}"
+											"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"errors\": [\n        {\n            \"code\": \"Hotel.IdNotFound\",\n            \"message\": \"Hotel with the given ID does not exist\"\n        }\n    ]\n}"
 										},
 										{
 											"name": "If the request is invalid (validation error).",
@@ -3660,7 +3662,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/v1/hotels/:id/reviews?PageNumber=<integer>&PageSize=<integer>",
+													"raw": "{{baseUrl}}/api/v1/hotels/:id/reviews?PageNumber=0&PageSize=0",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -3674,18 +3676,19 @@
 													"query": [
 														{
 															"key": "PageNumber",
-															"value": "<integer>",
+															"value": "0",
 															"description": "The current page number to retrieve.\r\nMust be a positive integer."
 														},
 														{
 															"key": "PageSize",
-															"value": "<integer>",
+															"value": "0",
 															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 														}
 													],
 													"variable": [
 														{
-															"key": "id"
+															"key": "id",
+															"value": "bcedf059-4835-4bcf-1e71-08dcbba01bc1"
 														}
 													]
 												}
@@ -3774,7 +3777,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/v1/hotels/:id/rooms?PageNumber=<integer>&PageSize=<integer>&roomType=Luxury",
+													"raw": "{{baseUrl}}/api/v1/hotels/:id/rooms?PageNumber=1&PageSize=5",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -3788,12 +3791,77 @@
 													"query": [
 														{
 															"key": "PageNumber",
-															"value": "<integer>",
+															"value": "1",
 															"description": "The current page number to retrieve.\r\nMust be a positive integer."
 														},
 														{
 															"key": "PageSize",
-															"value": "<integer>",
+															"value": "5",
+															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
+														},
+														{
+															"key": "roomType",
+															"value": "Luxury",
+															"description": "The type of the room.",
+															"disabled": true
+														}
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<uuid>"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"results\": {\n    \"totalCount\": \"<integer>\",\n    \"items\": [\n      {\n        \"id\": \"<uuid>\",\n        \"roomNumber\": \"<integer>\",\n        \"roomType\": \"Budget\",\n        \"description\": \"<string>\",\n        \"price\": {\n          \"value\": \"<double>\"\n        },\n        \"maxNumberOfGuests\": {\n          \"adults\": \"<integer>\",\n          \"children\": \"<integer>\"\n        }\n      },\n      {\n        \"id\": \"<uuid>\",\n        \"roomNumber\": \"<integer>\",\n        \"roomType\": \"Budget\",\n        \"description\": \"<string>\",\n        \"price\": {\n          \"value\": \"<double>\"\n        },\n        \"maxNumberOfGuests\": {\n          \"adults\": \"<integer>\",\n          \"children\": \"<integer>\"\n        }\n      }\n    ]\n  },\n  \"id\": \"<uuid>\"\n}"
+										},
+										{
+											"name": "Returns Luxury rooms of the hotel.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													},
+													{
+														"key": "Authorization",
+														"value": "Bearer <token>",
+														"description": "Added as a part of security scheme: bearer"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/hotels/:id/rooms?PageNumber=1&PageSize=5&roomType=Luxury",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"hotels",
+														":id",
+														"rooms"
+													],
+													"query": [
+														{
+															"key": "PageNumber",
+															"value": "1",
+															"description": "The current page number to retrieve.\r\nMust be a positive integer."
+														},
+														{
+															"key": "PageSize",
+															"value": "5",
 															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 														},
 														{
@@ -3804,7 +3872,8 @@
 													],
 													"variable": [
 														{
-															"key": "id"
+															"key": "id",
+															"value": "<uuid>"
 														}
 													]
 												}
@@ -3900,7 +3969,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/v1/hotels/:id/rooms?PageNumber=<integer>&PageSize=<integer>&roomType=Luxury",
+													"raw": "{{baseUrl}}/api/v1/hotels/:id/rooms?PageNumber=1&PageSize=5&roomType=Luxury",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -3914,12 +3983,12 @@
 													"query": [
 														{
 															"key": "PageNumber",
-															"value": "<integer>",
+															"value": "1",
 															"description": "The current page number to retrieve.\r\nMust be a positive integer."
 														},
 														{
 															"key": "PageSize",
-															"value": "<integer>",
+															"value": "5",
 															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 														},
 														{
@@ -3930,7 +3999,8 @@
 													],
 													"variable": [
 														{
-															"key": "id"
+															"key": "id",
+															"value": "bcedf059-4835-4bcf-1e71-08dcbba01bc1"
 														}
 													]
 												}
@@ -3945,7 +4015,7 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}"
+											"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"errors\": [\n        {\n            \"code\": \"Hotel.IdNotFound\",\n            \"message\": \"Hotel with the given ID does not exist\"\n        }\n    ]\n}"
 										},
 										{
 											"name": "If the request is invalid (validation error).",
@@ -3963,7 +4033,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/v1/hotels/:id/rooms?PageNumber=<integer>&PageSize=<integer>&roomType=Luxury",
+													"raw": "{{baseUrl}}/api/v1/hotels/:id/rooms?PageNumber=0&PageSize=0&roomType=Luxury",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -3977,12 +4047,12 @@
 													"query": [
 														{
 															"key": "PageNumber",
-															"value": "<integer>",
+															"value": "0",
 															"description": "The current page number to retrieve.\r\nMust be a positive integer."
 														},
 														{
 															"key": "PageSize",
-															"value": "<integer>",
+															"value": "0",
 															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 														},
 														{
@@ -3993,7 +4063,8 @@
 													],
 													"variable": [
 														{
-															"key": "id"
+															"key": "id",
+															"value": "bcedf059-4835-4bcf-1e71-08dcbba01bc3"
 														}
 													]
 												}
@@ -4046,7 +4117,7 @@
 							},
 							"response": [
 								{
-									"name": "Returns the details of the hotel.",
+									"name": "Returns the details of the hotel (User Token).",
 									"originalRequest": {
 										"method": "GET",
 										"header": [
@@ -4073,7 +4144,8 @@
 											],
 											"variable": [
 												{
-													"key": "id"
+													"key": "id",
+													"value": "<uuid>"
 												}
 											]
 										}
@@ -4089,6 +4161,52 @@
 									],
 									"cookie": [],
 									"body": "{\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"starRate\": \"OneStar\",\n  \"description\": \"<string>\",\n  \"thumbnailImage\": {\n    \"url\": \"<string>\",\n    \"id\": \"<uuid>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  },\n  \"cityId\": \"<uuid>\",\n  \"cityName\": \"<string>\",\n  \"coordinates\": {\n    \"latitude\": \"<double>\",\n    \"longitude\": \"<double>\"\n  },\n  \"amenities\": [\n    \"RoomService\",\n    \"Restaurant\"\n  ]\n}"
+								},
+								{
+									"name": "Returns the details of the hotel (Admin Token).",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/hotels/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"hotels",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<uuid>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"owner\": \"<string>\",\n  \"numberOfRooms\": \"<integer>\",    \n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"starRate\": \"OneStar\",\n  \"description\": \"<string>\",\n  \"thumbnailImage\": {\n    \"url\": \"<string>\",\n    \"id\": \"<uuid>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  },\n  \"cityId\": \"<uuid>\",\n  \"cityName\": \"<string>\",\n  \"coordinates\": {\n    \"latitude\": \"<double>\",\n    \"longitude\": \"<double>\"\n  },\n  \"amenities\": [\n    \"RoomService\",\n    \"Restaurant\"\n  ]\n}"
 								},
 								{
 									"name": "Unauthorized if credentials are invalid.",
@@ -4163,7 +4281,8 @@
 											],
 											"variable": [
 												{
-													"key": "id"
+													"key": "id",
+													"value": "bcedf059-4835-4bcf-1e71-08dcbba01bc1"
 												}
 											]
 										}
@@ -4178,7 +4297,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}"
+									"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"errors\": [\n        {\n            \"code\": \"Hotel.IdNotFound\",\n            \"message\": \"Hotel with the given ID does not exist\"\n        }\n    ]\n}"
 								}
 							]
 						},
@@ -5515,7 +5634,7 @@
 									"formdata": [
 										{
 											"key": "Name",
-											"value": "<string>",
+											"value": "Some Name",
 											"description": "The name of the hotel.",
 											"type": "text"
 										},
@@ -5527,13 +5646,13 @@
 										},
 										{
 											"key": "Description",
-											"value": "<string>",
+											"value": "Some Description",
 											"description": "A description of the hotel, detailing its features and offerings.",
 											"type": "text"
 										},
 										{
 											"key": "Owner",
-											"value": "<string>",
+											"value": "Some Owner",
 											"description": "The name of the owner of the hotel.",
 											"type": "text"
 										},
@@ -5545,9 +5664,9 @@
 										},
 										{
 											"key": "Images",
-											"value": "<binary>,<binary>",
 											"description": "A collection of additional images of the hotel.",
-											"type": "text"
+											"type": "file",
+											"src": []
 										},
 										{
 											"key": "CityId",
@@ -5557,12 +5676,12 @@
 										},
 										{
 											"key": "Coordinates.Latitude",
-											"value": "<double>",
+											"value": "100",
 											"type": "text"
 										},
 										{
 											"key": "Coordinates.Longitude",
-											"value": "<double>",
+											"value": "50",
 											"type": "text"
 										},
 										{
@@ -6200,7 +6319,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/v1/rooms/:id/images?PageNumber=<integer>&PageSize=<integer>",
+													"raw": "{{baseUrl}}/api/v1/rooms/:id/images?PageNumber=1&PageSize=5",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -6214,18 +6333,19 @@
 													"query": [
 														{
 															"key": "PageNumber",
-															"value": "<integer>",
+															"value": "1",
 															"description": "The current page number to retrieve.\r\nMust be a positive integer."
 														},
 														{
 															"key": "PageSize",
-															"value": "<integer>",
+															"value": "5",
 															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 														}
 													],
 													"variable": [
 														{
-															"key": "id"
+															"key": "id",
+															"value": "<uuid>"
 														}
 													]
 												}
@@ -6316,7 +6436,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/v1/rooms/:id/images?PageNumber=<integer>&PageSize=<integer>",
+													"raw": "{{baseUrl}}/api/v1/rooms/:id/images?PageNumber=1&PageSize=5",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -6330,18 +6450,19 @@
 													"query": [
 														{
 															"key": "PageNumber",
-															"value": "<integer>",
+															"value": "1",
 															"description": "The current page number to retrieve.\r\nMust be a positive integer."
 														},
 														{
 															"key": "PageSize",
-															"value": "<integer>",
+															"value": "5",
 															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 														}
 													],
 													"variable": [
 														{
-															"key": "id"
+															"key": "id",
+															"value": "bcedf059-4835-4bcf-1e71-08dcbba01bc1"
 														}
 													]
 												}
@@ -6356,7 +6477,7 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}"
+											"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"errors\": [\n        {\n            \"code\": \"Room.IdNotFound\",\n            \"message\": \"Room with the given ID does not exist\"\n        }\n    ]\n}"
 										},
 										{
 											"name": "If the request is invalid (validation error).",
@@ -6374,7 +6495,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{baseUrl}}/api/v1/rooms/:id/images?PageNumber=<integer>&PageSize=<integer>",
+													"raw": "{{baseUrl}}/api/v1/rooms/:id/images?PageNumber=0&PageSize=0",
 													"host": [
 														"{{baseUrl}}"
 													],
@@ -6388,18 +6509,19 @@
 													"query": [
 														{
 															"key": "PageNumber",
-															"value": "<integer>",
+															"value": "0",
 															"description": "The current page number to retrieve.\r\nMust be a positive integer."
 														},
 														{
 															"key": "PageSize",
-															"value": "<integer>",
+															"value": "0",
 															"description": "The number of items to include on each page of results.\r\nMust be a positive integer."
 														}
 													],
 													"variable": [
 														{
-															"key": "id"
+															"key": "id",
+															"value": "bcedf059-4835-4bcf-1e71-08dcbba01bc1"
 														}
 													]
 												}
@@ -6452,7 +6574,7 @@
 							},
 							"response": [
 								{
-									"name": "Returns the details of the room.",
+									"name": "Returns the details of the room (User Token).",
 									"originalRequest": {
 										"method": "GET",
 										"header": [
@@ -6479,7 +6601,8 @@
 											],
 											"variable": [
 												{
-													"key": "id"
+													"key": "id",
+													"value": "<uuid>"
 												}
 											]
 										}
@@ -6495,6 +6618,52 @@
 									],
 									"cookie": [],
 									"body": "{\n  \"hotelId\": \"<uuid>\",\n  \"roomNumber\": \"<integer>\",\n  \"roomType\": \"Budget\",\n  \"description\": \"<string>\",\n  \"price\": {\n    \"value\": \"<double>\"\n  },\n  \"maxNumberOfGuests\": {\n    \"adults\": \"<integer>\",\n    \"children\": \"<integer>\"\n  }\n}"
+								},
+								{
+									"name": "Returns the details of the room (Admin Token).",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer <token>",
+												"description": "Added as a part of security scheme: bearer"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/rooms/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"rooms",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<uuid>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"hotelId\": \"<uuid>\",\n  \"roomNumber\": \"<integer>\",\n  \"roomType\": \"Budget\",\n  \"description\": \"<string>\",\n  \"price\": {\n    \"value\": \"<double>\"\n  },\n  \"maxNumberOfGuests\": {\n    \"adults\": \"<integer>\",\n    \"children\": \"<integer>\"\n  }\n}"
 								},
 								{
 									"name": "Unauthorized if credentials are invalid.",
@@ -6569,7 +6738,8 @@
 											],
 											"variable": [
 												{
-													"key": "id"
+													"key": "id",
+													"value": "bcedf059-4835-4bcf-1e71-08dcbba01bc1"
 												}
 											]
 										}
@@ -6584,7 +6754,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<string>\",\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}"
+									"body": "{\n    \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\n    \"title\": \"Not Found\",\n    \"status\": 404,\n    \"errors\": [\n        {\n            \"code\": \"Room.IdNotFound\",\n            \"message\": \"Room with the given ID does not exist\"\n        }\n    ]\n}"
 								}
 							]
 						},
@@ -8015,7 +8185,7 @@
 							},
 							"response": [
 								{
-									"name": "Returns the newly created token.",
+									"name": "Returns User token.",
 									"originalRequest": {
 										"method": "POST",
 										"header": [
@@ -8026,11 +8196,6 @@
 											{
 												"key": "Accept",
 												"value": "text/plain"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
 											}
 										],
 										"body": {
@@ -8038,13 +8203,69 @@
 											"formdata": [
 												{
 													"key": "Username",
-													"value": "<string>",
+													"value": "user",
 													"description": "The username of the user attempting to log in.",
 													"type": "text"
 												},
 												{
 													"key": "Password",
-													"value": "<string>",
+													"value": "q~>k6Dz'kD27",
+													"description": "The password of the user attempting to log in.",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/users/token",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"token"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"token\": \"<string>\"\n}"
+								},
+								{
+									"name": "Returns Admin token.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "multipart/form-data"
+											},
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "Username",
+													"value": "admin",
+													"description": "The username of the user attempting to log in.",
+													"type": "text"
+												},
+												{
+													"key": "Password",
+													"value": "q~>k6Dz'kD27",
 													"description": "The password of the user attempting to log in.",
 													"type": "text"
 												}
@@ -8087,11 +8308,6 @@
 											{
 												"key": "Accept",
 												"value": "text/plain"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
 											}
 										],
 										"body": {
@@ -8099,13 +8315,13 @@
 											"formdata": [
 												{
 													"key": "Username",
-													"value": "<string>",
+													"value": "user",
 													"description": "The username of the user attempting to log in.",
 													"type": "text"
 												},
 												{
 													"key": "Password",
-													"value": "<string>",
+													"value": "invalid_pass",
 													"description": "The password of the user attempting to log in.",
 													"type": "text"
 												}
@@ -8148,11 +8364,6 @@
 											{
 												"key": "Accept",
 												"value": "text/plain"
-											},
-											{
-												"key": "Authorization",
-												"value": "Bearer <token>",
-												"description": "Added as a part of security scheme: bearer"
 											}
 										],
 										"body": {
@@ -8160,7 +8371,7 @@
 											"formdata": [
 												{
 													"key": "Username",
-													"value": "<string>",
+													"value": "user",
 													"description": "The username of the user attempting to log in.",
 													"type": "text"
 												},
@@ -8168,7 +8379,8 @@
 													"key": "Password",
 													"value": "<string>",
 													"description": "The password of the user attempting to log in.",
-													"type": "text"
+													"type": "text",
+													"disabled": true
 												}
 											]
 										},
@@ -8259,11 +8471,6 @@
 									{
 										"key": "Content-Type",
 										"value": "multipart/form-data"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer <token>",
-										"description": "Added as a part of security scheme: bearer"
 									}
 								],
 								"body": {
@@ -8271,19 +8478,19 @@
 									"formdata": [
 										{
 											"key": "Username",
-											"value": "<string>",
+											"value": "new_uername",
 											"description": "The username for the new user.",
 											"type": "text"
 										},
 										{
 											"key": "Password",
-											"value": "<string>",
+											"value": "74kD88&>xd`=",
 											"description": "The password for the new user.",
 											"type": "text"
 										},
 										{
 											"key": "Email",
-											"value": "<string>",
+											"value": "new_email@mail.com",
 											"description": "The email address for the new user.",
 											"type": "text"
 										}
@@ -8320,11 +8527,6 @@
 									{
 										"key": "Accept",
 										"value": "text/plain"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer <token>",
-										"description": "Added as a part of security scheme: bearer"
 									}
 								],
 								"body": {
@@ -8332,19 +8534,19 @@
 									"formdata": [
 										{
 											"key": "Username",
-											"value": "<string>",
+											"value": "user",
 											"description": "The username for the new user.",
 											"type": "text"
 										},
 										{
 											"key": "Password",
-											"value": "<string>",
+											"value": "74kD88&>xd`=",
 											"description": "The password for the new user.",
 											"type": "text"
 										},
 										{
 											"key": "Email",
-											"value": "<string>",
+											"value": "new_email@mail.com",
 											"description": "The email address for the new user.",
 											"type": "text"
 										}
@@ -8386,11 +8588,6 @@
 									{
 										"key": "Accept",
 										"value": "text/plain"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer <token>",
-										"description": "Added as a part of security scheme: bearer"
 									}
 								],
 								"body": {
@@ -8398,19 +8595,19 @@
 									"formdata": [
 										{
 											"key": "Username",
-											"value": "<string>",
+											"value": "user",
 											"description": "The username for the new user.",
 											"type": "text"
 										},
 										{
 											"key": "Password",
-											"value": "<string>",
+											"value": "weak_password",
 											"description": "The password for the new user.",
 											"type": "text"
 										},
 										{
 											"key": "Email",
-											"value": "<string>",
+											"value": "invalid_email",
 											"description": "The email address for the new user.",
 											"type": "text"
 										}
@@ -8455,10 +8652,36 @@
 			}
 		]
 	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
 			"key": "baseUrl",
 			"value": "/"
+		},
+		{
+			"key": "bearerToken",
+			"value": ""
 		}
 	]
 }

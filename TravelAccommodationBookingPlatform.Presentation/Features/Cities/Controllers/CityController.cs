@@ -34,8 +34,8 @@ public class CityController : AbstractController
     /// <response code="404">If the city is not found.</response>
     [HttpGet("{id:guid}")]
     [MultipleResponseTypes(StatusCodes.Status200OK,
-        typeof(CityDetailsResponse),
-        typeof(AdminCityDetailsResponse))]
+        typeof(CityDetailsViewModel),
+        typeof(AdminCityDetailsViewModel))]
     [ProducesError(StatusCodes.Status401Unauthorized)]
     [ProducesError(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CityDetailsResponse>> GetCityDetails(
@@ -62,12 +62,12 @@ public class CityController : AbstractController
     }
 
     /// <summary>
-    /// Searches for cities based on provided filters and returns available search filters.
+    /// Searches for cities based on provided filters.
     /// </summary>
     /// <param name="query">The search query with filters.</param>
     /// <param name="cancellationToken">Cancellation token for the request.</param>
-    /// <returns>The search results and available filters.</returns>
-    /// <response code="200">Returns the search results and filters.</response>
+    /// <returns>The search results.</returns>
+    /// <response code="200">Returns the search results.</response>
     /// <response code="400">If the request is invalid.</response>
     /// <response code="401">Unauthorized if credentials are invalid.</response>
     /// <response code="422">If the request is invalid (validation error).</response>
