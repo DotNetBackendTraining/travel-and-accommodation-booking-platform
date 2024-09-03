@@ -22,5 +22,5 @@ public class CreateBookingRequest
     /// <summary>
     /// Any special requests the user may have for their stay.
     /// </summary>
-    public SpecialRequest SpecialRequest { get; set; } = default!;
+    public SpecialRequest SpecialRequest { get; set; } = new();
 }
