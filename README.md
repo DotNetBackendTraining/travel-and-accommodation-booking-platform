@@ -35,6 +35,9 @@ the [Project Requirements documentation](assets/pages/ProjectRequirements.md).
 The domain models used in this project were derived from the project requirements to reflect the business logic
 accurately.
 To view the detailed domain models, please refer to the [Domain Models documentation](assets/pages/DomainModels.md).
+Here is a class diagram for the domain models of the project:
+
+![DrawSQL-ClassDiagram](assets/diagrams/DrawSQL-ClassDiagram.png)
 
 ## Project Architecture
 

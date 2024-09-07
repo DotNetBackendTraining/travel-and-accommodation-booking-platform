@@ -1,5 +1,10 @@
 # Domain Models
 
+This page includes the details for each domain model and where in the requirements is each field inferred from.
+Before that, here is a class diagram that summarizes the domain models and their relationships:
+
+![DrawSQL-ClassDiagram](../diagrams/DrawSQL-ClassDiagram.png)
+
 ## User
 
 - **Username**
